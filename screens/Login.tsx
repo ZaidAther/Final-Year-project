@@ -1,4 +1,5 @@
-import * as React from "react";
+// import * as React from "react";
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -11,12 +12,24 @@ import {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { Padding, FontSize, Color, FontFamily, Border } from "../GlobalStyles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const SignUp = () => {
+const Login = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  const [isPressed, setIsPressed] = useState(false); // State to track button press
+
+  const handlePress = () => {
+    setIsPressed(true); // Set the button press state to true
+    Linking.openURL("https://www.google.com/");
+  };
+  setTimeout(() => {
+    setIsPressed(false); // Reset the button press state to false after 1 second
+  }, 1000);
+
+  
 
   return (
-    <View style={[styles.signup, styles.logoFlexBox]}>
+    <View style={[styles.login, styles.logoFlexBox]}>
       <View style={styles.formContainer}>
         <View style={styles.conent}>
           <View style={[styles.logo, styles.logoFlexBox]}>
@@ -33,56 +46,55 @@ const SignUp = () => {
               placeholder="Password"
               placeholderTextColor="#c2c3cb"
             />
-            <Text style={[styles.forgetPassword, styles.loginTypo]}>
+            <Text style={[styles.forgetPassword, styles.login1Typo]}>
               Forget Password ?
             </Text>
             <TouchableHighlight
               style={[styles.loginButton, styles.buttonShadowBox]}
-              underlayColor="#fff"
-              onPress={() => navigation.navigate("Login")}
+              underlayColor="#01607A"
+              onPress={() => navigation.navigate("Gender")}
             >
               <>
-                <Text style={[styles.login, styles.loginTypo]}>Login</Text>
-                <Text style={[styles.register, styles.google1Typo]}>
-                  REGISTER
-                </Text>
+                <Text style={[styles.login1, styles.login1Typo]}>Login</Text>
+                <Text style={[styles.login2, styles.login2Typo]}>LOGIN</Text>
               </>
             </TouchableHighlight>
+            <Text style={styles.login3}>Login</Text>
           </View>
           <View style={styles.lowerText}>
-            <Text style={styles.alreadyHaveAnContainer}>
-              <Text style={styles.alreadyHaveAnAccount}>
-                <Text style={styles.alreadyHaveAn}>
-                  Already Have An Account?
+            <Text style={styles.createNewAccountContainer}>
+              <Text style={styles.createNewAccount}>
+                <Text style={styles.createNewAccount1}>
+                  Create New Account?
                 </Text>
                 <Text style={styles.text}>{` `}</Text>
               </Text>
-              <Text style={styles.signIn}>Sign In</Text>
+              <Text style={styles.signUp}>Sign up</Text>
             </Text>
             <View style={styles.lowerTextChild} />
           </View>
         </View>
         <View style={[styles.socialMedia, styles.inputFieldsFlexBox]}>
-          <Text style={[styles.continueWithAccounts, styles.loginTypo]}>
+          <Text style={[styles.continueWithAccounts, styles.login1Typo]}>
             Continue With Accounts
           </Text>
           <View style={styles.accounts}>
-            <Pressable
+            <TouchableHighlight
               style={[styles.googleButton, styles.buttonShadowBox]}
-              onPress={() => Linking.openURL("https://www.google.com/")}
+              onPress={handlePress}
+              onLongPress={handlePress}
+              underlayColor="#01607A"
             >
-              <Text style={styles.google} selectionColor="#FFFFFF">
+              <Text
+                style={[
+                  styles.google,
+                  // Conditionally change text color based on button press state
+                  { color: isPressed ? "#FFFFFF" : Color.colorDarkslategray_100 },
+                ]}
+              >
                 Google
               </Text>
-              <Text style={[styles.google1, styles.google1Typo]}>
-                <Text style={styles.g}>G</Text>
-                <Text style={styles.o}>o</Text>
-                <Text style={styles.o1}>o</Text>
-                <Text style={styles.g}>g</Text>
-                <Text style={styles.l}>l</Text>
-                <Text style={styles.o}>e</Text>
-              </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
@@ -121,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  loginTypo: {
+  login1Typo: {
     textAlign: "left",
     fontFamily: FontFamily.poppins,
   },
@@ -141,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  google1Typo: {
+  login2Typo: {
     marginLeft: 10,
     textTransform: "uppercase",
     letterSpacing: 3,
@@ -166,12 +178,14 @@ const styles = StyleSheet.create({
   },
   enterYourEmail: {
     paddingVertical: Padding.p_6xs,
+    zIndex: 0,
     fontSize: FontSize.size_sm,
     fontWeight: "500",
     justifyContent: "center",
   },
   password: {
     paddingVertical: Padding.p_4xs,
+    zIndex: 1,
     marginTop: 27,
     fontSize: FontSize.size_sm,
     fontWeight: "500",
@@ -179,49 +193,67 @@ const styles = StyleSheet.create({
   forgetPassword: {
     letterSpacing: -0.3,
     opacity: 0.7,
+    zIndex: 2,
     color: Color.colorDarkslategray,
     marginTop: 27,
     fontSize: FontSize.size_sm,
     fontWeight: "500",
   },
-  login: {
+  login1: {
     letterSpacing: 2.8,
     color: Color.colorFirebrick_100,
     display: "none",
     fontSize: FontSize.size_sm,
     fontWeight: "600",
   },
-  register: {
+  login2: {
     color: Color.colorWhitesmoke_100,
   },
   loginButton: {
     backgroundColor: Color.colorCadetblue,
     paddingHorizontal: Padding.p_117xl,
+    zIndex: 3,
     marginTop: 27,
     height: 45,
     paddingVertical: Padding.p_smi,
     borderRadius: Border.br_mini,
   },
+  login3: {
+    position: "absolute",
+    marginTop: -126,
+    marginLeft: -48.5,
+    top: "50%",
+    left: "50%",
+    fontSize: 38,
+    letterSpacing: -1.5,
+    lineHeight: 48,
+    zIndex: 4,
+    display: "none",
+    color: Color.colorDarkslategray,
+    textAlign: "center",
+    fontFamily: FontFamily.poppins,
+    fontWeight: "600",
+  },
   inputFields: {
     paddingTop: Padding.p_31xl,
     paddingBottom: Padding.p_mini,
   },
-  alreadyHaveAn: {
+  createNewAccount1: {
     fontWeight: "500",
     fontFamily: FontFamily.poppins,
   },
   text: {
     fontFamily: FontFamily.poppins,
   },
-  alreadyHaveAnAccount: {
+  createNewAccount: {
     color: Color.colorDarkgray,
   },
-  signIn: {
+  signUp: {
     color: Color.colorDarkslategray,
     fontFamily: FontFamily.poppins,
     fontWeight: "600",
   },
-  alreadyHaveAnContainer: {
+  createNewAccountContainer: {
     fontSize: FontSize.size_base,
     textAlign: "center",
   },
@@ -252,6 +284,7 @@ const styles = StyleSheet.create({
   },
   google: {
     color: Color.colorDarkslategray_100,
+
     textTransform: "uppercase",
     letterSpacing: 3,
     fontSize: FontSize.size_sm,
@@ -259,21 +292,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
     fontWeight: "600",
   },
-  g: {
-    color: Color.colorDodgerblue,
-  },
-  o: {
-    color: Color.colorTomato,
-  },
-  o1: {
-    color: Color.colorGold,
-  },
-  l: {
-    color: Color.colorMediumseagreen,
-  },
-  google1: {
-    display: "none",
-  },
+
   googleButton: {
     paddingHorizontal: Padding.p_103xl,
     paddingVertical: Padding.p_smi,
@@ -295,7 +314,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
-  signup: {
+  login: {
     borderRadius: Border.br_lg,
     backgroundColor: Color.colorWhitesmoke_100,
     width: "100%",
@@ -309,4 +328,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default Login;
