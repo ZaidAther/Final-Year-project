@@ -15,18 +15,7 @@ const ChooseGoals = () => {
       <View style={[styles.muscleGroupContainer, styles.backFlexBox]}>
         <View style={styles.headerFlexBox}>
           <View style={[styles.header, styles.headerFlexBox]}>
-            <View style={[styles.back, styles.backFlexBox]}>
-              <Image
-                style={styles.backChild}
-                contentFit="cover"
-                source={require("../assets/rectangle-1051.png")}
-              />
-              <Image
-                style={styles.path3391Icon}
-                contentFit="cover"
-                source={require("../assets/path-33911.png")}
-              />
-            </View>
+
             <View style={[styles.progressbar, styles.backFlexBox]}>
               <View style={styles.progressPillBar}>
                 <View style={[styles.progressPills, styles.progressLayout1]} />
@@ -162,7 +151,7 @@ const styles = StyleSheet.create({
   headerFlexBox: {
     alignSelf: "stretch",
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
   },
   progressLayout1: {
     height: 15,
@@ -192,7 +181,6 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
   },
   backShadowBox: {
-    paddingVertical: Padding.p_mini,
     paddingHorizontal: Padding.p_13xl,
     backgroundColor: Color.colorWhite,
     shadowOpacity: 1,
@@ -208,30 +196,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    overflow: "hidden",
   },
-  backChild: {
-    zIndex: 0,
-    height: 35,
-    width: 35,
-  },
-  path3391Icon: {
-    position: "absolute",
-    height: "25.43%",
-    width: "13.14%",
-    top: "37.71%",
-    right: "42.29%",
-    bottom: "36.86%",
-    left: "44.57%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    zIndex: 1,
-    overflow: "hidden",
-  },
-  back: {
-    justifyContent: "center",
-    flexDirection: "row",
-  },
+
+
+
   progressPills: {
     backgroundColor: Color.colorCadetblue,
     height: 15,
@@ -327,7 +295,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorCadetblue,
     alignItems: "center",
     flexDirection: "row",
-    overflow: "hidden",
   },
   bottom: {
     paddingTop: 22,

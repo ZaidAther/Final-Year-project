@@ -19,23 +19,7 @@ const Gender = () => {
       <View style={styles.genderContainer}>
         <View style={styles.genderContent}>
           <View style={styles.header}>
-            <View style={styles.back}>
-              <Pressable
-                style={styles.wrapper}
-                onPress={() => navigation.goBack()}
-              >
-                <Image
-                  style={styles.icon}
-                  contentFit="cover"
-                  source={require("../assets/rectangle-105.png")}
-                />
-              </Pressable>
-              <Image
-                style={styles.path3391Icon}
-                contentFit="cover"
-                source={require("../assets/path-3391.png")}
-              />
-            </View>
+
             <View style={styles.progressbar}>
               <View style={styles.progressPillBar}>
                 <View style={styles.progressPills} />
@@ -119,15 +103,7 @@ const Gender = () => {
             <Text style={styles.continue1}>cONTINUE</Text>
           </View>
         </TouchableHighlight>
-        <Pressable style={styles.backButton}>
-          <Pressable style={styles.back1} onPress={() => navigation.goBack()}>
-            <Image
-              style={styles.icon}
-              contentFit="cover"
-              source={require("../assets/back.png")}
-            />
-          </Pressable>
-        </Pressable>
+
       </View>
     </View>
   );
@@ -154,7 +130,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   rowShadowBox: {
-    paddingHorizontal: Padding.p_xl,
     height: 45,
     shadowOpacity: 1,
     elevation: 4,
@@ -171,33 +146,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  icon: {
-    height: "100%",
-    width: "100%",
-  },
-  wrapper: {
-    height: 35,
-    width: 35,
-    zIndex: 0,
-  },
-  path3391Icon: {
-    height: "25.43%",
-    width: "13.14%",
-    top: "37.71%",
-    right: "42.29%",
-    bottom: "36.86%",
-    left: "44.57%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    zIndex: 1,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  back: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
+
   progressPills: {
     backgroundColor: Color.colorDarkslategray_100,
     height: 15,
@@ -229,7 +179,7 @@ const styles = StyleSheet.create({
     letterSpacing: 3.2,
     lineHeight: 26,
     fontWeight: "500",
-    fontFamily: FontFamily.poppinsMedium,
+    fontFamily: FontFamily.poppins,
     color: Color.colorGray,
     textAlign: "center",
   },
@@ -238,7 +188,7 @@ const styles = StyleSheet.create({
   },
   male1Typo: {
     color: Color.colorDarkslategray_100,
-    fontFamily: FontFamily.poppinsSemiBold,
+    fontFamily: FontFamily.poppins,
     fontWeight: "600",
     textTransform: "uppercase",
     letterSpacing: 3,
@@ -252,8 +202,7 @@ const styles = StyleSheet.create({
     display: "none",
   },
   maleRow: {
-    paddingHorizontal: Padding.p_mini,
-    paddingVertical: Padding.p_4xs,
+
     height: 45,
     backgroundColor: Color.colorWhite,
     shadowOpacity: 1,
@@ -269,7 +218,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
   },
   row1: {
     paddingHorizontal: 2,
@@ -286,11 +234,11 @@ const styles = StyleSheet.create({
   },
   femaleRow: {
     paddingVertical: 12,
-    overflow: "hidden",
   },
   row2: {
     justifyContent: "center",
     alignItems: "center",
+    width: 315,
   },
   vectorIcon1: {
     width: 19,
@@ -304,6 +252,7 @@ const styles = StyleSheet.create({
   row3: {
     paddingHorizontal: 1,
     paddingVertical: 0,
+    
   },
   genders: {
     alignSelf: "stretch",
@@ -316,7 +265,7 @@ const styles = StyleSheet.create({
   },
   continue1: {
     color: Color.colorWhitesmoke_100,
-    fontFamily: FontFamily.poppinsSemiBold,
+    fontFamily: FontFamily.poppins,
     fontWeight: "600",
     textTransform: "uppercase",
     letterSpacing: 3,
@@ -339,24 +288,13 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_mini,
     flexDirection: "row",
     justifyContent: "center",
-    overflow: "hidden",
   },
   bottom: {
     marginTop: 222,
     zIndex: 1,
     alignItems: "center",
   },
-  back1: {
-    width: 20,
-    height: 16,
-  },
-  backButton: {
-    top: -118,
-    left: 148,
-    zIndex: 2,
-    display: "none",
-    position: "absolute",
-  },
+
   genderContainer: {
     alignSelf: "center",
     justifyContent: "center",

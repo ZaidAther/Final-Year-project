@@ -9,9 +9,25 @@ import SignUp from "./screens/SignUp";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { useFonts } from 'expo-font';
+
+
+// Your component code here
+
+
+
 
 const App = () => {
+
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
+  const [loaded] = useFonts({
+    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+  });
+  
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <>

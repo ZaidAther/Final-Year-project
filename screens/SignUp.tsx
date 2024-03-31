@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: Color.colorCadetblue,
-    paddingHorizontal: Padding.p_117xl,
+    // paddingHorizontal: Padding.p_117xl,
     marginTop: 27,
     height: 45,
     paddingVertical: Padding.p_smi,
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     display: "none",
   },
   googleButton: {
-    paddingHorizontal: Padding.p_103xl,
+    // paddingHorizontal: Padding.p_103xl,
     paddingVertical: Padding.p_smi,
     borderRadius: Border.br_mini,
     backgroundColor: Color.colorWhite,

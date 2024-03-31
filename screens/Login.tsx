@@ -55,11 +55,11 @@ const Login = () => {
               onPress={() => navigation.navigate("Gender")}
             >
               <>
-                <Text style={[styles.login1, styles.login1Typo]}>Login</Text>
+                {/* <Text style={[styles.login1, styles.login1Typo]}>Login</Text> */}
                 <Text style={[styles.login2, styles.login2Typo]}>LOGIN</Text>
               </>
             </TouchableHighlight>
-            <Text style={styles.login3}>Login</Text>
+            {/* <Text style={styles.login3}>Login</Text> */}
           </View>
           <View style={styles.lowerText}>
             <Text style={styles.createNewAccountContainer}>
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: Color.colorCadetblue,
-    paddingHorizontal: Padding.p_117xl,
+    // paddingHorizontal: Padding.p_117xl,
     zIndex: 3,
     marginTop: 27,
     height: 45,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
 
   googleButton: {
-    paddingHorizontal: Padding.p_103xl,
+    // paddingHorizontal: Padding.p_103xl,
     paddingVertical: Padding.p_smi,
     borderRadius: Border.br_mini,
     backgroundColor: Color.colorWhite,
