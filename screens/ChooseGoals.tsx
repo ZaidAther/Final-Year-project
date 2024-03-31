@@ -278,10 +278,10 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
   },
   continue: {
-    width: 210,
-    height: 45,
+    // width: 210,
+    // height: 45,
     justifyContent: "space-between",
-    paddingHorizontal: Padding.p_41xl,
+    paddingHorizontal: Padding.p_31xl,
     paddingVertical: Padding.p_smi,
     shadowOpacity: 1,
     elevation: 4,

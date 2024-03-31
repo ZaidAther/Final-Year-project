@@ -100,7 +100,7 @@ const Gender = () => {
           onPress={() => navigation.navigate("ChooseGoals")}
         >
           <View style={styles.continue}>
-            <Text style={styles.continue1}>cONTINUE</Text>
+            <Text style={styles.continue1}>CONTINUE</Text>
           </View>
         </TouchableHighlight>
 
@@ -273,9 +273,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   continue: {
+    // width: 210,
+    // height: 45,
     backgroundColor: Color.colorCadetblue,
     alignItems: "flex-end",
-    paddingHorizontal: Padding.p_41xl,
+    paddingHorizontal: Padding.p_31xl,
     paddingVertical: Padding.p_smi,
     shadowOpacity: 1,
     elevation: 4,

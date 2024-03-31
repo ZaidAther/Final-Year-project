@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputFieldsFlexBox: {
-    width: 315,
+    width: 310,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -294,8 +294,7 @@ const styles = StyleSheet.create({
   },
 
   googleButton: {
-    // paddingHorizontal: Padding.p_103xl,
-    paddingVertical: Padding.p_smi,
+    height: 45,
     borderRadius: Border.br_mini,
     backgroundColor: Color.colorWhite,
   },
