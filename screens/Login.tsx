@@ -1,5 +1,6 @@
 // import * as React from "react";
 import React, { useState } from "react";
+import { Image } from 'react-native';
 import {
   Text,
   StyleSheet,
@@ -16,15 +17,25 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Login = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const [isPressed, setIsPressed] = useState(false); // State to track button press
+  // const [isPressed, setIsPressed] = useState(false); // State to track button press
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
-  const handlePress = () => {
-    setIsPressed(true); // Set the button press state to true
-    Linking.openURL("https://www.google.com/");
+  const toggleSelection = (item: string) => {
+    if (selectedItems.includes(item)) {
+      setSelectedItems(selectedItems.filter((selectedItem) => selectedItem !== item));
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
   };
-  setTimeout(() => {
-    setIsPressed(false); // Reset the button press state to false after 1 second
-  }, 1000);
+
+  const isSelected = (item: string) => {
+    return selectedItems.includes(item)
+  };
+  // const handlePress = () => {
+  //   setIsPressed(true); // Set the button press state to true
+  //   // Linking.openURL("https://www.google.com/");
+  // };
+
 
   
 
@@ -33,7 +44,7 @@ const Login = () => {
       <View style={styles.formContainer}>
         <View style={styles.conent}>
           <View style={[styles.logo, styles.logoFlexBox]}>
-            <Text style={styles.activetrack}> ACTIVETRACK</Text>
+            <Text style={styles.activetrack}>ACTIVETRACK</Text>
           </View>
           <View style={[styles.inputFields, styles.inputFieldsFlexBox]}>
             <TextInput
@@ -78,23 +89,26 @@ const Login = () => {
           <Text style={[styles.continueWithAccounts, styles.login1Typo]}>
             Continue With Accounts
           </Text>
-          <View style={styles.accounts}>
+          <View style={[styles.accounts,]}>
             <TouchableHighlight
-              style={[styles.googleButton, styles.buttonShadowBox]}
-              onPress={handlePress}
-              onLongPress={handlePress}
-              underlayColor="#01607A"
+              style={[styles.googleButton, styles.buttonShadowBox,]}
+              onPress={() => {
+                Linking.openURL('https://www.google.com');
+              }}
+              underlayColor={"#f7f8fa"}
             >
-              <Text
-                style={[
-                  styles.google,
-                  // Conditionally change text color based on button press state
-                  { color: isPressed ? "#FFFFFF" : Color.colorDarkslategray_100 },
-                ]}
-              >
-                Google
-              </Text>
+              <Image source={require('../assets/google.png')} style={styles.googleLogo}/>
             </TouchableHighlight>
+            <TouchableHighlight
+              style={[styles.googleButton, styles.buttonShadowBox,]}
+              onPress={() => {
+                Linking.openURL('https://www.google.com');
+              }}
+              underlayColor={"#f7f8fa"}
+            >
+              <Image source={require('../assets/apple.png')} style={styles.googleLogo}/>
+            </TouchableHighlight>
+          
           </View>
         </View>
       </View>
@@ -103,10 +117,20 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
+  googleLogo: {
+    width: 25,
+    height: 25,
+  },
   logoFlexBox: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  selectedText: {
+    color: Color.colorWhite, // Change to your desired selected text color
+  },
+  selectedItem: {
+    color: Color.colorDarkslategray_100, // Change to your desired selected text color
   },
   inputFieldsFlexBox: {
     width: 310,
@@ -154,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   login2Typo: {
-    marginLeft: 10,
+    marginLeft: 0,
     textTransform: "uppercase",
     letterSpacing: 3,
     fontSize: FontSize.size_sm,
@@ -295,14 +319,22 @@ const styles = StyleSheet.create({
 
   googleButton: {
     height: 45,
+    width: "48.5%",
+
+    
+    
+
+
     borderRadius: Border.br_mini,
-    backgroundColor: Color.colorWhite,
+    backgroundColor: "white",
   },
   accounts: {
+    flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 30,
-    alignSelf: "stretch",
-    alignItems: "center",
+    gap: 10,
+    // alignSelf: "center",
+    // alignItems: "center",
   },
   socialMedia: {
     marginTop: 25,

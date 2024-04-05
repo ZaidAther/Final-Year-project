@@ -12,6 +12,20 @@ import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { Color, Padding, Border, FontSize, FontFamily } from "../GlobalStyles";
 
 const Gender = () => {
+  const [selectedItem, setSelectedItem] = React.useState<string | null>(null);
+
+  const toggleSelection = (item: string) => {
+    if (selectedItem === item) {
+      setSelectedItem(null);
+    } else {
+      setSelectedItem(item);
+    }
+  };
+  
+  const isSelected = (item: string) => {
+    return selectedItem === item;
+  };
+  
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
@@ -19,7 +33,6 @@ const Gender = () => {
       <View style={styles.genderContainer}>
         <View style={styles.genderContent}>
           <View style={styles.header}>
-
             <View style={styles.progressbar}>
               <View style={styles.progressPillBar}>
                 <View style={styles.progressPills} />
@@ -37,73 +50,72 @@ const Gender = () => {
           <View style={[styles.genders, styles.gendersFlexBox]}>
             <View style={styles.row1}>
               <TouchableHighlight
-                style={styles.maleRow}
+                style={[
+                  styles.maleRow,
+                  isSelected("MALE") && styles.selectedItem,
+                ]}
                 underlayColor="#fff"
-                onPress={() => navigation.navigate("ChooseGoals")}
+                onPress={() => toggleSelection("MALE")}
               >
-                <>
-                  <TouchableHighlight
-                    underlayColor="#fff"
-                    onPress={() => navigation.navigate("ChooseGoals")}
-                  >
-                    <Text style={styles.male1Typo}>Male</Text>
-                  </TouchableHighlight>
-                  <Image
-                    style={styles.iconGenderMale}
-                    contentFit="cover"
-                    source={require("../assets/-icon-gender-male.png")}
-                  />
-                </>
+                <Text
+                  style={[
+                    styles.male1Typo,
+                    isSelected("MALE") && styles.selectedText,
+                  ]}
+                >
+                  MALE
+                </Text>
               </TouchableHighlight>
             </View>
             <View style={[styles.row2, styles.rowSpaceBlock]}>
               <TouchableHighlight
-                style={[styles.femaleRow, styles.rowShadowBox]}
+                style={[
+                  styles.maleRow,
+                  isSelected("FEMALE") && styles.selectedItem,
+                ]}
                 underlayColor="#fff"
-                onPress={() => navigation.navigate("ChooseGoals")}
+                onPress={() => toggleSelection("FEMALE")}
               >
-                <>
-                  <Text style={styles.male1Typo} selectionColor="#FFFFFF">
-                    female
-                  </Text>
-                  <Image
-                    style={styles.vectorIcon}
-                    contentFit="cover"
-                    source={require("../assets/vector.png")}
-                  />
-                </>
+                <Text
+                  style={[
+                    styles.male1Typo,
+                    isSelected("FEMALE") && styles.selectedText,
+                  ]}
+                >
+                  FEMALE
+                </Text>
               </TouchableHighlight>
             </View>
             <View style={[styles.row3, styles.rowSpaceBlock]}>
-              <TouchableHighlight
-                style={[styles.otherRow, styles.rowShadowBox]}
+            <TouchableHighlight
+                style={[
+                  styles.maleRow,
+                  isSelected("OTHER") && styles.selectedItem,
+                ]}
                 underlayColor="#fff"
-                onPress={() => navigation.navigate("ChooseGoals")}
+                onPress={() => toggleSelection("OTHER")}
               >
-                <>
-                  <Text style={styles.male1Typo} selectionColor="#FFFFFF">
-                    Other
-                  </Text>
-                  <Image
-                    style={styles.vectorIcon1}
-                    contentFit="cover"
-                    source={require("../assets/vector1.png")}
-                  />
-                </>
+                <Text
+                  style={[
+                    styles.male1Typo,
+                    isSelected("OTHER") && styles.selectedText,
+                  ]}
+                >
+                  OTHER
+                </Text>
               </TouchableHighlight>
             </View>
           </View>
         </View>
         <TouchableHighlight
-          style={styles.bottom}
-          underlayColor="#fff"
+          style={[styles.bottom, styles.continue]}
+          underlayColor={Color.colorDarkslategray_100}
           onPress={() => navigation.navigate("ChooseGoals")}
         >
-          <View style={styles.continue}>
-            <Text style={styles.continue1}>CONTINUE</Text>
-          </View>
+          {/* <View style={styles.continue}> */}
+          <Text style={styles.continue1}>CONTINUE</Text>
+          {/* </View> */}
         </TouchableHighlight>
-
       </View>
     </View>
   );
@@ -146,7 +158,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
 
   progressPills: {
     backgroundColor: Color.colorDarkslategray_100,
@@ -192,7 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textTransform: "uppercase",
     letterSpacing: 3,
-    fontSize: FontSize.size_sm,
+    fontSize: 12,
     textAlign: "center",
   },
   iconGenderMale: {
@@ -202,7 +213,6 @@ const styles = StyleSheet.create({
     display: "none",
   },
   maleRow: {
-
     height: 45,
     backgroundColor: Color.colorWhite,
     shadowOpacity: 1,
@@ -252,7 +262,6 @@ const styles = StyleSheet.create({
   row3: {
     paddingHorizontal: 1,
     paddingVertical: 0,
-    
   },
   genders: {
     alignSelf: "stretch",
@@ -313,6 +322,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
     width: "100%",
+  },
+  selectedItem: {
+    backgroundColor: Color.colorDarkslategray_100, // Change to your desired selected background color
+  },
+  selectedText: {
+    color: Color.colorWhite, // Change to your desired selected text color
   },
 });
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Image } from 'react-native';
 import {
   Text,
   StyleSheet,
@@ -20,7 +21,7 @@ const SignUp = () => {
       <View style={styles.formContainer}>
         <View style={styles.conent}>
           <View style={[styles.logo, styles.logoFlexBox]}>
-            <Text style={styles.activetrack}> ACTIVETRACK</Text>
+            <Text style={styles.activetrack}>ACTIVETRACK</Text>
           </View>
           <View style={[styles.inputFields, styles.inputFieldsFlexBox]}>
             <TextInput
@@ -38,7 +39,7 @@ const SignUp = () => {
             </Text>
             <TouchableHighlight
               style={[styles.loginButton, styles.buttonShadowBox]}
-              underlayColor="#fff"
+              underlayColor="#01607A"
               onPress={() => navigation.navigate("Login")}
             >
               <>
@@ -66,23 +67,26 @@ const SignUp = () => {
           <Text style={[styles.continueWithAccounts, styles.loginTypo]}>
             Continue With Accounts
           </Text>
-          <View style={styles.accounts}>
-            <Pressable
-              style={[styles.googleButton, styles.buttonShadowBox]}
-              onPress={() => Linking.openURL("https://www.google.com/")}
+          <View style={[styles.accounts,]}>
+            <TouchableHighlight
+              style={[styles.googleButton, styles.buttonShadowBox,]}
+              onPress={() => {
+                Linking.openURL('https://www.google.com');
+              }}
+              underlayColor={"#f7f8fa"}
             >
-              <Text style={styles.google} selectionColor="#FFFFFF">
-                Google
-              </Text>
-              <Text style={[styles.google1, styles.google1Typo]}>
-                <Text style={styles.g}>G</Text>
-                <Text style={styles.o}>o</Text>
-                <Text style={styles.o1}>o</Text>
-                <Text style={styles.g}>g</Text>
-                <Text style={styles.l}>l</Text>
-                <Text style={styles.o}>e</Text>
-              </Text>
-            </Pressable>
+              <Image source={require('../assets/google.png')} style={styles.googleLogo}/>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={[styles.googleButton, styles.buttonShadowBox,]}
+              onPress={() => {
+                Linking.openURL('https://www.google.com');
+              }}
+              underlayColor={"#f7f8fa"}
+            >
+              <Image source={require('../assets/apple.png')} style={styles.googleLogo}/>
+            </TouchableHighlight>
+          
           </View>
         </View>
       </View>
@@ -91,6 +95,11 @@ const SignUp = () => {
 };
 
 const styles = StyleSheet.create({
+  googleLogo: {
+    width: 25,
+    height: 25,
+    
+  },
   logoFlexBox: {
     flexDirection: "row",
     justifyContent: "center",
@@ -259,31 +268,21 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
     fontWeight: "600",
   },
-  g: {
-    color: Color.colorDodgerblue,
-  },
-  o: {
-    color: Color.colorTomato,
-  },
-  o1: {
-    color: Color.colorGold,
-  },
-  l: {
-    color: Color.colorMediumseagreen,
-  },
-  google1: {
-    display: "none",
-  },
+  
+
   googleButton: {
     height: 45,
+    width: "48.5%",
     borderRadius: Border.br_mini,
     backgroundColor: Color.colorWhite,
+
   },
   accounts: {
-    justifyContent: "flex-end",
+    flexDirection: "row",
     marginTop: 30,
-    alignSelf: "stretch",
     alignItems: "center",
+    gap: 10,
+    backgroundColor: "transparent",
   },
   socialMedia: {
     marginTop: 25,

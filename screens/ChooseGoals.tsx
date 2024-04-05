@@ -10,6 +10,20 @@ import {
 import { Color, FontFamily, Padding, Border, FontSize } from "../GlobalStyles";
 
 const ChooseGoals = () => {
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+
+  const toggleSelection = (item: string) => {
+    if (selectedItems.includes(item)) {
+      setSelectedItems(selectedItems.filter((selectedItem) => selectedItem !== item));
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+
+  const isSelected = (item: string) => {
+    return selectedItems.includes(item)
+  };
+
   return (
     <View style={[styles.choosegoals, styles.backFlexBox]}>
       <View style={[styles.muscleGroupContainer, styles.backFlexBox]}>
@@ -32,104 +46,171 @@ const ChooseGoals = () => {
           </View>
           <View style={styles.goalsFlexBox}>
             <View style={styles.row1}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("FOREARM") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("FOREARM")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("FOREARM") && styles.selectedText]}>
                   FOREARM
                 </Text>
-              </View>
-              <View style={[styles.bicep, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("BICEP") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("BICEP")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("BICEP") && styles.selectedText]}>
                   BICEP
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("TRICEPS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("TRICEPS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("TRICEPS") && styles.selectedText]}>
                   TRICEPS
                 </Text>
-              </View>
-              <View style={[styles.lats, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>LATS</Text>
-              </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("LATS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("LATS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("LATS") && styles.selectedText]}>
+                LATS
+                </Text>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("SHOULDER") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("SHOULDER")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("SHOULDER") && styles.selectedText]}>
                   SHOULDER
                 </Text>
-              </View>
-              <View style={[styles.boostLibido, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("BOOST LIBIDO") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("BOOST LIBIDO")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("BOOST LIBIDO") && styles.selectedText]}>
                   BOOST LIBIDO
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("WEIGHT LOSS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("WEIGHT LOSS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("WEIGHT LOSS") && styles.selectedText]}>
                   WEIGHT LOSS
                 </Text>
-              </View>
-              <View style={[styles.traps, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("TRAPS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("TRAPS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("TRAPS") && styles.selectedText]}>
                   TRAPS
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("FLEXIBILITY") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("FLEXIBILITY")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("FLEXIBILITY") && styles.selectedText]}>
                   FLEXIBILITY
                 </Text>
-              </View>
-              <View style={[styles.middleBack, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("MIDDLE BACK") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("MIDDLE BACK")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("MIDDLE BACK") && styles.selectedText]}>
                   MIDDLE BACK
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("HAMSTRINGS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("HAMSTRINGS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("HAMSTRINGS") && styles.selectedText]}>
                   HAMSTRINGS
                 </Text>
-              </View>
-              <View style={[styles.calves, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("CALVES") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("CALVES")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("CALVES") && styles.selectedText]}>
                   CALVES
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
-            <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+            <View style={styles.row1}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("LOWER BACK") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("LOWER BACK")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("LOWER BACK") && styles.selectedText]}>
                   LOWER BACK
                 </Text>
-              </View>
-              <View style={[styles.chest, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("CHEST") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("CHEST")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("CHEST") && styles.selectedText]}>
                   CHEST
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
             <View style={styles.row2}>
-              <View style={styles.backShadowBox}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              <TouchableHighlight
+                style={[styles.backShadowBox, isSelected("ABDUCTORS") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("ABDUCTORS")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("ABDUCTORS") && styles.selectedText]}>
                   ABDUCTORS
                 </Text>
-              </View>
-              <View style={[styles.glutes, styles.backShadowBox]}>
-                <Text style={[styles.forearm1, styles.forearm1Typo]}>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.bicep, styles.backShadowBox, isSelected("GLUTES") && styles.selectedItem]}
+                underlayColor="transparent"
+                onPress={() => toggleSelection("GLUTES")}
+              >
+                <Text style={[styles.forearm1, styles.forearm1Typo, isSelected("GLUTES") && styles.selectedText]}>
                   GLUTES
                 </Text>
-              </View>
+              </TouchableHighlight>
             </View>
+            {/* Repeat the above structure for other items */}
           </View>
           <View style={[styles.bottom, styles.goalsFlexBox]}>
             <TouchableHighlight
               style={styles.continue}
-              underlayColor="#fff"
+              underlayColor= {Color.colorDarkslategray_100}
               onPress={() => {}}
             >
               <Text style={[styles.continue1, styles.forearm1Typo]}>
@@ -197,9 +278,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-
-
-
   progressPills: {
     backgroundColor: Color.colorCadetblue,
     height: 15,
@@ -239,7 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   forearm1: {
-    fontSize: FontSize.size_5xs,
+    fontSize: 10,
     color: Color.colorDarkslategray_100,
   },
   bicep: {
@@ -247,31 +325,14 @@ const styles = StyleSheet.create({
   },
   row1: {
     flexDirection: "row",
-  },
-  lats: {
-    marginLeft: 10,
+    marginBottom: 10,
   },
   row2: {
-    marginTop: 10,
     flexDirection: "row",
+
   },
-  boostLibido: {
-    marginLeft: 10,
-  },
-  traps: {
-    marginLeft: 10,
-  },
-  middleBack: {
-    marginLeft: 10,
-  },
-  calves: {
-    marginLeft: 10,
-  },
-  chest: {
-    marginLeft: 10,
-  },
-  glutes: {
-    marginLeft: 10,
+  selectedText: {
+    color: Color.colorWhite, // Change to your desired selected text color
   },
   continue1: {
     fontSize: FontSize.size_sm,
@@ -315,6 +376,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     overflow: "hidden",
+  },
+  selectedItem: {
+    backgroundColor: Color.colorDarkslategray_100, // Change to your desired selected background color
   },
 });
 
