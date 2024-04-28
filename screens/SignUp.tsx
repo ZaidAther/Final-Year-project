@@ -1,306 +1,282 @@
 import * as React from "react";
-import { Image } from 'react-native';
 import {
-  Text,
+  ScrollView,
   StyleSheet,
+  Text,
   View,
   TextInput,
   Pressable,
-  TouchableHighlight,
-  Linking,
 } from "react-native";
+import { Image } from "expo-image";
+import Inputs from "../components/Inputs";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
-import { Padding, FontSize, Color, FontFamily, Border } from "../GlobalStyles";
+import StatusBars from "../components/StatusBars";
+import { FontFamily, Padding, FontSize, Color } from "../GlobalStyles";
 
 const SignUp = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
-    <View style={[styles.signup, styles.logoFlexBox]}>
-      <View style={styles.formContainer}>
-        <View style={styles.conent}>
-          <View style={[styles.logo, styles.logoFlexBox]}>
-            <Text style={styles.activetrack}>ACTIVETRACK</Text>
-          </View>
-          <View style={[styles.inputFields, styles.inputFieldsFlexBox]}>
-            <TextInput
-              style={[styles.enterYourEmail, styles.passwordShadowBox]}
-              placeholder="Enter Your Email"
-              placeholderTextColor="#c2c3cb"
-            />
-            <TextInput
-              style={[styles.password, styles.passwordShadowBox]}
-              placeholder="Password"
-              placeholderTextColor="#c2c3cb"
-            />
-            <Text style={[styles.forgetPassword, styles.loginTypo]}>
-              Forget Password ?
-            </Text>
-            <TouchableHighlight
-              style={[styles.loginButton, styles.buttonShadowBox]}
-              underlayColor="#01607A"
-              onPress={() => navigation.navigate("Login")}
-            >
-              <>
-                <Text style={[styles.login, styles.loginTypo]}>Login</Text>
-                <Text style={[styles.register, styles.google1Typo]}>
-                  REGISTER
-                </Text>
-              </>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.lowerText}>
-            <Text style={styles.alreadyHaveAnContainer}>
-              <Text style={styles.alreadyHaveAnAccount}>
-                <Text style={styles.alreadyHaveAn}>
-                  Already Have An Account?
-                </Text>
-                <Text style={styles.text}>{` `}</Text>
-              </Text>
-              <Text style={styles.signIn}>Sign In</Text>
-            </Text>
-            <View style={styles.lowerTextChild} />
-          </View>
-        </View>
-        <View style={[styles.socialMedia, styles.inputFieldsFlexBox]}>
-          <Text style={[styles.continueWithAccounts, styles.loginTypo]}>
-            Continue With Accounts
+    <View style={[styles.signup, styles.signupFlexBox]}>
+      <ScrollView
+        style={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
+        showsHorizontalScrollIndicator={true}
+        contentContainerStyle={styles.scrollContentScrollViewContent}
+      >
+        <View style={styles.logo}>
+          <Image
+            style={styles.logoIcon}
+            contentFit="cover"
+            source={require("../assets/logo.png")}
+          />
+          <Text style={[styles.logotext, styles.logotextTypo]}>
+            ACTIVETRACK
           </Text>
-          <View style={[styles.accounts,]}>
-            <TouchableHighlight
-              style={[styles.googleButton, styles.buttonShadowBox,]}
-              onPress={() => {
-                Linking.openURL('https://www.google.com');
-              }}
-              underlayColor={"#f7f8fa"}
+        </View>
+        <View style={[styles.emailInput, styles.inputSpaceBlock]}>
+          <Inputs />
+        </View>
+        <View style={styles.inputSpaceBlock}>
+          <Inputs />
+        </View>
+        <Pressable
+          style={styles.inputSpaceBlock}
+          onPress={() => navigation.navigate("SingIn")}
+        >
+          <Pressable
+            style={[styles.button, styles.buttonFlexBox]}
+            onPress={() => navigation.navigate("SingIn")}
+          >
+            <Text style={[styles.startTraining, styles.logotextTypo]}>
+              Sing Up
+            </Text>
+          </Pressable>
+        </Pressable>
+        <View style={[styles.forgotPassword, styles.buttonFlexBox]}>
+          <Text style={styles.forgotPassword1}>Forgot Password?</Text>
+        </View>
+        <View style={[styles.singInWith, styles.signupFlexBox]}>
+          <Text style={styles.signInWith}>Sign in with</Text>
+          <View style={[styles.icons, styles.iconsSpaceBlock]}>
+            <View style={[styles.logosapple, styles.viewboxLayout]}>
+              <View style={[styles.viewbox, styles.viewboxPosition]} />
+              <Image
+                style={[styles.viewbox, styles.viewboxPosition]}
+                contentFit="cover"
+                source={require("../assets/shape.png")}
+              />
+            </View>
+            <Image
+              style={styles.fLogoRgbBlue1024Icon}
+              contentFit="cover"
+              source={require("../assets/f-logo-rgbblue-1024.png")}
+            />
+            <Image
+              style={styles.fLogoRgbBlue1024Icon}
+              contentFit="cover"
+              source={require("../assets/flatcoloriconsgoogle.png")}
+            />
+          </View>
+          <View style={[styles.signup1, styles.iconsSpaceBlock]}>
+            <Text style={[styles.dontHaveAn, styles.signInTypo]}>
+              Already have an account?
+            </Text>
+            <Pressable
+              style={styles.signUp}
+              onPress={() => navigation.navigate("SingIn")}
             >
-              <Image source={require('../assets/google.png')} style={styles.googleLogo}/>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.googleButton, styles.buttonShadowBox,]}
-              onPress={() => {
-                Linking.openURL('https://www.google.com');
-              }}
-              underlayColor={"#f7f8fa"}
-            >
-              <Image source={require('../assets/apple.png')} style={styles.googleLogo}/>
-            </TouchableHighlight>
-          
+              <Text style={[styles.signIn, styles.signInTypo]}>Sign In</Text>
+            </Pressable>
           </View>
         </View>
+      </ScrollView>
+      <View style={[styles.statusBar, styles.viewboxPosition]}>
+        <StatusBars
+          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight2.png")}
+          barsStatusBarsiPhoneLightHeight={50}
+          barsStatusBarsiPhoneLightOverflow="hidden"
+          barsStatusBarsiPhoneLightWidth={390}
+        />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  googleLogo: {
-    width: 25,
-    height: 25,
-    
-  },
-  logoFlexBox: {
-    flexDirection: "row",
-    justifyContent: "center",
+  scrollContentScrollViewContent: {
+    flexDirection: "column",
+    paddingBottom: 10,
     alignItems: "center",
-  },
-  inputFieldsFlexBox: {
-    width: 310,
     justifyContent: "center",
-    alignItems: "center",
   },
-  passwordShadowBox: {
-    paddingHorizontal: Padding.p_lgi,
-    shadowOpacity: 1,
-    elevation: 4,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    borderRadius: 13,
-    fontSize: FontSize.size_sm,
-    fontWeight: "500",
-    height: 45,
-    backgroundColor: Color.colorWhite,
+  signupFlexBox: {
+    overflow: "hidden",
+    justifyContent: "center",
+  },
+  logotextTypo: {
+    textAlign: "center",
     fontFamily: FontFamily.poppins,
+    fontWeight: "500",
+  },
+  inputSpaceBlock: {
+    paddingVertical: 0,
+    paddingHorizontal: Padding.p_3xs,
+    marginTop: 25,
     alignSelf: "stretch",
     alignItems: "center",
+  },
+  buttonFlexBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconsSpaceBlock: {
+    marginTop: 30,
     flexDirection: "row",
   },
-  loginTypo: {
+  viewboxLayout: {
+    width: 26,
+    height: 32,
+  },
+  viewboxPosition: {
+    top: 0,
+    position: "absolute",
+  },
+  signInTypo: {
+    fontSize: FontSize.size_sm,
     textAlign: "left",
     fontFamily: FontFamily.poppins,
+    fontWeight: "500",
   },
-  buttonShadowBox: {
-    paddingVertical: Padding.p_smi,
-    borderRadius: Border.br_mini,
-    shadowOpacity: 1,
-    elevation: 4,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    alignSelf: "stretch",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+  logoIcon: {
+    width: 68,
+    height: 64,
   },
-  google1Typo: {
-    marginLeft: 10,
-    textTransform: "uppercase",
-    letterSpacing: 3,
-    fontSize: FontSize.size_sm,
+  logotext: {
+    fontSize: FontSize.size_8xl,
+    lineHeight: 32,
+    marginTop: 25,
+    color: Color.colorGray_200,
     textAlign: "center",
     fontFamily: FontFamily.poppins,
-    fontWeight: "600",
-  },
-  activetrack: {
-    fontSize: FontSize.size_2xl,
-    letterSpacing: 3.2,
-    lineHeight: 26,
-    color: Color.colorGray,
-    textAlign: "center",
-    fontFamily: FontFamily.poppins,
-    fontWeight: "600",
+    fontWeight: "500",
   },
   logo: {
-    width: 197,
-    justifyContent: "center",
     alignItems: "center",
   },
-  enterYourEmail: {
-    paddingVertical: Padding.p_6xs,
-    fontSize: FontSize.size_sm,
-    fontWeight: "500",
+  emailInput: {
     justifyContent: "center",
   },
-  password: {
-    paddingVertical: Padding.p_4xs,
-    marginTop: 27,
-    fontSize: FontSize.size_sm,
+  startTraining: {
+    fontSize: FontSize.size_mid,
+    color: Color.colorWhite,
+    lineHeight: 20,
+    textAlign: "center",
+    fontFamily: FontFamily.poppins,
     fontWeight: "500",
   },
-  forgetPassword: {
-    letterSpacing: -0.3,
-    opacity: 0.7,
+  button: {
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowRadius: 5,
+    elevation: 5,
+    shadowOpacity: 1,
+    borderRadius: 25,
+    backgroundColor: Color.primary,
+    paddingHorizontal: 33,
+    paddingVertical: 12,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  forgotPassword1: {
+    fontSize: FontSize.size_xs,
+    textAlign: "left",
     color: Color.colorDarkslategray,
-    marginTop: 27,
-    fontSize: FontSize.size_sm,
+    lineHeight: 24,
+    fontFamily: FontFamily.poppins,
     fontWeight: "500",
   },
-  login: {
-    letterSpacing: 2.8,
-    color: Color.colorFirebrick_100,
-    display: "none",
-    fontSize: FontSize.size_sm,
-    fontWeight: "600",
+  forgotPassword: {
+    marginTop: 25,
+    justifyContent: "center",
   },
-  register: {
-    color: Color.colorWhitesmoke_100,
-  },
-  loginButton: {
-    backgroundColor: Color.colorCadetblue,
-    // paddingHorizontal: Padding.p_117xl,
-    marginTop: 27,
-    height: 45,
-    paddingVertical: Padding.p_smi,
-    borderRadius: Border.br_mini,
-  },
-  inputFields: {
-    paddingTop: Padding.p_31xl,
-    paddingBottom: Padding.p_mini,
-  },
-  alreadyHaveAn: {
+  signInWith: {
+    fontSize: FontSize.size_xl,
+    lineHeight: 24,
+    textAlign: "center",
+    color: Color.colorGray_200,
+    fontFamily: FontFamily.poppins,
     fontWeight: "500",
-    fontFamily: FontFamily.poppins,
+    alignSelf: "stretch",
   },
-  text: {
-    fontFamily: FontFamily.poppins,
+  viewbox: {
+    left: 0,
+    height: 32,
+    width: 26,
   },
-  alreadyHaveAnAccount: {
-    color: Color.colorDarkgray,
+  logosapple: {
+    height: 32,
+  },
+  fLogoRgbBlue1024Icon: {
+    width: 32,
+    height: 32,
+  },
+  icons: {
+    width: 138,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  dontHaveAn: {
+    display: "flex",
+    width: 100,
+    height: 48,
+    color: Color.colorDarkslategray,
+    fontSize: FontSize.size_sm,
+    lineHeight: 24,
+    alignItems: "center",
   },
   signIn: {
-    color: Color.colorDarkslategray,
-    fontFamily: FontFamily.poppins,
-    fontWeight: "600",
+    color: Color.primary,
+    width: 58,
+    lineHeight: 20,
   },
-  alreadyHaveAnContainer: {
-    fontSize: FontSize.size_base,
-    textAlign: "center",
+  signUp: {
+    marginLeft: 25,
   },
-  lowerTextChild: {
-    borderStyle: "solid",
-    borderColor: Color.colorSilver,
-    borderTopWidth: 2,
-    height: 2,
-    opacity: 0.3,
+  signup1: {
+    alignSelf: "stretch",
+    justifyContent: "center",
+  },
+  singInWith: {
     marginTop: 25,
     alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  lowerText: {
-    paddingTop: Padding.p_3xs,
+  scrollContent: {
+    zIndex: 0,
     alignSelf: "stretch",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  conent: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  continueWithAccounts: {
-    letterSpacing: -0.2,
-    color: Color.colorDarkgray,
-    fontSize: FontSize.size_base,
-    fontWeight: "500",
-  },
-  google: {
-    color: Color.colorDarkslategray_100,
-    textTransform: "uppercase",
-    letterSpacing: 3,
-    fontSize: FontSize.size_sm,
-    textAlign: "center",
-    fontFamily: FontFamily.poppins,
-    fontWeight: "600",
-  },
-  
-
-  googleButton: {
-    height: 45,
-    width: "48.5%",
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorWhite,
-
-  },
-  accounts: {
-    flexDirection: "row",
-    marginTop: 30,
-    alignItems: "center",
-    gap: 10,
-    backgroundColor: "transparent",
-  },
-  socialMedia: {
-    marginTop: 25,
-  },
-  formContainer: {
-    alignSelf: "stretch",
-    justifyContent: "center",
-    alignItems: "center",
     flex: 1,
   },
+  statusBar: {
+    right: 0,
+    width: 390,
+    height: 50,
+    justifyContent: "flex-end",
+    zIndex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
   signup: {
-    borderRadius: Border.br_lg,
-    backgroundColor: Color.colorWhitesmoke_100,
+    backgroundColor: Color.colorWhite,
     width: "100%",
-    height: 736,
-    overflow: "hidden",
-    paddingHorizontal: Padding.p_21xl,
-    paddingVertical: Padding.p_31xl,
+    height: 731,
+    paddingTop: Padding.p_31xl,
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

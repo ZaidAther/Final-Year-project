@@ -2,61 +2,186 @@ const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import Login from "./screens/Login";
-import Gender from "./screens/Gender";
-import ChooseGoals from "./screens/ChooseGoals";
+import Welcome from "./screens/Welcome";
+import SelectWeight from "./screens/SelectWeight";
+import SingIn from "./screens/SingIn";
 import SignUp from "./screens/SignUp";
+import SelectHeight from "./screens/SelectHeight";
+import CreatePlan from "./screens/CreatePlan";
+import ALaunch from "./screens/ALaunch";
+import Onboarding from "./screens/Onboarding";
+import Onboarding1 from "./screens/Onboarding1";
+import Gender from "./screens/Gender";
+import Birthday from "./screens/Birthday";
+import ProfileActive from "./screens/ProfileActive";
+import ToggleMetric from "./components/ToggleMetric";
+import AllGenders from "./components/AllGenders";
+import TrainingLevel from "./screens/TrainingLevel";
+import Dates from "./components/Dates";
+import MyWorkout from "./screens/MyWorkout";
+import Goal from "./screens/Goal";
+import Inputs from "./components/Inputs";
+import Workouts from "./screens/Workouts";
+import NavBar from "./components/NavBar";
+import HomeActive from "./screens/HomeActive";
+import StatusBars from "./components/StatusBars";
+import ActivityActive from "./screens/ActivityActive";
+import Category from "./components/Category";
+import Navigations from "./components/Navigation";
+import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import { useFonts } from 'expo-font';
-
-
-// Your component code here
-
-
-
+import {
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
 const App = () => {
+  const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
 
-  const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
-  const [loaded] = useFonts({
-    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
-  });
-  
-  if (!loaded) {
-    return null;
+  React.useEffect(() => {
+    setTimeout(() => {
+      setHideSplashScreen(true);
+    }, 2000);
+  }, []);
+
+  function MaterialIcon({ name, style }) {
+    const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
+    return (
+      <MIcon name={name} size={height} color={tintColor} style={iconStyle} />
+    );
   }
+
+  const IconProvider = (name) => ({
+    toReactElement: (props) => MaterialIcon({ name, ...props }),
+  });
+
+  function createIconsMap() {
+    return new Proxy(
+      {},
+      {
+        get(target, name) {
+          return IconProvider(name);
+        },
+      }
+    );
+  }
+  const MaterialIconsPack = {
+    name: "material",
+    icons: createIconsMap(),
+  };
 
   return (
     <>
-      <NavigationContainer>
-        {hideSplashScreen ? (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Gender"
-              component={Gender}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="ChooseGoals"
-              component={ChooseGoals}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        ) : null}
-      </NavigationContainer>
+      <IconRegistry icons={[MaterialIconsPack]} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <NavigationContainer>
+          {hideSplashScreen ? (
+            <Stack.Navigator
+              initialRouteName="Welcome"
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SelectWeight"
+                component={SelectWeight}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SingIn"
+                component={SingIn}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SelectHeight"
+                component={SelectHeight}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="CreatePlan"
+                component={CreatePlan}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ALaunch"
+                component={ALaunch}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Onboarding"
+                component={Onboarding}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Onboarding1"
+                component={Onboarding1}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Gender"
+                component={Gender}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Birthday"
+                component={Birthday}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ProfileActive"
+                component={ProfileActive}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="TrainingLevel"
+                component={TrainingLevel}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="MyWorkout"
+                component={MyWorkout}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Goal"
+                component={Goal}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Workouts"
+                component={Workouts}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="HomeActive"
+                component={HomeActive}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ActivityActive"
+                component={ActivityActive}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          ) : (
+            <ALaunch />
+          )}
+        </NavigationContainer>
+      </ApplicationProvider>
     </>
   );
 };
