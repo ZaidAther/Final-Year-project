@@ -193,6 +193,9 @@ const styles = StyleSheet.create({
     width: 19,
   },
   navBar: {
+    borderRadius: Border.br_mini,
+    backgroundColor: Color.rgb255255255,
+
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -201,8 +204,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorWhite,
     paddingHorizontal: Padding.p_26xl,
     paddingVertical: Padding.p_3xs,
     flexDirection: "row",

@@ -29,9 +29,11 @@ const styles = StyleSheet.create({
   },
   aLaunch: {
     borderRadius: Border.br_xl,
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
+
     borderStyle: "solid",
-    borderColor: Color.colorWhite,
+    borderColor: Color.rgb255255255,
+
     borderWidth: 1,
     flex: 1,
     width: "100%",

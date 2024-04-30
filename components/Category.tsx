@@ -63,7 +63,12 @@ const styles = StyleSheet.create({
   },
   category: {
     borderRadius: Border.br_5xs,
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
     borderStyle: "solid",
     borderColor: Color.colorGainsboro_100,
     borderWidth: 1,

@@ -28,8 +28,9 @@ const Goals = ({ dumbbell, propBorderColor }: GoalsType) => {
         <View style={[styles.bg, styles.bgLayout]}>
           <LinearGradient
             style={[styles.bg1, styles.bgLayout]}
-            locations={[]}
-            colors={[]}
+            locations={[1, 0]}
+            colors={["rgba(90, 200, 250, 0.13)", "rgba(120, 108, 255, 0.16)"]}
+
           />
         </View>
         <Image
@@ -91,7 +92,16 @@ const styles = StyleSheet.create({
   },
   goal: {
     alignSelf: "stretch",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 4,
+    elevation: 4,
+    shadowOpacity: 1,
+
     borderStyle: "solid",
     borderColor: Color.primary,
     borderWidth: 1,

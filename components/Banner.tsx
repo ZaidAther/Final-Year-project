@@ -46,7 +46,12 @@ const styles = StyleSheet.create({
   },
   startTrainingTypo: {
     textAlign: "center",
+<<<<<<< HEAD
     color: Color.colorWhite,
+=======
+    color: Color.rgb255255255,
+
+>>>>>>> Incoming
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
   },
@@ -73,6 +78,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   button: {
+<<<<<<< HEAD
+=======
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.primary,
+
+>>>>>>> Incoming
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,

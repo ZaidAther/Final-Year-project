@@ -55,7 +55,12 @@ const styles = StyleSheet.create({
   },
   chooseLevel: {
     borderRadius: Border.br_5xs,
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
     borderStyle: "solid",
     borderColor: Color.colorAliceblue_200,
     borderWidth: 1,

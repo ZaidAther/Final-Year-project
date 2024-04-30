@@ -132,11 +132,18 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   startTraining: {
-    fontSize: FontSize.size_mid,
+    fontSize: FontSize.size_sm,
+    letterSpacing: 3,
+
     lineHeight: 20,
-    color: Color.colorWhite,
+    textTransform: "uppercase",
+    color: Color.rgb255255255,
+
   },
   button: {
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.primary,
+
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
@@ -145,8 +152,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
-    borderRadius: Border.br_6xl,
-    backgroundColor: Color.primary,
     paddingHorizontal: Padding.p_14xl,
     paddingVertical: Padding.p_xs,
     alignSelf: "stretch",
@@ -163,7 +168,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   trainingLevel: {
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
+
     width: "100%",
     height: 692,
     paddingHorizontal: Padding.p_3xs,

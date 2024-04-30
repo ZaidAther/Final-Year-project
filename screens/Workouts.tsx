@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addWorkout: {
+    borderRadius: Border.br_mini,
+
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -150,14 +152,14 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
-    borderRadius: Border.br_mini,
     height: 45,
     padding: Padding.p_xl,
     marginTop: 10,
     flexDirection: "row",
     justifyContent: "center",
     alignSelf: "stretch",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
+
   },
   workouts1: {
     marginTop: 15,
@@ -185,7 +187,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     flex: 1,
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
+
   },
 });
 

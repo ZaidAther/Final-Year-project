@@ -1,16 +1,20 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import StatusBars from "../components/StatusBars";
+import { StyleSheet, View } from "react-native";
+
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
-import { Color, Padding, FontFamily, FontSize, Border } from "../GlobalStyles";
+import StatusBars from "../components/StatusBars";
+import BoardingContent from "../components/BoardingContent";
+import { Color, Padding, Border } from "../GlobalStyles";
+
 
 const Onboarding1 = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
-    <View style={[styles.onboarding2, styles.button1FlexBox]}>
+    <View style={styles.onboarding2}>
+
       <View style={styles.statusBar}>
         <StatusBars
           barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
@@ -19,58 +23,21 @@ const Onboarding1 = () => {
           barsStatusBarsiPhoneLightWidth={390}
         />
       </View>
-      <View style={styles.content}>
-        <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
-          <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>
-            Custom Workouts
-          </Text>
-          <Text style={[styles.title, styles.titleTypo]}>
-            FitooZone has workouts on demand that you can find based on hCreate
-            and save your own custom workouts. Name your workouts, save them,
-            and they’ll automatically appear when you’re ready  to workoutow
-            much time you have
-          </Text>
-        </View>
-        <View style={styles.logo}>
-          <Image
-            style={styles.path10Icon}
-            contentFit="cover"
-            source={require("../assets/path-101.png")}
-          />
-          <Image
-            style={styles.path9Icon}
-            contentFit="cover"
-            source={require("../assets/path-91.png")}
-          />
-        </View>
-        <View style={styles.dots}>
-          <Image
-            style={styles.iconLayout}
-            contentFit="cover"
-            source={require("../assets/dot-1.png")}
-          />
-          <Image
-            style={[styles.dot2Icon, styles.iconLayout]}
-            contentFit="cover"
-            source={require("../assets/dot-1.png")}
-          />
-          <Image
-            style={[styles.dot2Icon, styles.iconLayout]}
-            contentFit="cover"
-            source={require("../assets/dot-2.png")}
-          />
-        </View>
-        <View style={[styles.button, styles.buttonSpaceBlock]}>
-          <Pressable
-            style={[styles.button1, styles.button1FlexBox]}
-            onPress={() => navigation.navigate("Gender")}
-          >
-            <Text style={[styles.startTraining, styles.titleTypo]}>
-              Start Training
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+      <BoardingContent
+        welcomeToFitooZone="Custom Workouts"
+        title="FitooZone has workouts on demand that you can find based on hCreate and save your own custom workouts. Name your workouts, save them, and they’ll automatically appear when you’re ready  to workoutow much time you have"
+        path10={require("../assets/path-101.png")}
+        path9={require("../assets/path-91.png")}
+        dot1={require("../assets/dot-1.png")}
+        dot2={require("../assets/dot-1.png")}
+        dot3={require("../assets/dot-2.png")}
+        startTraining="Start Training"
+        logoHeight={214}
+        path9IconDisplay="unset"
+        path9IconHeight="unset"
+        onButtonPress={() => navigation.navigate("Gender")}
+      />
+
     </View>
   );
 };
@@ -104,50 +71,16 @@ const styles = StyleSheet.create({
     right: 1,
     width: 376,
     height: 50,
+    flexDirection: "row",
+
     justifyContent: "space-between",
     zIndex: 0,
     flexDirection: "row",
     alignItems: "center",
   },
-  welcomeToFitoozone: {
-    fontSize: FontSize.size_8xl,
-    lineHeight: 32,
-    color: Color.colorGray_200,
-    alignSelf: "stretch",
-  },
-  title: {
-    fontSize: FontSize.size_base,
-    lineHeight: 22,
-    color: Color.colorDarkslategray,
-    marginTop: 18,
-    alignSelf: "stretch",
-  },
-  welcomeText: {
-    height: 214,
-  },
-  path10Icon: {
-    width: 13,
-    height: 13,
-  },
-  path9Icon: {
-    width: 72,
-    height: 30,
-    marginTop: 5,
-  },
-  logo: {
-    marginTop: 20,
-  },
-  dot2Icon: {
-    marginLeft: 8,
-  },
-  dots: {
-    marginTop: 20,
-    flexDirection: "row",
-  },
-  startTraining: {
-    fontSize: FontSize.size_mid,
-    lineHeight: 20,
-    color: Color.colorWhite,
+  onboarding2: {
+    backgroundColor: Color.rgb255255255,
+
     flex: 1,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
@@ -189,6 +122,8 @@ const styles = StyleSheet.create({
   onboarding2: {
     width: "100%",
     height: 736,
+    overflow: "hidden",
+
     justifyContent: "flex-end",
     alignItems: "center",
   },

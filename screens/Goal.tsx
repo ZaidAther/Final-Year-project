@@ -113,7 +113,12 @@ const styles = StyleSheet.create({
   },
   chooseGender: {
     fontSize: FontSize.size_xl,
+<<<<<<< HEAD
     lineHeight: 32,
+=======
+    lineHeight: 26,
+
+>>>>>>> Incoming
     color: Color.colorGray_200,
     marginTop: 60,
   },
@@ -128,11 +133,29 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   startTraining: {
+<<<<<<< HEAD
     fontSize: FontSize.size_mid,
+=======
+    fontSize: FontSize.size_sm,
+    letterSpacing: 3,
+
+>>>>>>> Incoming
     lineHeight: 20,
+<<<<<<< HEAD
     color: Color.colorWhite,
+=======
+    textTransform: "uppercase",
+    color: Color.rgb255255255,
+
+>>>>>>> Incoming
   },
   button: {
+<<<<<<< HEAD
+=======
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.primary,
+
+>>>>>>> Incoming
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
@@ -159,7 +182,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   goal9: {
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
     width: "100%",
     height: 692,
     paddingHorizontal: Padding.p_3xs,

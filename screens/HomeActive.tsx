@@ -448,7 +448,12 @@ const styles = StyleSheet.create({
     },
     justifyContent: "flex-end",
     overflow: "hidden",
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
   },
   exercise1SpaceBlock: {
     paddingBottom: Padding.p_8xs,
@@ -458,7 +463,12 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     flexDirection: "row",
     alignItems: "center",
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
   },
   statusBar: {
     right: 0,
@@ -488,6 +498,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   search: {
+<<<<<<< HEAD
+=======
+    borderRadius: Border.br_6xl,
+
+>>>>>>> Incoming
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowRadius: 5,
     elevation: 5,
@@ -506,7 +521,12 @@ const styles = StyleSheet.create({
     marginTop: 19,
     flexDirection: "row",
     alignItems: "center",
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
   },
   category: {
     color: Color.colorGray_200,
@@ -661,7 +681,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     overflow: "hidden",
+<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
+=======
+    backgroundColor: Color.rgb255255255,
+
+>>>>>>> Incoming
     justifyContent: "center",
     width: "100%",
     flex: 1,

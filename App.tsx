@@ -2,24 +2,30 @@ const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import Welcome from "./screens/Welcome";
+import CreatePlan from "./screens/CreatePlan";
+import TrainingLevel from "./screens/TrainingLevel";
+
 import SelectWeight from "./screens/SelectWeight";
+import SelectHeight from "./screens/SelectHeight";
+import Birthday from "./screens/Birthday";
+import Goal from "./screens/Goal";
+import Gender from "./screens/Gender";
+import Onboarding1 from "./screens/Onboarding1";
+import Onboarding from "./screens/Onboarding";
+
 import SingIn from "./screens/SingIn";
 import SignUp from "./screens/SignUp";
-import SelectHeight from "./screens/SelectHeight";
-import CreatePlan from "./screens/CreatePlan";
+import Welcome from "./screens/Welcome";
+
 import ALaunch from "./screens/ALaunch";
-import Onboarding from "./screens/Onboarding";
-import Onboarding1 from "./screens/Onboarding1";
-import Gender from "./screens/Gender";
-import Birthday from "./screens/Birthday";
+import ExerciseDetails from "./screens/ExerciseDetails";
+import ExerciseInfo from "./screens/ExerciseInfo";
+
 import ProfileActive from "./screens/ProfileActive";
 import ToggleMetric from "./components/ToggleMetric";
 import AllGenders from "./components/AllGenders";
-import TrainingLevel from "./screens/TrainingLevel";
 import Dates from "./components/Dates";
 import MyWorkout from "./screens/MyWorkout";
-import Goal from "./screens/Goal";
 import Inputs from "./components/Inputs";
 import Workouts from "./screens/Workouts";
 import NavBar from "./components/NavBar";
@@ -68,7 +74,7 @@ const App = () => {
         get(target, name) {
           return IconProvider(name);
         },
-      }
+      },
     );
   }
   const MaterialIconsPack = {
@@ -87,63 +93,9 @@ const App = () => {
               screenOptions={{ headerShown: false }}
             >
               <Stack.Screen
-                name="Welcome"
-                component={Welcome}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="SelectWeight"
-                component={SelectWeight}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="SingIn"
-                component={SingIn}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="SelectHeight"
-                component={SelectHeight}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
                 name="CreatePlan"
                 component={CreatePlan}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="ALaunch"
-                component={ALaunch}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Onboarding"
-                component={Onboarding}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Onboarding1"
-                component={Onboarding1}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Gender"
-                component={Gender}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Birthday"
-                component={Birthday}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="ProfileActive"
-                component={ProfileActive}
+
                 options={{ headerShown: false }}
               />
               <Stack.Screen
@@ -152,18 +104,86 @@ const App = () => {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
-                name="MyWorkout"
-                component={MyWorkout}
+
+                name="SelectWeight"
+                component={SelectWeight}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SelectHeight"
+                component={SelectHeight}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Birthday"
+                component={Birthday}
+
                 options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="Goal"
                 component={Goal}
+
                 options={{ headerShown: false }}
               />
               <Stack.Screen
-                name="Workouts"
-                component={Workouts}
+                name="Gender"
+                component={Gender}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Onboarding1"
+                component={Onboarding1}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Onboarding"
+                component={Onboarding}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SingIn"
+                component={SingIn}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ALaunch"
+                component={ALaunch}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ExerciseDetails"
+                component={ExerciseDetails}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ExerciseInfo"
+                component={ExerciseInfo}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ActivityActive"
+                component={ActivityActive}
+
                 options={{ headerShown: false }}
               />
               <Stack.Screen
@@ -172,8 +192,21 @@ const App = () => {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
-                name="ActivityActive"
-                component={ActivityActive}
+
+                name="Workouts"
+                component={Workouts}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="MyWorkout"
+                component={MyWorkout}
+
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ProfileActive"
+                component={ProfileActive}
+
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

@@ -153,9 +153,13 @@ const styles = StyleSheet.create({
   navBar: {
     position: "absolute",
     width: "100%",
-    // right: "0%",
+    right: "0%",
+
     bottom: 0,
-    // left: "0%",
+    left: "0%",
+    borderRadius: Border.br_mini,
+    backgroundColor: Color.rgb255255255,
+
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -164,8 +168,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorWhite,
     alignItems: "flex-end",
     justifyContent: "space-between",
     paddingHorizontal: Padding.p_26xl,

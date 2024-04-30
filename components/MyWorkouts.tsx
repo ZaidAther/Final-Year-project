@@ -69,6 +69,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   workout1: {
+    backgroundColor: Color.rgb255255255,
+
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -77,7 +79,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
-    backgroundColor: Color.colorWhite,
     height: 159,
     justifyContent: "space-between",
     padding: Padding.p_xl,
