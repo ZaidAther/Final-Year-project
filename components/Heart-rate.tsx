@@ -109,9 +109,6 @@ const styles = StyleSheet.create({
   },
   heartRate: {
     flex: 1,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.rgb255255255,
-
     shadowColor: "rgba(234, 240, 246, 0.6)",
     shadowOffset: {
       width: 0,
@@ -120,6 +117,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
+    borderRadius: Border.br_mini,
+    backgroundColor: Color.colorWhite,
     height: 170,
     overflow: "hidden",
     padding: Padding.p_3xs,

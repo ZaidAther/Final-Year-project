@@ -7,15 +7,13 @@ import StatusBars from "../components/StatusBars";
 import Navigations from "../components/Navigation";
 import Dropdown from "../components/Dropdown";
 import Footer from "../components/Footer";
-import { Border, Color, FontFamily, FontSize, Padding } from "../GlobalStyles";
-
+import { Color, FontFamily, Border, Padding, FontSize } from "../GlobalStyles";
 
 const MyWorkout = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
-    <View style={[styles.myWorkout, styles.scrollFlexBox]}>
-
+    <View style={styles.myWorkout}>
       <View style={[styles.statusBar, styles.statusBarFlexBox]}>
         <StatusBars
           barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
@@ -42,8 +40,9 @@ const MyWorkout = () => {
           onBackButtonPress={() => navigation.goBack()}
         />
         <View style={[styles.trainingsText, styles.weeksSpaceBlock]}>
-          <Text style={styles.trainings}>Exercises</Text>
-
+          <Text style={[styles.trainings, styles.trainingsTypo]}>
+            Exercises
+          </Text>
           <View style={styles.progress}>
             <Text style={[styles.progress1, styles.percentTypo]}>Progress</Text>
             <View style={[styles.ellipseParent, styles.groupChildLayout]}>
@@ -52,8 +51,7 @@ const MyWorkout = () => {
                 contentFit="cover"
                 source={require("../assets/ellipse-1.png")}
               />
-              <Text style={[styles.percent, styles.percentTypo]}>10%</Text>
-
+              <Text style={[styles.percent, styles.percentFlexBox]}>10%</Text>
               <Image
                 style={[styles.groupChild, styles.groupChildLayout]}
                 contentFit="cover"
@@ -213,11 +211,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
-  scrollFlexBox: {
-    overflow: "hidden",
-    flex: 1,
-  },
-
   statusBarFlexBox: {
     justifyContent: "space-between",
     alignItems: "center",
@@ -297,22 +290,18 @@ const styles = StyleSheet.create({
   },
   trainings: {
     fontSize: FontSize.size_xl,
-    color: Color.colorGray_200,
-
     textAlign: "left",
     lineHeight: 40,
+    color: Color.colorGray_200,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
-
     flex: 1,
   },
   progress1: {
-    fontSize: FontSize.size_xs,
-
     textAlign: "right",
-    lineHeight: 40,
-
+    fontSize: FontSize.size_xs,
     color: Color.colorSlategray,
+    lineHeight: 40,
   },
   groupChild: {
     left: 0,
@@ -323,16 +312,13 @@ const styles = StyleSheet.create({
     top: 15,
     left: 7,
     fontSize: 9,
-    display: "flex",
-
     width: 17,
-    textAlign: "left",
-    alignItems: "center",
-
     color: Color.colorSlategray,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
+    textAlign: "left",
     position: "absolute",
+    display: "flex",
   },
   ellipseParent: {
     marginLeft: 10,
@@ -448,8 +434,6 @@ const styles = StyleSheet.create({
   weeks: {
     paddingBottom: Padding.p_56xl,
     flex: 1,
-    alignSelf: "stretch",
-
   },
   scroll: {
     zIndex: 1,
@@ -458,13 +442,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   myWorkout: {
-    backgroundColor: Color.rgb255255255,
-    width: "100%",
-
     height: 711,
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     overflow: "hidden",
+    width: "100%",
+    backgroundColor: Color.colorWhite,
     flex: 1,
   },
 });

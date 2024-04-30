@@ -6,8 +6,7 @@ import { useNavigation, ParamListBase } from "@react-navigation/native";
 import StatusBars from "../components/StatusBars";
 import Navigations from "../components/Navigation";
 import ToggleMetric from "../components/ToggleMetric";
-import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
-
+import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 
 const SelectWeight = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
@@ -46,8 +45,8 @@ const SelectWeight = () => {
         />
         <View style={[styles.heightInput, styles.continueFlexBox]}>
           <TextInput style={[styles.input, styles.inputShadowBox]} />
-          <Text style={styles.cm}>kg</Text>
-
+          <Text style={styles.cmTypo}>kg</Text>
+          <Text style={[styles.lbs, styles.cmTypo]}>lbs</Text>
         </View>
       </View>
       <View style={[styles.continue, styles.continueFlexBox]}>
@@ -114,28 +113,19 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   input: {
-    borderRadius: Border.br_5xs,
-
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowRadius: 4,
     elevation: 4,
+    borderRadius: Border.br_5xs,
     borderStyle: "solid",
     borderColor: Color.colorGray_400,
     borderWidth: 1,
     width: 97,
     height: 64,
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
   },
-  cm: {
-    fontSize: FontSize.size_base,
-    lineHeight: 22,
-    color: Color.colorGray_100,
-    textAlign: "left",
-    marginTop: 10,
-    fontFamily: FontFamily.poppins,
-    fontWeight: "500",
-
+  lbs: {
+    display: "none",
   },
   heightInput: {
     marginTop: 60,
@@ -147,21 +137,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   startTraining: {
-    fontSize: FontSize.size_sm,
-    letterSpacing: 3,
-
+    fontSize: FontSize.size_mid,
     lineHeight: 20,
-    textTransform: "uppercase",
-    color: Color.rgb255255255,
-
+    color: Color.colorWhite,
   },
   button: {
-    borderRadius: Border.br_6xl,
-    backgroundColor: Color.primary,
-
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowRadius: 5,
     elevation: 5,
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.primary,
     paddingHorizontal: Padding.p_14xl,
     paddingVertical: Padding.p_xs,
     alignSelf: "stretch",
@@ -184,8 +169,7 @@ const styles = StyleSheet.create({
     paddingTop: Padding.p_31xl,
     alignItems: "center",
     overflow: "hidden",
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
   },
 });
 

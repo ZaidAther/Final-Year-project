@@ -1,33 +1,16 @@
 import * as React from "react";
 import { Image } from "expo-image";
-<<<<<<< HEAD
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import StatusBars from "../components/StatusBars";
-=======
-import { StyleSheet, View } from "react-native";
-
->>>>>>> Incoming
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
-<<<<<<< HEAD
 import { Color, Padding, FontFamily, FontSize, Border } from "../GlobalStyles";
-=======
-import StatusBars from "../components/StatusBars";
-import BoardingContent from "../components/BoardingContent";
-import { Color } from "../GlobalStyles";
-
->>>>>>> Incoming
 
 const Onboarding = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
-<<<<<<< HEAD
     <View style={[styles.onboarding1, styles.button1Bg]}>
-=======
-    <View style={styles.onboarding1}>
-
->>>>>>> Incoming
       <View style={styles.statusBar}>
         <StatusBars
           barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
@@ -36,7 +19,6 @@ const Onboarding = () => {
           barsStatusBarsiPhoneLightWidth={390}
         />
       </View>
-<<<<<<< HEAD
       <View style={styles.content}>
         <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
           <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>
@@ -87,23 +69,6 @@ const Onboarding = () => {
           </Pressable>
         </View>
       </View>
-=======
-      <BoardingContent
-        welcomeToFitooZone="Workout Categories"
-        title="Workout categories will help you gain strength, get in better shape and embrace  a healthy lifestyle"
-        path10={require("../assets/path-10.png")}
-        path9={require("../assets/path-9.png")}
-        dot1={require("../assets/dot-1.png")}
-        dot2={require("../assets/dot-2.png")}
-        dot3={require("../assets/dot-1.png")}
-        startTraining="Start Training"
-        logoHeight="unset"
-        path9IconDisplay="flex"
-        path9IconHeight={56}
-        onButtonPress={() => navigation.navigate("Onboarding1")}
-      />
-
->>>>>>> Incoming
     </View>
   );
 };
@@ -139,17 +104,11 @@ const styles = StyleSheet.create({
     right: 1,
     width: 376,
     height: 50,
-<<<<<<< HEAD
-=======
-    flexDirection: "row",
-
->>>>>>> Incoming
     justifyContent: "space-between",
     zIndex: 0,
     flexDirection: "row",
     alignItems: "center",
   },
-<<<<<<< HEAD
   welcomeToFitoozone: {
     fontSize: FontSize.size_8xl,
     lineHeight: 32,
@@ -194,11 +153,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_mid,
     lineHeight: 20,
     color: Color.colorWhite,
-=======
-  onboarding1: {
-    backgroundColor: Color.rgb255255255,
-
->>>>>>> Incoming
     flex: 1,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
@@ -242,11 +196,6 @@ const styles = StyleSheet.create({
   onboarding1: {
     width: "100%",
     height: 736,
-<<<<<<< HEAD
-=======
-    overflow: "hidden",
-
->>>>>>> Incoming
     justifyContent: "flex-end",
     alignItems: "center",
   },

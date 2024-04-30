@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
   novTypo: {
     width: 64,
     textAlign: "center",
-    color: Color.rgb255255255,
-
+    color: Color.colorWhite,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
     lineHeight: 24,
@@ -66,9 +65,6 @@ const styles = StyleSheet.create({
     height: 16,
   },
   property1active: {
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.primary,
-
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -77,6 +73,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
+    borderRadius: Border.br_5xs,
+    backgroundColor: Color.primary,
     paddingHorizontal: 0,
     paddingVertical: Padding.p_sm,
   },

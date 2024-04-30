@@ -172,19 +172,13 @@ const styles = StyleSheet.create({
   },
   startTraining: {
     fontSize: FontSize.size_mid,
-    letterSpacing: 3,
-    textTransform: "uppercase",
-    color: Color.rgb255255255,
-
+    color: Color.colorWhite,
     lineHeight: 20,
     textAlign: "center",
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
   },
   button: {
-    borderRadius: 25,
-    backgroundColor: Color.primary,
-
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
@@ -193,6 +187,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
+    borderRadius: 25,
+    backgroundColor: Color.primary,
     paddingHorizontal: 33,
     paddingVertical: 12,
     alignSelf: "stretch",
@@ -272,8 +268,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   singIn: {
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
     width: "100%",
     height: 731,
     paddingTop: Padding.p_31xl,

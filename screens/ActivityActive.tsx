@@ -278,7 +278,6 @@ const styles = StyleSheet.create({
       height: 5,
     },
     shadowColor: "rgba(234, 240, 246, 0.6)",
-
     alignItems: "center",
     overflow: "hidden",
     flex: 1,
@@ -396,7 +395,6 @@ const styles = StyleSheet.create({
       height: 5,
     },
     shadowColor: "rgba(234, 240, 246, 0.6)",
-
     borderRadius: Border.br_5xs,
     flexDirection: "row",
     alignItems: "center",

@@ -66,12 +66,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_base,
   },
   ft1: {
-<<<<<<< HEAD
     color: Color.colorWhite,
-=======
-    color: Color.rgb255255255,
-
->>>>>>> Incoming
   },
   ft: {
     backgroundColor: Color.primary,
@@ -85,12 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cm: {
-<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
-=======
-    backgroundColor: Color.rgb255255255,
-
->>>>>>> Incoming
   },
   property1ftActive: {
     shadowColor: "rgba(0, 0, 0, 0.1)",
@@ -104,12 +94,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 35,
     flexDirection: "row",
-<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
-=======
-    backgroundColor: Color.rgb255255255,
-
->>>>>>> Incoming
     borderRadius: Border.br_6xl,
     alignItems: "center",
   },

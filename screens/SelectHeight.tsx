@@ -103,18 +103,16 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   input: {
-    borderRadius: Border.br_5xs,
-
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowRadius: 4,
     elevation: 4,
+    borderRadius: Border.br_5xs,
     borderStyle: "solid",
     borderColor: Color.colorGray_400,
     borderWidth: 1,
     width: 97,
     height: 64,
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
   },
   cm: {
     fontSize: FontSize.size_base,
@@ -135,21 +133,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   startTraining: {
-    fontSize: FontSize.size_sm,
-    letterSpacing: 3,
-
+    fontSize: FontSize.size_mid,
     lineHeight: 20,
-    textTransform: "uppercase",
-    color: Color.rgb255255255,
-
+    color: Color.colorWhite,
   },
   button: {
-    borderRadius: Border.br_6xl,
-    backgroundColor: Color.primary,
-
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowRadius: 5,
     elevation: 5,
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.primary,
     paddingHorizontal: Padding.p_14xl,
     paddingVertical: Padding.p_xs,
     alignSelf: "stretch",
@@ -173,8 +166,7 @@ const styles = StyleSheet.create({
     paddingTop: Padding.p_31xl,
     alignItems: "center",
     overflow: "hidden",
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
   },
 });
 

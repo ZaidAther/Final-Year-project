@@ -1,20 +1,16 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View } from "react-native";
-
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import StatusBars from "../components/StatusBars";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
-import StatusBars from "../components/StatusBars";
-import BoardingContent from "../components/BoardingContent";
-import { Color } from "../GlobalStyles";
-
+import { Color, Padding, FontFamily, FontSize, Border } from "../GlobalStyles";
 
 const Welcome = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
-    <View style={styles.welcome}>
-
+    <View style={[styles.welcome, styles.welcomeBg]}>
       <View style={styles.statusBar}>
         <StatusBars
           barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
@@ -23,18 +19,56 @@ const Welcome = () => {
           barsStatusBarsiPhoneLightWidth={390}
         />
       </View>
-      <BoardingContent
-        welcomeToFitooZone="Welcome to FitooZone"
-        title="FitooZone has workouts on demand that you can find based on how much time you have"
-        path10={require("../assets/path-10.png")}
-        path9={require("../assets/path-9.png")}
-        dot1={require("../assets/dot-2.png")}
-        dot2={require("../assets/dot-1.png")}
-        dot3={require("../assets/dot-1.png")}
-        startTraining="Get Started"
-        onButtonPress={() => navigation.navigate("SignUp")}
-      />
-
+      <View style={styles.content}>
+        <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
+          <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>
+            Welcome to FitooZone
+          </Text>
+          <Text style={[styles.title, styles.buttonFlexBox]}>
+            FitooZone has workouts on demand that you can find based on how much
+            time you have
+          </Text>
+        </View>
+        <View style={styles.logo}>
+          <Image
+            style={styles.path10Icon}
+            contentFit="cover"
+            source={require("../assets/path-10.png")}
+          />
+          <Image
+            style={styles.path9Icon}
+            contentFit="cover"
+            source={require("../assets/path-9.png")}
+          />
+        </View>
+        <View style={styles.dots}>
+          <Image
+            style={styles.iconLayout}
+            contentFit="cover"
+            source={require("../assets/dot-2.png")}
+          />
+          <Image
+            style={[styles.dot2Icon, styles.iconLayout]}
+            contentFit="cover"
+            source={require("../assets/dot-1.png")}
+          />
+          <Image
+            style={[styles.dot2Icon, styles.iconLayout]}
+            contentFit="cover"
+            source={require("../assets/dot-1.png")}
+          />
+        </View>
+        <View style={[styles.button, styles.buttonFlexBox]}>
+          <Pressable
+            style={[styles.button1, styles.buttonFlexBox]}
+            onPress={() => navigation.navigate("SignUp")}
+          >
+            <Text style={[styles.startTraining, styles.titleTypo]}>
+              Get Started
+            </Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 };
@@ -70,16 +104,55 @@ const styles = StyleSheet.create({
     right: 1,
     width: 376,
     height: 50,
-    flexDirection: "row",
-
     justifyContent: "space-between",
     zIndex: 0,
     flexDirection: "row",
     alignItems: "center",
   },
-  welcome: {
-    backgroundColor: Color.rgb255255255,
-
+  welcomeToFitoozone: {
+    fontSize: FontSize.size_8xl,
+    lineHeight: 32,
+    color: Color.colorGray_200,
+    alignSelf: "stretch",
+  },
+  title: {
+    fontSize: FontSize.size_base,
+    lineHeight: 22,
+    color: Color.colorDarkslategray,
+    display: "flex",
+    height: 56,
+    marginTop: 18,
+    textAlign: "center",
+    fontFamily: FontFamily.poppins,
+    fontWeight: "500",
+    alignSelf: "stretch",
+  },
+  welcomeText: {
+    alignItems: "center",
+  },
+  path10Icon: {
+    width: 13,
+    height: 13,
+  },
+  path9Icon: {
+    width: 72,
+    height: 30,
+    marginTop: 5,
+  },
+  logo: {
+    marginTop: 20,
+  },
+  dot2Icon: {
+    marginLeft: 8,
+  },
+  dots: {
+    marginTop: 20,
+    flexDirection: "row",
+  },
+  startTraining: {
+    fontSize: FontSize.size_mid,
+    lineHeight: 20,
+    color: Color.colorWhite,
     flex: 1,
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
@@ -123,8 +196,6 @@ const styles = StyleSheet.create({
   welcome: {
     width: "100%",
     height: 736,
-    overflow: "hidden",
-
     justifyContent: "flex-end",
     alignItems: "center",
   },

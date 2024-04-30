@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
   },
   input1: {
     borderRadius: Border.br_5xl,
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",

@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import React, { useEffect } from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
@@ -11,7 +10,7 @@ const CreatePlan = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("HomeActive"); // Navigate to the next screen
+      navigation.navigate('HomeActive'); // Navigate to the next screen
     }, 1000); // 1000 milliseconds = 1 second
 
     return () => clearTimeout(timer);
@@ -44,10 +43,9 @@ training plan`}</Text>
           />
           <Text style={styles.text}>75%</Text>
         </View>
-        <Text style={[styles.weCreateAContainer, styles.createTypo]}>
-          {`We create a workout according `}
-          {`to demographic profile, activity `}level and interests
-
+        <Text style={[styles.weCreateA, styles.createTypo]}>
+          We create a workout according  to demographic profile, activity  level
+          and interests
         </Text>
       </View>
     </View>
@@ -112,8 +110,7 @@ const styles = StyleSheet.create({
     height: 264,
     marginTop: 33,
   },
-  weCreateAContainer: {
-
+  weCreateA: {
     fontSize: FontSize.size_base,
     lineHeight: 22,
     marginTop: 33,
@@ -127,8 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   createPlan: {
-    backgroundColor: Color.rgb255255255,
-
+    backgroundColor: Color.colorWhite,
     width: "100%",
     height: 692,
     overflow: "hidden",

@@ -67,12 +67,7 @@ const styles = StyleSheet.create({
   },
   account: {
     alignSelf: "stretch",
-<<<<<<< HEAD
     backgroundColor: Color.colorWhite,
-=======
-    backgroundColor: Color.rgb255255255,
-
->>>>>>> Incoming
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
