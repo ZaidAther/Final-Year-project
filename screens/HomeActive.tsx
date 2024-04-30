@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, ScrollView, Text, TextInput } from "react-native";
+import { StyleSheet, View, ScrollView, Text, TextInput, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import StatusBars from "../components/StatusBars";
@@ -11,6 +11,7 @@ import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 
 const HomeActive = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
 
   return (
     <View style={[styles.homeActive, styles.workoutsFlexBox]}>
@@ -216,7 +217,7 @@ const HomeActive = () => {
             <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text>
           </View>
           <View style={styles.excercises}>
-            <View style={styles.exercise1SpaceBlock}>
+            <Pressable style={styles.exercise1SpaceBlock} onPress={() => navigation.navigate("ExerciseInfo")}>
               <View>
                 <View style={styles.beautifulSlimBrunetteDoing} />
               </View>
@@ -231,7 +232,7 @@ const HomeActive = () => {
                 contentFit="cover"
                 source={require("../assets/featherinfo1.png")}
               />
-            </View>
+            </Pressable>
             <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
               <View>
                 <View style={styles.beautifulSlimBrunetteDoing} />
@@ -401,7 +402,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   hiDeborahTypo: {
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     textAlign: "left",
     color: Color.colorGray_200,
@@ -413,14 +414,14 @@ const styles = StyleSheet.create({
   text2Typo: {
     lineHeight: 24,
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
   },
   viewTypo: {
     color: Color.colorDarkgray_100,
     fontSize: FontSize.size_mini,
     lineHeight: 24,
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
   },
   workouts80Layout: {
@@ -431,7 +432,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: FontSize.size_xs,
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     alignSelf: "stretch",
   },
@@ -448,7 +449,7 @@ const styles = StyleSheet.create({
     },
     justifyContent: "flex-end",
     overflow: "hidden",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
   },
   exercise1SpaceBlock: {
     paddingBottom: Padding.p_8xs,
@@ -458,7 +459,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
   },
   statusBar: {
     right: 0,
@@ -501,12 +502,12 @@ const styles = StyleSheet.create({
       height: 2,
     },
     fontSize: FontSize.size_sm,
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     marginTop: 19,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
   },
   category: {
     color: Color.colorGray_200,
@@ -534,7 +535,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_xs,
     lineHeight: 18,
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     alignSelf: "stretch",
   },
@@ -661,7 +662,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     overflow: "hidden",
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
     justifyContent: "center",
     width: "100%",
     flex: 1,
