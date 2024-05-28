@@ -8,8 +8,34 @@ import Footer from "../components/Footer";
 import StatusBars from "../components/StatusBars";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 
-const Workouts = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+interface Exercise {
+  Exercise_Name: string;
+  Exercise_Video: string;
+}
+
+interface WorkoutPlan {
+  [day: string]: {
+    [muscleGroup: string]: Exercise;
+  };
+}
+
+interface HomeActiveProps {
+  navigation: any;
+  route: {
+    params: {
+      weight: number;
+      height: number;
+      age: number;
+      gender: string;
+      fitness_goal: string;
+      muscle_groups: string[];
+      workout_intensity: string;
+      activity_level: string;
+      clusterId: number;
+    };
+  };
+}
+const Workouts: React.FC<HomeActiveProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.workouts}>
@@ -30,7 +56,7 @@ const Workouts = () => {
           contentContainerStyle={styles.workoutsScrollViewContent}
         >
           <MyWorkouts
-            onWorkout1Press={() => navigation.navigate("MyWorkout")}
+            onWorkout1Press={() => navigation.navigate("MyWorkout" ,{...route.params})}
           />
           <MyWorkouts
             onWorkout1Press={() => navigation.navigate("MyWorkout")}
@@ -134,7 +160,7 @@ const styles = StyleSheet.create({
   },
   createANewContainer: {
     lineHeight: 20,
-    color: Color.colorSlategray,
+    color: Color.colorSlategray_100,
     textAlign: "center",
     alignSelf: "stretch",
   },

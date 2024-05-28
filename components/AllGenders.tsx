@@ -30,7 +30,10 @@ const AllGenders = ({ property1DefaultBorderColor }: AllGendersType) => {
         <Text style={[styles.text, styles.textTypo]}>👨</Text>
       </View>
       <Text style={[styles.title, styles.textTypo]}>Man</Text>
+      
+
     </View>
+    
   );
 };
 

@@ -1,27 +1,35 @@
 import * as React from "react";
-import { Image } from "expo-image";
 import { StyleSheet, View, ScrollView, Pressable, Text } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
-import StatusBars from "../components/StatusBars";
+import { useNavigation, RouteProp } from "@react-navigation/native";
 import Navigations from "../components/Navigation";
 import Goals from "../components/Goals";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import { RootStackParamList } from "../types";
 
-const Goal = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+type GoalScreenRouteProp = RouteProp<RootStackParamList, 'Goal'>;
+
+type Props = {
+  route: GoalScreenRouteProp;
+};
+
+const Goal: React.FC<Props> = ({ route }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [fitnessGoal, setFitnessGoal] = React.useState('');
+
+  const handleNext = () => {
+    if (!fitnessGoal) {
+      // You can show an alert or a toast message here
+      alert("Please select a fitness goal");
+      return;
+    }
+
+    navigation.navigate('MuscleGroupsInput', { ...route.params, fitness_goal: fitnessGoal });
+  };
 
   return (
     <View style={[styles.goal9, styles.goal9FlexBox]}>
-      <View style={styles.statusBar}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightFlex={1}
-          barsStatusBarsiPhoneLightWidth="unset"
-        />
-      </View>
+
       <ScrollView
         style={[styles.scrollContent, styles.goal9FlexBox]}
         showsVerticalScrollIndicator={false}
@@ -29,7 +37,7 @@ const Goal = () => {
         contentContainerStyle={styles.scrollContentScrollViewContent}
       >
         <Navigations
-          step2Of5="Step 1 of 8"
+          step2Of5="Step 2 of 8"
           showStep2Of
           showSkip
           navigationPosition="unset"
@@ -43,7 +51,29 @@ const Goal = () => {
           Choose goal
         </Text>
         <View style={[styles.genders, styles.buttonFlexBox]}>
-          <Goals dumbbell={require("../assets/dumbbell1.png")} />
+        <Goals
+            title="LOOSE WEIGHT"
+            txt="Light workout intensity"
+            propBorderColor={fitnessGoal === "lose_weight" ? "#2f548d" : "#fff"}
+            onPress={() => setFitnessGoal("lose_weight")}
+            dumbbell={require("../assets/dumbbell1.png")}
+          />
+          <Goals
+          
+            title="GAIN MUSCLE"
+            txt="Moderate workout intensity"
+            propBorderColor={fitnessGoal === "gain_muscle" ? "#2f548d" : "#fff"}
+            onPress={() => setFitnessGoal("gain_muscle")}
+            dumbbell={require("../assets/dumbbell1.png")}
+          />
+          <Goals
+            title="MAINTAIN"
+            txt="Intense workout intensity"
+            propBorderColor={fitnessGoal === "maintain" ? "#2f548d" : "#fff"}
+            onPress={() => setFitnessGoal("maintain")}
+            dumbbell={require("../assets/dumbbell1.png")}
+          />
+          {/* <Goals dumbbell={require("../assets/dumbbell1.png")} />
           <Goals
             dumbbell={require("../assets/dumbbell2.png")}
             propBorderColor="#e5e9ef"
@@ -63,13 +93,13 @@ const Goal = () => {
           <Goals
             dumbbell={require("../assets/dumbbell2.png")}
             propBorderColor="#e5e9ef"
-          />
+          /> */}
         </View>
       </ScrollView>
       <View style={[styles.continue, styles.buttonFlexBox]}>
         <Pressable
           style={[styles.button, styles.buttonFlexBox]}
-          onPress={() => navigation.navigate("Birthday")}
+          onPress={handleNext}
         >
           <Text style={[styles.startTraining, styles.chooseGenderTypo]}>
             Continue
@@ -150,10 +180,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   continue: {
-    width: "92.05%",
-    right: "3.97%",
+    width: "100%",
     bottom: 0,
-    left: "3.97%",
     paddingBottom: Padding.p_6xl,
     zIndex: 2,
     position: "absolute",

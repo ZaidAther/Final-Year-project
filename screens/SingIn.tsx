@@ -13,20 +13,51 @@ import Inputs from "../components/Inputs";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { FontFamily, Padding, FontSize, Color } from "../GlobalStyles";
+import { useState } from "react";
+import { shadow } from "react-native-paper";
 
 const SingIn = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  // const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://192.168.1.113:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        navigation.navigate("Onboarding");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+  };
+
+  const handleSignUp = () => {
+    // Step 3
+    navigation.navigate("SignUp");
+  };
 
   return (
     <View style={[styles.singIn, styles.singFlexBox]}>
-      <View style={[styles.statusBar, styles.buttonFlexBox]}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight1.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightWidth={390}
-        />
-      </View>
+
       <ScrollView
         style={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -44,18 +75,32 @@ const SingIn = () => {
           </Text>
         </View>
         <View style={[styles.emailInput, styles.inputSpaceBlock]}>
-          <Inputs />
+          <Inputs
+            placeholder="Enter Your Email"
+            placeholderTextColor="#c2c3cb"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+          />
         </View>
         <View style={styles.inputSpaceBlock}>
-          <Inputs />
+          <Inputs
+            placeholder="Password"
+            placeholderTextColor="#c2c3cb"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry
+          />
         </View>
-        <View style={styles.inputSpaceBlock}>
+        <View style={[styles.inputSpaceBlock, styles.shadow]}>
           <Pressable
             style={[styles.button, styles.buttonFlexBox]}
-            onPress={() => navigation.navigate("Onboarding")}
+            onPress={handleLogin}
+            onPressIn={() => setIsPressed(true)}
+            onPressOut={() => setIsPressed(false)}
+            // onPress={() => navigation.navigate("Onboarding")}
           >
             <Text style={[styles.startTraining, styles.logotextTypo]}>
-              Sing In
+              Sign In
             </Text>
           </Pressable>
         </View>
@@ -125,8 +170,10 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: Padding.p_3xs,
     marginTop: 25,
-    alignSelf: "stretch",
+    // alignSelf: "stretch",
+    width: "100%",
     alignItems: "center",
+    
   },
   iconsSpaceBlock: {
     marginTop: 30,
@@ -178,6 +225,16 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
     fontWeight: "500",
   },
+  shadow:{
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 2,
+    elevation: 5,
+    shadowOpacity: 1,
+  },
   button: {
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
@@ -187,7 +244,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
-    borderRadius: 25,
+    borderRadius: 8,
+    height: 45,
     backgroundColor: Color.primary,
     paddingHorizontal: 33,
     paddingVertical: 12,
@@ -270,8 +328,9 @@ const styles = StyleSheet.create({
   singIn: {
     backgroundColor: Color.colorWhite,
     width: "100%",
-    height: 731,
+    // height: "100%",
     paddingTop: Padding.p_31xl,
+    alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

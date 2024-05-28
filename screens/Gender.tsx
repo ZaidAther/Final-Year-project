@@ -1,28 +1,40 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, View, ScrollView, Pressable, Text } from "react-native";
-import { Button } from "react-native-paper";
+import React, { useState } from "react";
+import { View, Text, TouchableHighlight, StyleSheet, Pressable, ScrollView } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
-import StatusBars from "../components/StatusBars";
+import { useNavigation, RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types";
 import Navigations from "../components/Navigation";
-import AllGenders from "../components/AllGenders";
-import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import { Color, FontSize, Border, Padding, FontFamily } from "../GlobalStyles";
 
-const Gender = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+type GenderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Gender'>;
+type GenderScreenRouteProp = RouteProp<RootStackParamList, 'Gender'>;
+
+type Props = {
+  navigation: GenderScreenNavigationProp;
+  route: GenderScreenRouteProp;
+};
+
+const Gender: React.FC<Props> = ({ route }) => {
+  const navigation = useNavigation<GenderScreenNavigationProp>();
+  const [gender, setGender] = useState("");
+
+  const handlePress = (selectedGender: string) => {
+    setGender(selectedGender);
+  };
+
+  const handleNext = () => {
+    if (gender.trim().toLowerCase() !== "male" && gender.trim().toLowerCase() !== "female") {
+      alert("Please select a valid gender (Male/Female).");
+      return;
+    }
+    navigation.navigate("Goal", {
+      ...route.params,
+      gender: gender.trim().toLowerCase(),
+    });
+  };
 
   return (
     <View style={[styles.gender, styles.genderFlexBox]}>
-      <View style={styles.statusBar}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightFlex={1}
-          barsStatusBarsiPhoneLightWidth="unset"
-        />
-      </View>
       <ScrollView
         style={[styles.scrollContent, styles.genderFlexBox]}
         showsVerticalScrollIndicator={false}
@@ -44,14 +56,40 @@ const Gender = () => {
           Choose gender
         </Text>
         <View style={[styles.genders, styles.buttonFlexBox]}>
-          <AllGenders property1DefaultBorderColor="#e5e9ef" />
-          <AllGenders property1DefaultBorderColor="#2f548d" />
+          <TouchableHighlight
+            style={[styles.iconFlexBox, gender === "male" && styles.selectedGender]}
+            underlayColor={Color.primary}
+            onPress={() => handlePress("male")}
+          >
+            <Text
+              style={[
+                styles.text,
+                gender === "male" && styles.selectedText,
+              ]}
+            >
+              👨 Male
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={[styles.iconFlexBox, gender === "female" && styles.selectedGender]}
+            underlayColor={Color.primary}
+            onPress={() => handlePress("female")}
+          >
+            <Text
+              style={[
+                styles.text,
+                gender === "female" && styles.selectedText,
+              ]}
+            >
+              👩 Female
+            </Text>
+          </TouchableHighlight>
         </View>
       </ScrollView>
       <View style={[styles.continue, styles.buttonFlexBox]}>
         <Pressable
           style={[styles.button, styles.buttonFlexBox]}
-          onPress={() => navigation.navigate("Goal")}
+          onPress={handleNext}
         >
           <Text style={[styles.startTraining, styles.chooseGenderTypo]}>
             Continue
@@ -63,17 +101,41 @@ const Gender = () => {
 };
 
 const styles = StyleSheet.create({
-  womanBtn: {
-    color: "#0a0615",
-    fontSize: 16,
-    fontWeight: "500",
-    fontFamily: "Poppins",
-  },
-  womanBtn1: {
+  iconFlexBox: {
+    backgroundColor: Color.colorWhite,
+    width: "100%",
+    paddingVertical: 30,
     paddingHorizontal: 15,
-    paddingVertical: 31,
+    alignItems: "center",
+    flexDirection: "row",
     borderRadius: 8,
-    height: 88,
+    marginBottom: 10,
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowRadius: 5,
+    elevation: 5,
+    shadowOpacity: 1,
+  },
+
+  text: {
+    fontFamily: FontFamily.poppins,
+    fontWeight: "500",
+    color: Color.colorGray_100,
+    flex: 1,
+    fontSize: FontSize.size_base,
+    lineHeight: 20,
+    textAlign: "left",
+    width: "100%",
+  },
+
+  selectedGender: {
+    backgroundColor: Color.primary,
+  },
+  selectedText: {
+    color: Color.colorWhitesmoke_100,
   },
   scrollContentScrollViewContent: {
     flexDirection: "column",
@@ -83,7 +145,6 @@ const styles = StyleSheet.create({
   },
   genderFlexBox: {
     flex: 1,
-    overflow: "hidden",
   },
   chooseGenderTypo: {
     textAlign: "center",
@@ -92,17 +153,6 @@ const styles = StyleSheet.create({
   },
   buttonFlexBox: {
     justifyContent: "center",
-    alignItems: "center",
-  },
-  statusBar: {
-    top: 0,
-    right: 0,
-    width: 390,
-    height: 50,
-    justifyContent: "flex-end",
-    zIndex: 0,
-    flexDirection: "row",
-    position: "absolute",
     alignItems: "center",
   },
   chooseGender: {
@@ -119,7 +169,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginTop: 33,
     alignSelf: "stretch",
-    overflow: "hidden",
   },
   startTraining: {
     fontSize: FontSize.size_mid,
@@ -144,10 +193,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   continue: {
-    width: "92.05%",
-    right: "3.97%",
+    width: "100%",
     bottom: 0,
-    left: "3.97%",
     paddingBottom: Padding.p_6xl,
     zIndex: 2,
     position: "absolute",
@@ -159,7 +206,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     alignItems: "center",
-    overflow: "hidden",
+    justifyContent: "center",
+    flex: 1,
   },
 });
 

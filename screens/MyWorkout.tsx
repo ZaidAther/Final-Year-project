@@ -1,204 +1,305 @@
 import * as React from "react";
+import { ResizeMode } from "expo-av";
 import { Image } from "expo-image";
-import { StyleSheet, View, ScrollView, Pressable, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import StatusBars from "../components/StatusBars";
-import Navigations from "../components/Navigation";
-import Dropdown from "../components/Dropdown";
+import Category from "../components/Category";
+import Banner from "../components/Banner";
 import Footer from "../components/Footer";
-import { Color, FontFamily, Border, Padding, FontSize } from "../GlobalStyles";
+import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
+import Video from "expo-av/build/Video";
+import ExerciseDetails from "./ExerciseDetails";
 
-const MyWorkout = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+interface Exercise {
+  Exercise_Name: string;
+  Exercise_Video: string;
+}
 
-  return (
-    <View style={styles.myWorkout}>
-      <View style={[styles.statusBar, styles.statusBarFlexBox]}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightWidth={390}
-        />
+interface WorkoutPlan {
+  [day: string]: {
+    [muscleGroup: string]: Exercise;
+  };
+}
+
+interface HomeActiveProps {
+  navigation: any;
+  route: {
+    params: {
+      weight: number;
+      height: number;
+      age: number;
+      gender: string;
+      fitness_goal: string;
+      muscle_groups: string[];
+      workout_intensity: string;
+      activity_level: string;
+      clusterId: number;
+    };
+  };
+}
+const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
+  const [workoutPlan, setWorkoutPlan] = React.useState<any>({});
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<unknown>(null);
+
+  React.useEffect(() => {
+    const fetchExercises = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          "http://192.168.1.113:5000/recommend_workout_plan",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              weight: route.params.weight,
+              height: route.params.height,
+              age: route.params.age,
+              gender: route.params.gender,
+              fitness_goal: route.params.fitness_goal,
+              muscle_groups: route.params.muscle_groups,
+              workout_intensity: route.params.workout_intensity,
+              activity_level: route.params.activity_level,
+            }),
+          }
+        );
+        const jsonData = await response.json();
+        if (response.ok) {
+          setWorkoutPlan(jsonData);
+        } else {
+          throw new Error("Failed to fetch exercises");
+        }
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExercises();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000FF" />;
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>
+          {typeof error === "string"
+            ? error
+            : "An error occurred while fetching the workout plan."}
+        </Text>
       </View>
+    );
+  }
+
+  const handleExercisePress = (
+    exerciseDetails: string,
+    muscleGroup: string,
+    day: string
+  ) => {
+    navigation.navigate("ExerciseInfo", { exerciseDetails, muscleGroup, day });
+  };
+  return (
+    <View style={[styles.homeActive, styles.workoutsFlexBox]}>
       <ScrollView
-        style={[styles.scroll, styles.weeksSpaceBlock]}
+        style={[styles.scroll, styles.scrollSpaceBlock]}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollScrollViewContent}
       >
-        <Navigations
-          step2Of5="Step 2 of 5"
-          showStep2Of={false}
-          showSkip={false}
-          navigationPosition="unset"
-          navigationAlignSelf="stretch"
-          step2OfColor="#461b93"
-          step2OfMarginLeft={21}
-          skipMarginLeft={21}
-          onBackButtonPress={() => navigation.goBack()}
-        />
-        <View style={[styles.trainingsText, styles.weeksSpaceBlock]}>
-          <Text style={[styles.trainings, styles.trainingsTypo]}>
-            Exercises
-          </Text>
-          <View style={styles.progress}>
-            <Text style={[styles.progress1, styles.percentTypo]}>Progress</Text>
-            <View style={[styles.ellipseParent, styles.groupChildLayout]}>
-              <Image
-                style={[styles.groupChild, styles.groupChildLayout]}
-                contentFit="cover"
-                source={require("../assets/ellipse-1.png")}
-              />
-              <Text style={[styles.percent, styles.percentFlexBox]}>10%</Text>
-              <Image
-                style={[styles.groupChild, styles.groupChildLayout]}
-                contentFit="cover"
-                source={require("../assets/ellipse-2.png")}
-              />
+        <View style={styles.scrollSpaceBlock}>
+          <View style={[styles.heaader, styles.heaaderFlexBox]}>
+            <View style={styles.popular1}>
+              <Text style={[styles.popularWorkouts, styles.text2Typo]}>
+                Exercises
+              </Text>
+              <Text style={[styles.exercises210, styles.minTypo]}>
+                Exercises: 210
+              </Text>
             </View>
+            {/* <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text> */}
           </View>
-        </View>
-        <View style={[styles.weeks, styles.weeksSpaceBlock]}>
-          <Dropdown label="Week 1" />
-          <Dropdown label="Week 2" />
-          <Dropdown label="Week 3" />
-          <View style={[styles.workouts, styles.rowSpaceBlock]}>
-            <View style={styles.row1}>
-              <View style={styles.workout1Wrapper}>
-                <View style={[styles.workout1, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask, styles.maskLayout]} />
-                  </View>
-                  <View style={[styles.content, styles.contentFlexBox]}>
-                    <Text style={[styles.danceFitness, styles.trainingsTypo]}>
-                      Core Control
-                    </Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+          <View style={styles.excercises}>
+            <Pressable style={styles.exercise1SpaceBlock}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
               </View>
-              <View style={styles.workout2Wrapper}>
-                <View style={[styles.workout2, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask, styles.maskLayout]} />
-                  </View>
-                  <View style={[styles.content, styles.contentFlexBox]}>
-                    <Text style={[styles.danceFitness, styles.trainingsTypo]}>
-                      Full Body Fast
-                    </Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Front and Back Lunge
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
               </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
+            </Pressable>
+
+            {Object.entries(workoutPlan).map(([day, exercises]) => (
+              <View>
+                {Object.entries(exercises).map(
+                  ([muscleGroup, exerciseDetails]) => (
+                    <Pressable
+                      onPress={() =>
+                        handleExercisePress(exerciseDetails, muscleGroup, day)
+                      }
+                      key={muscleGroup}
+                      style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
+                    >
+                      <View>
+                        <Video
+                          source={{ uri: exerciseDetails.Exercise_Video }}
+                          style={styles.beautifulSlimBrunetteDoing}
+                          useNativeControls
+                          resizeMode={ResizeMode.CONTAIN}
+                          isLooping
+                        />
+                      </View>
+                      <View style={styles.text1}>
+                        <Text
+                          style={[styles.danceFitness, styles.hiDeborahTypo]}
+                        >
+                          {exerciseDetails.Exercise_Name}
+                        </Text>
+                        <Text style={[styles.text2, styles.text2Typo]}>
+                          {muscleGroup}
+                        </Text>
+                      </View>
+                      <Image
+                        style={styles.featherinfoIcon}
+                        contentFit="cover"
+                        source={require("../assets/featherinfo1.png")}
+                      />
+                    </Pressable>
+                  )
+                )}
+              </View>
+            ))}
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
+              </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
+              </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
             </View>
-            <View style={[styles.row2, styles.rowSpaceBlock]}>
-              <View style={styles.workout1Wrapper}>
-                <View style={[styles.workout3, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask2, styles.maskLayout]} />
-                  </View>
-                  <View style={styles.contentFlexBox}>
-                    <Text style={[styles.danceFitness, styles.trainingsTypo]}>
-                      Express Tabata
-                    </Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
               </View>
-              <View style={styles.workout4Wrapper}>
-                <View style={[styles.workout4, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask2, styles.maskLayout]} />
-                  </View>
-                  <View style={[styles.content, styles.contentFlexBox]}>
-                    <Text style={[styles.danceFitness, styles.trainingsTypo]}>
-                      Bodyweight Stretch
-                    </Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
               </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
             </View>
-            <View style={[styles.row3, styles.rowSpaceBlock]}>
-              <View style={styles.workout1Wrapper}>
-                <View style={[styles.workout5, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask2, styles.maskLayout]} />
-                  </View>
-                  <View style={[styles.content, styles.contentFlexBox]}>
-                    <Text
-                      style={[styles.danceFitness, styles.trainingsTypo]}
-                    >{`Glutes & Abs`}</Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
               </View>
-              <View style={styles.workout4Wrapper}>
-                <View style={[styles.workout6, styles.workoutShadowBox]}>
-                  <View style={styles.bitmap}>
-                    <View style={styles.bitmap1}>
-                      <View style={styles.bitmap2} />
-                    </View>
-                    <View style={[styles.mask2, styles.maskLayout]} />
-                  </View>
-                  <View style={[styles.content, styles.contentFlexBox]}>
-                    <Text style={[styles.danceFitness, styles.trainingsTypo]}>
-                      Interval Pilates
-                    </Text>
-                    <Text style={[styles.beginner, styles.minTypo]}>
-                      Beginner
-                    </Text>
-                    <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-                  </View>
-                </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
               </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
+            </View>
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
+              </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
+              </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
+            </View>
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
+              </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
+              </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
+            </View>
+            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
+              <View>
+                <View style={styles.beautifulSlimBrunetteDoing} />
+              </View>
+              <View style={styles.text1}>
+                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                  Sumo Squat
+                </Text>
+                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
+              </View>
+              <Image
+                style={styles.featherinfoIcon}
+                contentFit="cover"
+                source={require("../assets/featherinfo1.png")}
+              />
             </View>
           </View>
         </View>
       </ScrollView>
       <Footer
-        homeActive={require("../assets/home.png")}
-        training={require("../assets/trainingactive.png")}
-        activity={require("../assets/activity2.png")}
-        propBottom={1}
-        propColor="#9299a3"
-        propColor1="#2f548d"
-        propColor2="#9299a3"
+        homeActive={require("../assets/homeactive.png")}
+        training={require("../assets/training.png")}
+        activity={require("../assets/activity.png")}
         onHomePress={() => navigation.navigate("HomeActive")}
         onTrainingPress={() => navigation.navigate("Workouts")}
-        onActivityPress={() => navigation.navigate("ActivityActive")}
+        onActivityPress={() =>
+          navigation.navigate("ActivityActive", { ...route.params })
+        }
         onProfilePress={() => navigation.navigate("ProfileActive")}
       />
     </View>
@@ -206,59 +307,185 @@ const MyWorkout = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollScrollViewContent: {
-    flexDirection: "column",
+  workoutsScrollViewContent: {
+    flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
-  statusBarFlexBox: {
-    justifyContent: "space-between",
+  scrollScrollViewContent: {
+    flexDirection: "column",
+    paddingBottom: 80,
     alignItems: "center",
-    flexDirection: "row",
+    justifyContent: "center",
   },
-  weeksSpaceBlock: {
-    marginTop: 15,
+  workoutsFlexBox: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scrollSpaceBlock: {
+    marginTop: 19,
     alignSelf: "stretch",
   },
-  trainingsTypo: {
-    color: Color.colorGray_200,
-    fontFamily: FontFamily.poppins,
+  heaaderFlexBox: {
+    flexDirection: "row",
+    alignSelf: "stretch",
+  },
+  hiDeborahTypo: {
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     textAlign: "left",
+    color: Color.colorGray_200,
   },
-  percentTypo: {
-    color: Color.colorSlategray,
-    fontFamily: FontFamily.poppins,
+  text2Typo1: {
+    fontSize: FontSize.size_sm,
+    alignSelf: "stretch",
+  },
+  text2Typo: {
+    lineHeight: 24,
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
   },
-  groupChildLayout: {
-    height: 30,
-    width: 30,
+  viewTypo: {
+    color: Color.colorDarkgray_100,
+    fontSize: FontSize.size_mini,
+    lineHeight: 24,
+    fontFamily: FontFamily.poppinsMedium,
+    fontWeight: "500",
   },
-  percentFlexBox: {
-    display: "flex",
-    alignItems: "center",
+  workouts80Layout: {
+    lineHeight: 18,
+    color: Color.colorDarkslategray,
   },
-  rowSpaceBlock: {
-    marginTop: 10,
+  minTypo: {
+    marginTop: 5,
+    fontSize: FontSize.size_xs,
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsMedium,
+    fontWeight: "500",
     alignSelf: "stretch",
   },
   workoutShadowBox: {
-    borderRadius: Border.br_5xs,
-    shadowOpacity: 1,
+    width: 121,
     elevation: 4,
     shadowRadius: 4,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    borderRadius: Border.br_5xs,
+    shadowOpacity: 1,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    alignSelf: "stretch",
+    justifyContent: "flex-end",
     overflow: "hidden",
-    flex: 1,
-    backgroundColor: Color.colorWhite,
+    backgroundColor: Color.rgb255255255,
   },
-  maskLayout: {
+  exercise1SpaceBlock: {
+    paddingBottom: Padding.p_8xs,
+    paddingRight: Padding.p_3xs,
+    paddingTop: Padding.p_8xs,
+    paddingLeft: Padding.p_8xs,
+    alignSelf: "stretch",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Color.rgb255255255,
+  },
+  statusBar: {
+    right: 0,
+    width: 390,
+    height: 50,
+    zIndex: 0,
+    justifyContent: "flex-end",
+    top: 0,
+    position: "absolute",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  hiDeborah: {
+    lineHeight: 40,
+    textAlign: "left",
+    color: Color.colorGray_200,
+    fontSize: FontSize.size_xl,
+    flex: 1,
+  },
+  notificationIcon: {
+    width: 16,
+    height: 19,
+  },
+  heaader: {
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+    alignItems: "center",
+  },
+  search: {
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowRadius: 5,
+    elevation: 5,
+    borderRadius: Border.br_6xl,
+    height: 45,
+    paddingHorizontal: Padding.p_6xl,
+    paddingVertical: 0,
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    fontSize: FontSize.size_sm,
+    fontFamily: FontFamily.poppinsMedium,
+    fontWeight: "500",
+    marginTop: 19,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Color.rgb255255255,
+  },
+  category: {
+    color: Color.colorGray_200,
+    fontSize: FontSize.size_xl,
+    flex: 1,
+  },
+  viewAll: {
+    textAlign: "left",
+  },
+  categories: {
+    marginTop: 21,
+    alignSelf: "stretch",
+    flex: 1,
+  },
+  categoriesSection1: {
+    height: 150,
+  },
+  popularWorkouts: {
+    color: Color.colorGray_200,
+    fontSize: FontSize.size_xl,
+    alignSelf: "stretch",
+  },
+  workouts80: {
+    color: Color.colorDarkslategray,
+    fontSize: FontSize.size_xs,
+    lineHeight: 18,
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsMedium,
+    fontWeight: "500",
+    alignSelf: "stretch",
+  },
+  popular1: {
+    flex: 1,
+  },
+  viewAll1: {
+    textAlign: "right",
+  },
+  bitmap2: {
+    height: 120,
+    backgroundColor: Color.colorGainsboro_200,
+    alignSelf: "stretch",
+  },
+  bitmap1: {
+    alignSelf: "stretch",
+    zIndex: 0,
+  },
+  mask: {
+    right: "-2.81%",
+    left: "2.81%",
     backgroundColor: Color.colorGainsboro_300,
     height: 120,
     borderRadius: Border.br_5xs,
@@ -267,85 +494,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
   },
-  contentFlexBox: {
-    paddingLeft: Padding.p_8xs,
-    justifyContent: "flex-end",
-    alignSelf: "stretch",
-  },
-  minTypo: {
-    marginTop: 5,
-    fontSize: FontSize.size_xs,
-    textAlign: "left",
-    fontFamily: FontFamily.poppins,
-    fontWeight: "500",
-    alignSelf: "stretch",
-  },
-  statusBar: {
-    right: 0,
-    width: 410,
-    height: 50,
-    zIndex: 0,
-    top: 0,
-    position: "absolute",
-  },
-  trainings: {
-    fontSize: FontSize.size_xl,
-    textAlign: "left",
-    lineHeight: 40,
-    color: Color.colorGray_200,
-    fontFamily: FontFamily.poppins,
-    fontWeight: "500",
-    flex: 1,
-  },
-  progress1: {
-    textAlign: "right",
-    fontSize: FontSize.size_xs,
-    color: Color.colorSlategray,
-    lineHeight: 40,
-  },
-  groupChild: {
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  percent: {
-    top: 15,
-    left: 7,
-    fontSize: 9,
-    width: 17,
-    color: Color.colorSlategray,
-    fontFamily: FontFamily.poppins,
-    fontWeight: "500",
-    textAlign: "left",
-    position: "absolute",
-    display: "flex",
-  },
-  ellipseParent: {
-    marginLeft: 10,
-  },
-  progress: {
-    justifyContent: "flex-end",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  trainingsText: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  bitmap2: {
-    backgroundColor: Color.colorGainsboro_200,
-    height: 120,
-    alignSelf: "stretch",
-  },
-  bitmap1: {
-    alignSelf: "stretch",
-    zIndex: 0,
-  },
-  mask: {
-    right: "-2.8%",
-    left: "2.8%",
-  },
   bitmap: {
     alignSelf: "stretch",
   },
@@ -353,101 +501,99 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_base,
     lineHeight: 20,
     textAlign: "left",
+    color: Color.colorGray_200,
     alignSelf: "stretch",
   },
   beginner: {
     color: Color.primary,
-    height: 19,
     display: "flex",
+    height: 19,
     alignItems: "center",
   },
   min: {
-    color: Color.colorDarkslategray,
     height: 18,
+    color: Color.colorDarkslategray,
   },
   content: {
     marginTop: 1,
-  },
-  workout1: {
-    justifyContent: "center",
-  },
-  workout1Wrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    flex: 1,
-  },
-  workout2: {
-    justifyContent: "flex-end",
-  },
-  workout2Wrapper: {
-    justifyContent: "center",
-    marginLeft: 10,
+    paddingLeft: Padding.p_8xs,
     alignSelf: "stretch",
-    alignItems: "center",
-    flexDirection: "row",
-    flex: 1,
-  },
-  row1: {
-    padding: Padding.p_3xs,
-    justifyContent: "center",
-    alignSelf: "stretch",
-    flexDirection: "row",
-  },
-  mask2: {
-    right: "-2.81%",
-    left: "2.81%",
-  },
-  workout3: {
     justifyContent: "flex-end",
   },
-  workout4: {
-    justifyContent: "flex-end",
-  },
-  workout4Wrapper: {
-    justifyContent: "center",
+  workout11: {
     marginLeft: 10,
-    alignItems: "center",
-    flexDirection: "row",
-    flex: 1,
   },
-  row2: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+  workout12: {
+    marginLeft: 10,
   },
-  workout5: {
-    justifyContent: "flex-end",
+  workout13: {
+    marginLeft: 10,
   },
-  workout6: {
-    justifyContent: "flex-end",
+  workout14: {
+    marginLeft: 10,
   },
-  row3: {
-    justifyContent: "center",
-    flexDirection: "row",
+  workout15: {
+    marginLeft: 10,
+  },
+  workout16: {
+    marginLeft: 10,
+  },
+  workouts1: {
+    height: 186,
+    maxHeight: 186,
+    marginTop: 8,
+    alignSelf: "stretch",
+    width: "100%",
   },
   workouts: {
-    display: "none",
-    paddingBottom: Padding.p_56xl,
+    justifyContent: "center",
     alignItems: "center",
   },
-  weeks: {
-    paddingBottom: Padding.p_56xl,
+  exercises210: {
+    height: 17,
+    color: Color.colorDarkslategray,
+    lineHeight: 18,
+  },
+  beautifulSlimBrunetteDoing: {
+    width: 96,
+    height: 64,
+    // backgroundColor: Color.colorGainsboro_200,
+  },
+  text2: {
+    marginTop: 4,
+    color: Color.colorDarkslategray,
+    fontSize: FontSize.size_sm,
+    alignSelf: "stretch",
+  },
+  text1: {
+    marginLeft: 10,
     flex: 1,
+  },
+  featherinfoIcon: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  exercise1Copy: {
+    marginTop: 10,
+  },
+  excercises: {
+    marginTop: 18,
+    alignSelf: "stretch",
   },
   scroll: {
     zIndex: 1,
-    marginTop: 15,
-    overflow: "hidden",
+    marginTop: 19,
     flex: 1,
   },
-  myWorkout: {
-    height: 711,
+  homeActive: {
+    height: 1471,
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     overflow: "hidden",
+    backgroundColor: Color.rgb255255255,
+    justifyContent: "center",
     width: "100%",
-    backgroundColor: Color.colorWhite,
     flex: 1,
   },
 });

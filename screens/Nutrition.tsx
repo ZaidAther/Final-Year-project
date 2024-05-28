@@ -1,32 +1,93 @@
-import React, { useState } from "react";
-import { View, FlatList, StyleSheet, Text, Pressable } from "react-native";
-import Status1 from "../components/Status1";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, View, Pressable, ActivityIndicator } from "react-native";
+import Scroll1 from "../components/Scroll1";
 import { Image } from "expo-image";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase, RouteProp, useRoute } from "@react-navigation/native";
+import { useNavigation, ParamListBase, RouteProp } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
 import { RootStackParamList } from "../types";
 
 
 
-const ActivityActive = () => {
-  const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
-  // const {mealPlan} = route.params.mealPlan;
-  // console.log(route.params.mealPlan);
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+type NutritionRouteProp = RouteProp<RootStackParamList, "Nutrition">;
+type NutritionNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Nutrition"
+>;
+
+interface NutritionProps {
+  route: NutritionRouteProp;
+  navigation: NutritionNavigationProp;
+}
+
+interface MealDetails {
+  name: string;
+  calories: number;
+  carbohydrate: number;
+  fat: number;
+  protein: number;
+  image: string;
+}
+
+interface MealPlan {
+  [day: string]: {
+    [mealTime: string]: MealDetails;
+  };
+}
+
+
+const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
+  const [mealPlan, setMealPlan] = useState<MealPlan>(route.params.mealPlan);
+  const { clusterId } = route.params;
+  const [loading, setLoading] = useState(true);
+  console.log(mealPlan, clusterId)
   const [flatListFlatListData, setFlatListFlatListData] = useState([
-    <Status1/>,
+    <Scroll1 clusterId={clusterId} mealPlan={mealPlan} />,
   ]);
 
+  useEffect(() => {
+    if (!mealPlan) {
+      fetch("http://192.168.1.113:5000/recommend_meal_plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cluster_id: clusterId }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setMealPlan(data);
+          setFlatListFlatListData([<Scroll1 clusterId={clusterId} mealPlan={data} />]);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+          setLoading(false);
+        });
+    } else {
+      setFlatListFlatListData([<Scroll1 clusterId={clusterId} mealPlan={mealPlan} />]);
+      setLoading(false);
+    }
+  }, [clusterId, mealPlan]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color={Color.primary} />;
+  }
+
   return (
-    <View style={[styles.activityActive, styles.navBarLayout]}>
+    <View style={[styles.nutrition, styles.navBarBg]}>
       <FlatList
         style={styles.flatList}
         data={flatListFlatListData}
         renderItem={({ item }) => item}
         contentContainerStyle={styles.flatListFlatListContent}
       />
-      <View style={[styles.navBar, styles.navBarLayout]}>
+      <View style={[styles.navBar, styles.navBarBg]}>
         <View style={[styles.home, styles.homeFlexBox]}>
           <Pressable
             style={styles.homeFlexBox}
@@ -47,18 +108,18 @@ const ActivityActive = () => {
           <Image
             style={[styles.trainingIcon, styles.iconLayout]}
             contentFit="cover"
-            source={require("../assets/training1.png")}
+            source={require("../assets/training.png")}
           />
           <Text style={[styles.home2, styles.home2Typo]}>Workouts</Text>
         </Pressable>
         <Pressable
           style={styles.homeFlexBox}
-          onPress={() => navigation.navigate("ActivityActive", {...route.params, mealPlan: route.params.mealPlan})}
+          onPress={() => navigation.navigate("ActivityActive", {...route.params})}
         >
           <Image
             style={[styles.trainingIcon, styles.iconLayout]}
             contentFit="cover"
-            source={require("../assets/activity1.png")}
+            source={require("../assets/activity.png")}
           />
           <Text style={[styles.activity1, styles.home2Typo]}>Activity</Text>
         </Pressable>
@@ -82,9 +143,8 @@ const styles = StyleSheet.create({
   flatListFlatListContent: {
     flexDirection: "column",
   },
-  navBarLayout: {
+  navBarBg: {
     overflow: "hidden",
-    width: "100%",
     backgroundColor: Color.rgb255255255,
   },
   homeFlexBox: {
@@ -128,9 +188,10 @@ const styles = StyleSheet.create({
   },
   navBar: {
     position: "absolute",
-    right: "0%",
+    width: "98.55%",
+    right: "0.72%",
     bottom: 0,
-    left: "0%",
+    left: "0.72%",
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -147,12 +208,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
     flexDirection: "row",
   },
-  activityActive: {
-    height: 576,
+  nutrition: {
+    width: "100%",
+    height: 813,
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,
     flex: 1,
   },
 });
 
-export default ActivityActive;
+export default Nutrition;

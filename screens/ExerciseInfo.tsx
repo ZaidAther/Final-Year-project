@@ -1,12 +1,53 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
-import { Image } from "expo-image";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+} from "react-native";
+import { ResizeMode, Video } from "expo-av";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { Padding, Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types";
 
-const ExerciseInfo = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+type ExerciseInfoScreenRouteProp = RouteProp<
+  RootStackParamList,
+  "ExerciseInfo"
+>;
+type ExerciseInfoScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "ExerciseInfo"
+>;
+
+interface ExerciseInfoProps {
+  route: ExerciseInfoScreenRouteProp;
+}
+
+const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ route }) => {
+  const navigation = useNavigation<ExerciseInfoScreenNavigationProp>();
+  const { exerciseDetails, muscleGroup, day } = route.params;
+  const [contentHeight, setContentHeight] = useState(0);
+
+  const durationMultipliers = {
+    Chest: 1.1,
+    Legs: 1.2,
+    Biceps: 1,
+    Triceps: 1,
+    Back: 1.1,
+    Abdominal: 1.2,
+    Shoulders: 1.1,
+  };
+
+  type MuscleGroup = keyof typeof durationMultipliers;
+
+  const getExerciseDuration = (muscleGroup: MuscleGroup) => {
+    const baseDuration = 30; // Default duration
+    const muscleMultiplier = durationMultipliers[muscleGroup] || 1;
+    return Math.round(baseDuration * muscleMultiplier) + " min";
+  };
 
   return (
     <View style={styles.exerciseinfo}>
@@ -17,34 +58,39 @@ const ExerciseInfo = () => {
         contentContainerStyle={styles.scrollScrollViewContent}
       >
         <View style={styles.heroSection}>
-          <Image
+          <Video
+            source={{ uri: exerciseDetails.Exercise_Video }}
             style={styles.imageIcon}
-            contentFit="cover"
-            source={require("../assets/image.png")}
+            resizeMode={ResizeMode.COVER}
+            useNativeControls
+            shouldPlay
+            isLooping
           />
           <View style={[styles.mainInfo, styles.contentSpaceBlock]}>
             <View style={styles.ttileAndDesc}>
               <Text style={[styles.strongLegsAnd, styles.title3FlexBox]}>
-                Strong Legs and Core
+                {exerciseDetails.Exercise_Name}
               </Text>
-              <Text style={[styles.tellusPellentesque, styles.skipClr]}>
-                Tellus pellentesque eu tincidunt tortor aliquam nulla. Feugiat
-                nisl pretium fusce id velit ut tortor pretium. Nunc faucibus a
-                pellentesque sit amet
+              <Text style={[styles.tellusPellentesque]}>
+                {exerciseDetails.Description}
               </Text>
             </View>
             <View style={styles.cards}>
               <View style={styles.cardDetails}>
                 <Text style={[styles.text, styles.titleTypo]}>⏱️</Text>
-                <Text style={[styles.min, styles.minTypo]}>30 min</Text>
+                <Text style={[styles.min, styles.minTypo]}>
+                  {getExerciseDuration(muscleGroup)}
+                </Text>
               </View>
               <View style={styles.cardShadowBox}>
-                <Text style={[styles.text, styles.titleTypo]}>🔥</Text>
-                <Text style={[styles.min, styles.minTypo]}>340 Kal</Text>
+                <Text style={[styles.text, styles.titleTypo]}>📆</Text>
+                <Text style={[styles.min, styles.minTypo]}>{day}</Text>
               </View>
               <View style={styles.cardShadowBox}>
                 <Text style={[styles.text, styles.titleTypo]}>⚡</Text>
-                <Text style={[styles.min, styles.minTypo]}>Beginner</Text>
+                <Text style={[styles.min, styles.minTypo]}>
+                  {exerciseDetails.Rating}
+                </Text>
               </View>
             </View>
           </View>
@@ -53,14 +99,18 @@ const ExerciseInfo = () => {
           <View style={styles.details}>
             <View style={[styles.equipment, styles.equipmentFlexBox]}>
               <Text style={[styles.title, styles.titleTypo]}>Equipment</Text>
-              <Text style={[styles.title1, styles.titleTypo]}>2 Dumbells</Text>
+              <Text style={[styles.title1, styles.titleTypo]}>
+                {exerciseDetails.Equipment}
+              </Text>
             </View>
             <View style={[styles.focusArea, styles.equipmentFlexBox]}>
               <Text style={[styles.title, styles.titleTypo]}>Focus Area</Text>
-              <Text style={[styles.title3, styles.titleTypo]}>Legs</Text>
+              <Text style={[styles.title3, styles.titleTypo]}>
+                {muscleGroup}
+              </Text>
             </View>
           </View>
-          <View style={styles.exercises}>
+          {/* <View style={styles.exercises}>
             <View style={[styles.equipment, styles.equipmentFlexBox]}>
               <Text style={[styles.warmUp, styles.warmUpTypo]}>Workout</Text>
               <View style={styles.info}>
@@ -134,22 +184,23 @@ const ExerciseInfo = () => {
                 />
               </Pressable>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
-      <View style={[styles.navigation, styles.equipmentFlexBox]}>
-        <View style={styles.backButton}>
-          <Pressable style={styles.group} onPress={() => navigation.goBack()}>
-            <Image
-              style={styles.icon}
-              contentFit="cover"
-              source={require("../assets/group.png")}
-            />
+        <View style={[styles.navigation, styles.equipmentFlexBox]}>
+          <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+            <View style={styles.group} >
+              <Image
+                style={styles.icon}
+                resizeMode={ResizeMode.CONTAIN}
+                source={require("../assets/group.png")}
+              />
+              <Text></Text>
+            </View>
           </Pressable>
+          {/* <Text style={[styles.step2Of, styles.skipTypo]}>Step 2 of 5</Text>
+          <Text style={[styles.skip, styles.skipTypo]}>Skip</Text> */}
         </View>
-        <Text style={[styles.step2Of, styles.skipTypo]}>Step 2 of 5</Text>
-        <Text style={[styles.skip, styles.skipTypo]}>Skip</Text>
-      </View>
     </View>
   );
 };
@@ -177,6 +228,7 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
+    // width: "100%",
   },
   minTypo: {
     textAlign: "center",
@@ -226,8 +278,9 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   imageIcon: {
+    // zIndex: 2,
     maxWidth: "100%",
-    height: 260,
+    height: 300,
     alignSelf: "stretch",
     overflow: "hidden",
     width: "100%",
@@ -318,17 +371,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.rgb255255255,
   },
   mainInfo: {
-    shadowColor: "rgba(234, 240, 246, 0.6)",
+    // shadowColor: "rgba(234, 240, 246, 0.6)",
     paddingVertical: Padding.p_5xl,
     marginTop: -15,
-    borderRadius: Border.br_mini,
-    shadowOpacity: 1,
-    elevation: 5,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
+    // borderRadius: Border.br_5xs,
+    // shadowOpacity: 1,
+    // // elevation: 5,
+    // // shadowRadius: 5,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
     paddingHorizontal: Padding.p_3xs,
     backgroundColor: Color.rgb255255255,
   },
@@ -352,7 +405,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   title3: {
-    width: 37,
+    // width: 37,
     lineHeight: 22,
     textAlign: "left",
     fontSize: FontSize.size_sm,
@@ -366,15 +419,15 @@ const styles = StyleSheet.create({
   details: {
     paddingHorizontal: Padding.p_mini,
     paddingVertical: Padding.p_sm,
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    borderRadius: Border.br_mini,
-    shadowOpacity: 1,
-    elevation: 5,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
+    borderRadius: Border.br_5xs,
+    // shadowColor: "rgba(0, 0, 0, 0.1)",
+    // shadowOpacity: 1,
+    // // elevation: 5,
+    // // shadowRadius: 5,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
     alignSelf: "stretch",
     backgroundColor: Color.rgb255255255,
   },
@@ -466,17 +519,32 @@ const styles = StyleSheet.create({
   icon: {
     height: "100%",
     width: "100%",
+
   },
   group: {
     width: 16,
     height: 14,
+    backgroundColor: "black",
   },
   backButton: {
     paddingHorizontal: Padding.p_9xs,
     paddingVertical: Padding.p_8xs,
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
+    justifyContent: "center",
+    // flex: 1,
+    backgroundColor: "white",
+    width: 35,
+    height: 35,
+    borderRadius: Border.br_5xs,
+    shadowColor: Color.colorBlack,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
   },
   step2Of: {
     color: Color.colorIndigo,
@@ -490,22 +558,25 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslategray,
   },
   navigation: {
+    
     position: "absolute",
     top: 0,
     left: 0,
-    width: 622,
-    height: 57,
+    // width: 70,
+    // height: 170,
     padding: Padding.p_3xs,
     zIndex: 1,
     overflow: "hidden",
+    paddingTop: 80,
   },
   exerciseinfo: {
-    height: 758,
+    // height: 758,
     alignItems: "center",
     overflow: "hidden",
     width: "100%",
     flex: 1,
-    backgroundColor: Color.rgb255255255,
+    backgroundColor: Color.colorWhitesmoke_100,
+    paddingTop: 80,
   },
 });
 

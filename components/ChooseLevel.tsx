@@ -1,33 +1,53 @@
-import React, { useMemo } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React from "react";
+import { Text, StyleSheet, View, Pressable } from "react-native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 
-export type ChooseLevelType = {
+export type ChooseLevelProps = {
   title?: string;
   txt?: string;
-
-  /** Style props */
   propBorderColor?: string;
+  onPress?: () => void;
+  isSelected?: boolean;
 };
 
-const getStyleValue = (key: string, value: string | number | undefined) => {
-  if (value === undefined) return;
-  return { [key]: value === "unset" ? undefined : value };
-};
-const ChooseLevel = ({ title, txt, propBorderColor }: ChooseLevelType) => {
-  const chooseLevelStyle = useMemo(() => {
-    return {
-      ...getStyleValue("borderColor", propBorderColor),
-    };
-  }, [propBorderColor]);
-
+const ChooseLevel = ({
+  title,
+  txt,
+  propBorderColor,
+  onPress,
+  isSelected = false,
+}: ChooseLevelProps) => {
   return (
-    <View style={[styles.chooseLevel, chooseLevelStyle]}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.chooseLevel,
+        isSelected
+          ? { backgroundColor: propBorderColor, borderColor: propBorderColor }
+          : { backgroundColor: Color.colorWhite, borderColor: Color.colorAliceblue_200 },
+      ]}
+    >
       <View style={styles.text}>
-        <Text style={[styles.title, styles.txtTypo]}>{title}</Text>
-        <Text style={[styles.txt, styles.txtTypo]}>{txt}</Text>
+        <Text
+          style={[
+            styles.title,
+            styles.txtTypo,
+            isSelected && { color: Color.colorWhite },
+          ]}
+        >
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.txt,
+            styles.txtTypo,
+            isSelected && { color: Color.colorWhite },
+          ]}
+        >
+          {txt}
+        </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -55,9 +75,7 @@ const styles = StyleSheet.create({
   },
   chooseLevel: {
     borderRadius: Border.br_5xs,
-    backgroundColor: Color.colorWhite,
     borderStyle: "solid",
-    borderColor: Color.colorAliceblue_200,
     borderWidth: 1,
     height: 89,
     overflow: "hidden",

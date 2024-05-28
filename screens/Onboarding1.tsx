@@ -63,7 +63,7 @@ const Onboarding1 = () => {
         <View style={[styles.button, styles.buttonSpaceBlock]}>
           <Pressable
             style={[styles.button1, styles.button1FlexBox]}
-            onPress={() => navigation.navigate("Gender")}
+            onPress={() => navigation.navigate("WeightInputScreen")} // Fixed typo
           >
             <Text style={[styles.startTraining, styles.titleTypo]}>
               Start Training
