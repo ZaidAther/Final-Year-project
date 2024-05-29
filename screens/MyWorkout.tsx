@@ -44,6 +44,7 @@ interface HomeActiveProps {
       workout_intensity: string;
       activity_level: string;
       clusterId: number;
+      workoutPlan: any;
     };
   };
 }
@@ -57,7 +58,7 @@ const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://192.168.1.113:5000/recommend_workout_plan",
+          "http://172.20.10.3:5000/recommend_workout_plan",
           {
             method: "POST",
             headers: {
@@ -295,10 +296,11 @@ const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         homeActive={require("../assets/homeactive.png")}
         training={require("../assets/training.png")}
         activity={require("../assets/activity.png")}
+        propColor2="#9299a3"
         onHomePress={() => navigation.navigate("HomeActive")}
         onTrainingPress={() => navigation.navigate("Workouts")}
         onActivityPress={() =>
-          navigation.navigate("ActivityActive", { ...route.params })
+          navigation.navigate("ActivityActive", { ...route.params, workoutPlan: workoutPlan })
         }
         onProfilePress={() => navigation.navigate("ProfileActive")}
       />

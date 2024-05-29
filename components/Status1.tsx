@@ -23,6 +23,7 @@ export type Status1Type = {
 const Status1 = ({ style }: Status1Type) => {
   const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
   // const {mealPlan} = route.params;
+  console.log(route.params)
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (

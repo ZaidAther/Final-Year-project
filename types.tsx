@@ -64,7 +64,8 @@ export type RootStackParamList = {
     age: number;
     gender: string;
   };
-  WorkoutPlan: any; // Define the appropriate params type for WorkoutPlan
+  WorkoutPlan: any; 
+// Define the appropriate params type for WorkoutPlan
   HomeActive: any; // Define the appropriate params type for WorkoutPlan
   ExerciseInfo: {
     exerciseDetails: {

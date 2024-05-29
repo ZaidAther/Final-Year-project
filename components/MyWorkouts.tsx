@@ -3,38 +3,66 @@ import { Text, StyleSheet, View, Pressable } from "react-native";
 import { LinearProgress } from "@rneui/themed";
 import { Color, FontSize, FontFamily, Border, Padding } from "../GlobalStyles";
 
+interface HomeActiveProps {
+  navigation: any;
+  route: {
+    params: {
+      weight: number;
+      height: number;
+      age: number;
+      gender: string;
+      fitness_goal: string;
+      muscle_groups: string[];
+      workout_intensity: string;
+      activity_level: string;
+      clusterId: number;
+      workoutPlan: any;
+    };
+  };
+}
+
 export type MyWorkoutsType = {
   /** Action props */
   onWorkout1Press?: () => void;
+  workoutPlan: any;
 };
 
-const MyWorkouts = ({ onWorkout1Press }: MyWorkoutsType) => {
+const MyWorkouts = ({ onWorkout1Press, workoutPlan }: MyWorkoutsType) => {
+  // console.log(workoutPlan);
   return (
-    <Pressable style={styles.workout1} onPress={onWorkout1Press}>
-      <View style={styles.topText}>
-        <Text style={styles.workout11}>Workout 1</Text>
-        <Text style={[styles.beginner, styles.beginnerTypo]}>Beginner</Text>
-      </View>
-      <View style={styles.topText}>
-        <Text style={styles.beginnerTypo}>Progress 100%</Text>
-        <View style={styles.progressBar}>
-          <LinearProgress
-            style={styles.progress1}
-            animation={true}
-            value={1}
-            variant="determinate"
-            color="#2f548d"
-            trackColor="rgba(217, 217, 217, 0.5)"
-          />
-        </View>
-      </View>
-    </Pressable>
+    <>
+      {Object.entries(workoutPlan).map(([day, exercises]) => (
+        <Pressable style={styles.workout1} onPress={onWorkout1Press}>
+          {Object.entries(exercises).map(([muscleGroup, exerciseDetails]) => (
+            <View style={styles.topText} key={day}>
+              <Text style={styles.workout11}>{day}</Text>
+              <Text style={[styles.beginner, styles.beginnerTypo]} key={muscleGroup}>
+                {muscleGroup}
+              </Text>
+            </View>
+          ))}
+          <View style={styles.topText}>
+            <Text style={styles.beginnerTypo}>Progress 100%</Text>
+            <View style={styles.progressBar}>
+              <LinearProgress
+                style={styles.progress1}
+                animation={true}
+                value={1}
+                variant="determinate"
+                color="#2f548d"
+                trackColor="rgba(217, 217, 217, 0.5)"
+              />
+            </View>
+          </View>
+        </Pressable>
+      ))}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   beginnerTypo: {
-    color: Color.colorSlategray,
+    color: Color.colorSlategray_100,
     fontSize: FontSize.size_xs,
     textAlign: "left",
     fontFamily: FontFamily.poppins,
@@ -43,6 +71,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   workout11: {
+    paddingTop: 10,
     fontSize: FontSize.size_xl,
     color: Color.colorBlack,
     textAlign: "left",
@@ -52,7 +81,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   beginner: {
-    marginTop: 10,
+    marginTop: 5,
   },
   topText: {
     justifyContent: "center",
@@ -83,6 +112,7 @@ const styles = StyleSheet.create({
     padding: Padding.p_xl,
     borderRadius: Border.br_mini,
     alignSelf: "stretch",
+    marginVertical: 10,
   },
 });
 

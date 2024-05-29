@@ -121,7 +121,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="Nutrition"
-                  component={Nutrition}
+                  component={Nutrition as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -141,7 +141,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="Workouts"
-                  component={Workouts}
+                  component={Workouts as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen

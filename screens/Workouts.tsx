@@ -2,11 +2,12 @@ import * as React from "react";
 import { ScrollView, Text, StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { useNavigation, ParamListBase, RouteProp } from "@react-navigation/native";
 import MyWorkouts from "../components/MyWorkouts";
 import Footer from "../components/Footer";
 import StatusBars from "../components/StatusBars";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import { RootStackParamList } from "../types";
 
 interface Exercise {
   Exercise_Name: string;
@@ -19,6 +20,14 @@ interface WorkoutPlan {
   };
 }
 
+type ExerciseInfoScreenRouteProp = RouteProp<
+  RootStackParamList,
+  "ExerciseInfo"
+>;
+type ExerciseInfoScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "ExerciseInfo"
+>;
 interface HomeActiveProps {
   navigation: any;
   route: {
@@ -32,11 +41,14 @@ interface HomeActiveProps {
       workout_intensity: string;
       activity_level: string;
       clusterId: number;
+      workoutPlan: any;
     };
   };
+  new_route: ExerciseInfoScreenRouteProp;
 }
-const Workouts: React.FC<HomeActiveProps> = ({ navigation, route }) => {
-
+const Workouts: React.FC<HomeActiveProps> = ({ navigation, route, new_route }) => {
+  // const { workoutPlan } = new_route.params;
+  // console.log(route.params.workoutPlan);
   return (
     <View style={styles.workouts}>
       <ScrollView
@@ -56,16 +68,20 @@ const Workouts: React.FC<HomeActiveProps> = ({ navigation, route }) => {
           contentContainerStyle={styles.workoutsScrollViewContent}
         >
           <MyWorkouts
-            onWorkout1Press={() => navigation.navigate("MyWorkout" ,{...route.params})}
+            onWorkout1Press={() => navigation.navigate("MyWorkout", {...route.params})}
+            workoutPlan = {route.params.workoutPlan}
           />
           <MyWorkouts
             onWorkout1Press={() => navigation.navigate("MyWorkout")}
+            workoutPlan = {route.params.workoutPlan}
           />
           <MyWorkouts
             onWorkout1Press={() => navigation.navigate("MyWorkout")}
+            workoutPlan = {route.params.workoutPlan}
           />
           <MyWorkouts
             onWorkout1Press={() => navigation.navigate("MyWorkout")}
+            workoutPlan = {route.params.workoutPlan}
           />
           <Pressable
             style={[styles.addWorkout, styles.topTextFlexBox]}
@@ -93,19 +109,12 @@ const Workouts: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         propColor="#9299a3"
         propColor1="#2f548d"
         propColor2="#9299a3"
-        onHomePress={() => navigation.navigate("HomeActive")}
+        onHomePress={() => navigation.navigate("HomeActive",{ ...route.params })}
         onTrainingPress={() => navigation.navigate("Workouts")}
         onActivityPress={() => navigation.navigate("ActivityActive")}
         onProfilePress={() => navigation.navigate("ProfileActive")}
       />
-      <View style={[styles.statusBar, styles.statusBarFlexBox]}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightWidth={390}
-        />
-      </View>
+
     </View>
   );
 };
@@ -206,7 +215,6 @@ const styles = StyleSheet.create({
   },
   workouts: {
     width: "100%",
-    height: 629,
     overflow: "hidden",
     paddingHorizontal: Padding.p_3xs,
     paddingTop: Padding.p_31xl,

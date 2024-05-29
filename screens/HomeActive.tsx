@@ -20,16 +20,16 @@ import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 import Video from "expo-av/build/Video";
 import ExerciseDetails from "./ExerciseDetails";
 
-interface Exercise {
-  Exercise_Name: string;
-  Exercise_Video: string;
-}
+// interface Exercise {
+//   Exercise_Name: string;
+//   Exercise_Video: string;
+// }
 
-interface WorkoutPlan {
-  [day: string]: {
-    [muscleGroup: string]: Exercise;
-  };
-}
+// interface WorkoutPlan {
+//   [day: string]: {
+//     [muscleGroup: string]: Exercise;
+//   };
+// }
 
 interface HomeActiveProps {
   navigation: any;
@@ -44,6 +44,7 @@ interface HomeActiveProps {
       workout_intensity: string;
       activity_level: string;
       clusterId: number;
+      workoutPlan: any;
     };
   };
 }
@@ -57,7 +58,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://192.168.1.113:5000/recommend_workout_plan",
+          "http://172.20.10.3:5000/recommend_workout_plan",
           {
             method: "POST",
             headers: {
@@ -113,6 +114,12 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
     day: string
   ) => {
     navigation.navigate("ExerciseInfo", { exerciseDetails, muscleGroup, day });
+  };
+  const handleWorkoutsPress = (
+    workoutPlan: any,
+
+  ) => {
+    navigation.navigate("Workouts", { ...route.params, workoutPlan });
   };
   return (
     <View style={[styles.homeActive, styles.workoutsFlexBox]}>
@@ -295,25 +302,6 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text>
           </View>
           <View style={styles.excercises}>
-            <Pressable
-              style={styles.exercise1SpaceBlock}
-              
-            >
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Front and Back Lunge
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </Pressable>
 
             {Object.entries(workoutPlan).map(([day, exercises]) => (
               <View>
@@ -324,7 +312,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                     key={muscleGroup}
                       style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
                     >
-                      <View>
+                      <View >
                         <Video
                         source={{ uri: exerciseDetails.Exercise_Video }}
                         style={styles.beautifulSlimBrunetteDoing}
@@ -354,102 +342,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                 )}
               </View>
             ))}
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
+
           </View>
         </View>
       </ScrollView>
@@ -457,10 +350,12 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         homeActive={require("../assets/homeactive.png")}
         training={require("../assets/training.png")}
         activity={require("../assets/activity.png")}
-        onHomePress={() => navigation.navigate("HomeActive")}
-        onTrainingPress={() => navigation.navigate("Workouts", {...route.params})}
-        onActivityPress={() => navigation.navigate("ActivityActive", {...route.params})}
-        onProfilePress={() => navigation.navigate("ProfileActive")}
+        onHomePress={() => navigation.navigate("HomeActive", { ...route.params, workoutPlan : workoutPlan })}
+        onTrainingPress={() => {
+          handleWorkoutsPress(workoutPlan);
+        }}
+        onActivityPress={() => navigation.navigate("ActivityActive", { ...route.params, workoutPlan: workoutPlan})}
+        onProfilePress={() => navigation.navigate("ProfileActive", { ...route.params, workoutPlan: workoutPlan })}
       />
     </View>
   );

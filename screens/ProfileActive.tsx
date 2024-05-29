@@ -2,27 +2,23 @@ import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { useNavigation, ParamListBase, RouteProp, useRoute } from "@react-navigation/native";
 import StatusBars from "../components/StatusBars";
 import Setting from "../components/Setting";
 import NavBar from "../components/NavBar";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 import Footer from "../components/Footer";
+import { RootStackParamList } from "../types";
+
+
 
 const ProfileActive = () => {
+  const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
+
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   return (
     <View style={styles.profileActive}>
-      <View style={[styles.statusBar, styles.statusBarFlexBox]}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightFlex={1}
-          barsStatusBarsiPhoneLightWidth="unset"
-        />
-      </View>
       <ScrollView
         style={styles.allSettings}
         showsVerticalScrollIndicator={false}
@@ -80,10 +76,10 @@ const ProfileActive = () => {
         homeActive={require("../assets/homeactive.png")}
         training={require("../assets/training.png")}
         activity={require("../assets/activity.png")}
-        onHomePress={() => navigation.navigate("HomeActive")}
-        onTrainingPress={() => navigation.navigate("Workouts")}
-        onActivityPress={() => navigation.navigate("ActivityActive")}
-        onProfilePress={() => navigation.navigate("ProfileActive")}
+        onHomePress={() => navigation.navigate("HomeActive", {...route.params})}
+        onTrainingPress={() => navigation.navigate("Workouts", {...route.params})}
+        onActivityPress={() => navigation.navigate("ActivityActive", {...route.params})}
+        onProfilePress={() => navigation.navigate("ProfileActive", {...route.params})}
       />
     </View>
   );

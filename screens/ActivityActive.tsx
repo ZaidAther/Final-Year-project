@@ -11,8 +11,7 @@ import { RootStackParamList } from "../types";
 
 const ActivityActive = () => {
   const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
-  // const {mealPlan} = route.params.mealPlan;
-  // console.log(route.params.mealPlan);
+  console.log("screenshot", route.params)
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const [flatListFlatListData, setFlatListFlatListData] = useState([
     <Status1/>,
@@ -30,7 +29,7 @@ const ActivityActive = () => {
         <View style={[styles.home, styles.homeFlexBox]}>
           <Pressable
             style={styles.homeFlexBox}
-            onPress={() => navigation.navigate("HomeActive")}
+            onPress={() => navigation.navigate("HomeActive", {...route.params})}
           >
             <Image
               style={styles.homeIcon}
@@ -42,7 +41,7 @@ const ActivityActive = () => {
         </View>
         <Pressable
           style={styles.homeFlexBox}
-          onPress={() => navigation.navigate("Workouts")}
+          onPress={() => navigation.navigate("Workouts", {...route.params})}
         >
           <Image
             style={[styles.trainingIcon, styles.iconLayout]}
@@ -64,7 +63,7 @@ const ActivityActive = () => {
         </Pressable>
         <Pressable
           style={styles.homeFlexBox}
-          onPress={() => navigation.navigate("ProfileActive")}
+          onPress={() => navigation.navigate("ProfileActive" , {...route.params})}
         >
           <Image
             style={[styles.profileIcon, styles.iconLayout]}
