@@ -25,7 +25,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch('http://172.20.10.3:5000/signup', {
+      const response = await fetch('http://192.168.1.113:5000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,24 +48,22 @@ const SignUp = () => {
     }
   };
 
-    const handlePress = () => {
+  const handlePress = () => {
     // Handle press event for Google button
     Linking.openURL("https://www.google.com/");
     setIsPressed(true); // Update press state
   };
+
   const handleSignIn = () => { // Step 3
     navigation.navigate("SingIn");
   };
 
   return (
-    <View style={[styles.singIn, styles.singFlexBox]}>
-
-      <ScrollView
-        style={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContentScrollViewContent}
-      >
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.scrollContent}>
         <View style={styles.logo}>
           <Image
             style={styles.logoIcon}
@@ -143,17 +141,20 @@ const SignUp = () => {
             </Pressable>
           </View>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContentScrollViewContent: {
-    flexDirection: "column",
-    paddingBottom: 10,
-    alignItems: "center",
-    justifyContent: "center",
+  container: {
+    backgroundColor: "white",
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  scrollContent: {
+    paddingTop: Padding.p_31xl,
+    paddingHorizontal: Padding.p_3xs,
   },
   singFlexBox: {
     overflow: "hidden",
@@ -170,12 +171,9 @@ const styles = StyleSheet.create({
   },
   inputSpaceBlock: {
     paddingVertical: 0,
-    paddingHorizontal: Padding.p_3xs,
     marginTop: 25,
-    // alignSelf: "stretch",
     width: "100%",
     alignItems: "center",
-    
   },
   iconsSpaceBlock: {
     marginTop: 30,
@@ -231,11 +229,19 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 3,
     },
-    shadowRadius: 2,
+    shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
+    borderRadius: 8,
+    height: 45,
+    backgroundColor: Color.primary,
+    paddingHorizontal: 33,
+    paddingVertical: 12,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    overflow: "hidden",
   },
   button: {
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -321,16 +327,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  scrollContent: {
-    zIndex: 1,
-    marginTop: 25,
-    alignSelf: "stretch",
-    flex: 1,
-  },
+
   singIn: {
     backgroundColor: Color.colorWhite,
     width: "100%",
-    // height: "100%",
     paddingTop: Padding.p_31xl,
     alignContent: "center",
     justifyContent: "center",
@@ -339,4 +339,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default SignUp

@@ -193,7 +193,7 @@ const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ route }) => {
               <Image
                 style={styles.icon}
                 resizeMode={ResizeMode.CONTAIN}
-                source={require("../assets/group.png")}
+                source={require("../assets/icon1.png")}
               />
               <Text></Text>
             </View>
@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
   group: {
     width: 16,
     height: 14,
-    backgroundColor: "black",
+    backgroundColor: "white",
   },
   backButton: {
     paddingHorizontal: Padding.p_9xs,

@@ -29,13 +29,10 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const { weight, height, age, gender, fitness_goal, muscle_groups, workout_intensity } = route.params;
 
-  const generateClusterId = (): number => {
-    return Math.floor(Math.random() * 5); // Generate a random number from 0 to 4
-  };
+
 
   const handleContinue = () => {
     if (selectedLevel) {
-      const clusterId = generateClusterId(); // Generate a random cluster ID
       navigation.navigate("HomeActive", {
         weight,
         height,
@@ -45,7 +42,7 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
         muscle_groups,
         workout_intensity,
         activity_level: selectedLevel,
-        clusterId,
+
       });
 
       const userData = {
@@ -67,7 +64,7 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
 
   const sendUserDataToBackend = async (userData: any) => {
     try {
-      const response = await fetch('http://172.20.10.3:5000/save_user_data', {
+      const response = await fetch('http://192.168.1.113:5000/save_user_data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

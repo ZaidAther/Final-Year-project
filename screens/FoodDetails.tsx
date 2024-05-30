@@ -2,10 +2,38 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import Scroll2 from "../components/Scroll2";
 import { Color, Padding } from "../GlobalStyles";
+import { RouteProp, useRoute } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types";
+
+// interface MealDetails {
+//   name: string;
+//   calories: number;
+//   carbohydrate: number;
+//   fat: number;
+//   protein: number;
+//   image: string;
+// }
+
+// interface MealPlan {
+//   [day: string]: {
+//     [mealTime: string]: MealDetails;
+//   };
+// }
+
+type FoodDetailsRouteProp = RouteProp<RootStackParamList, "FoodDetails">;
+
+
+// type FoodDetailsProps = {
+//   route: FoodDetailsRouteProp;
+// };
 
 const FoodDetails = () => {
+  const route = useRoute<RouteProp<RootStackParamList, "FoodDetails">>();
+  const { mealDetails } = route.params;
+  console.log("food", mealDetails);
   const [flatListFlatListData, setFlatListFlatListData] = useState([
-    <Scroll2 />,
+    <Scroll2  mealDetails = {mealDetails}/>,
   ]);
 
   return (

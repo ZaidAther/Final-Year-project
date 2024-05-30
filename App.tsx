@@ -126,7 +126,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="WorkoutIntensityInput"
-                  component={Intensity}
+                  component={Intensity as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -136,7 +136,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="HomeActive"
-                  component={HomeActive}
+                  component={HomeActive as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -151,7 +151,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="ExerciseInfo"
-                  component={ExerciseInfo}
+                  component={ExerciseInfo as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -166,22 +166,22 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="Gender"
-                  component={Gender}
+                  component={Gender as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
                   name="MyWorkout"
-                  component={MyWorkout}
+                  component={MyWorkout as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
                   name="Goal"
-                  component={Goal}
+                  component={Goal as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
                   name="MuscleGroupsInput"
-                  component={MuscleGroupsInput}
+                  component={MuscleGroupsInput as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -231,7 +231,7 @@ const App: React.FC = () => {
                 />
                 <Stack.Screen
                   name="ActivityLevelInput"
-                  component={ActivityLevelInputScreen}
+                  component={ActivityLevelInputScreen as React.ComponentType<any>}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen

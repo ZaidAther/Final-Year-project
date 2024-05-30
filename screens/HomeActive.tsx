@@ -54,11 +54,12 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
   const [error, setError] = React.useState<unknown>(null);
 
   React.useEffect(() => {
+    console.log("home:",route.params.age)
     const fetchExercises = async () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://172.20.10.3:5000/recommend_workout_plan",
+          "http://192.168.1.113:5000/recommend_workout_plan",
           {
             method: "POST",
             headers: {
@@ -90,6 +91,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
     };
 
     fetchExercises();
+    
   }, []);
 
   if (loading) {
@@ -115,11 +117,8 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
   ) => {
     navigation.navigate("ExerciseInfo", { exerciseDetails, muscleGroup, day });
   };
-  const handleWorkoutsPress = (
-    workoutPlan: any,
-
-  ) => {
-    navigation.navigate("Workouts", { ...route.params, workoutPlan });
+  const handleWorkoutsPress = () => {
+    navigation.navigate("Workouts", { ...route.params, workoutPlan: workoutPlan });
   };
   return (
     <View style={[styles.homeActive, styles.workoutsFlexBox]}>
@@ -129,7 +128,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollScrollViewContent}
       >
-        <View style={[styles.heaader, styles.heaaderFlexBox]}>
+        {/* <View style={[styles.heaader, styles.heaaderFlexBox]}>
           <Text style={[styles.hiDeborah, styles.hiDeborahTypo]}>
             Hi, Hammad
           </Text>
@@ -138,16 +137,12 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             contentFit="cover"
             source={require("../assets/notification.png")}
           />
-        </View>
-        <TextInput
-          style={[styles.search, styles.text2Typo1]}
-          placeholder="Search something"
-          placeholderTextColor="#404b52"
-        />
+        </View> */}
+
         <View style={[styles.categoriesSection1, styles.scrollSpaceBlock]}>
           <View style={[styles.heaader, styles.heaaderFlexBox]}>
-            <Text style={[styles.category, styles.text2Typo]}>Category</Text>
-            <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text>
+            
+            <Text style={[styles.category, styles.text2Typo]}>Hi, Hammad</Text>
           </View>
           <View style={[styles.categories, styles.heaaderFlexBox]}>
             <Category
@@ -176,7 +171,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             />
           </View>
         </View>
-        <Banner />
+        <Banner route = {route} navigation={navigation} workoutPlan = {workoutPlan}/>
         <View style={[styles.workouts, styles.scrollSpaceBlock]}>
           <View style={[styles.heaader, styles.heaaderFlexBox]}>
             <View style={styles.popular1}>
@@ -296,7 +291,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                 Exercises
               </Text>
               <Text style={[styles.exercises210, styles.minTypo]}>
-                Exercises: 210
+              Exercises: {Object.keys(workoutPlan).length}
               </Text>
             </View>
             <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text>
@@ -347,15 +342,16 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         </View>
       </ScrollView>
       <Footer
+      
         homeActive={require("../assets/homeactive.png")}
         training={require("../assets/training.png")}
         activity={require("../assets/activity.png")}
         onHomePress={() => navigation.navigate("HomeActive", { ...route.params, workoutPlan : workoutPlan })}
         onTrainingPress={() => {
-          handleWorkoutsPress(workoutPlan);
+          handleWorkoutsPress();
         }}
         onActivityPress={() => navigation.navigate("ActivityActive", { ...route.params, workoutPlan: workoutPlan})}
-        onProfilePress={() => navigation.navigate("ProfileActive", { ...route.params, workoutPlan: workoutPlan })}
+        onProfilePress={() => navigation.navigate("ProfileActive", { ...route.params, workoutPlan: workoutPlan, weight: route.params.weight, height: route.params.height, age: route.params.age})}
       />
     </View>
   );

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
     shadowRadius: 2,
-    elevation: 5,
+    elevation: 1,
     shadowOpacity: 1,
     // overflow: "hidden",
     flexDirection: "row",

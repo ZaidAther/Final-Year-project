@@ -47,8 +47,9 @@ interface HomeActiveProps {
   new_route: ExerciseInfoScreenRouteProp;
 }
 const Workouts: React.FC<HomeActiveProps> = ({ navigation, route, new_route }) => {
+
   // const { workoutPlan } = new_route.params;
-  // console.log(route.params.workoutPlan);
+  // console.log("workouts",route.params.workoutPlan);
   return (
     <View style={styles.workouts}>
       <ScrollView
@@ -70,19 +71,9 @@ const Workouts: React.FC<HomeActiveProps> = ({ navigation, route, new_route }) =
           <MyWorkouts
             onWorkout1Press={() => navigation.navigate("MyWorkout", {...route.params})}
             workoutPlan = {route.params.workoutPlan}
+            navigation={navigation}
           />
-          <MyWorkouts
-            onWorkout1Press={() => navigation.navigate("MyWorkout")}
-            workoutPlan = {route.params.workoutPlan}
-          />
-          <MyWorkouts
-            onWorkout1Press={() => navigation.navigate("MyWorkout")}
-            workoutPlan = {route.params.workoutPlan}
-          />
-          <MyWorkouts
-            onWorkout1Press={() => navigation.navigate("MyWorkout")}
-            workoutPlan = {route.params.workoutPlan}
-          />
+
           <Pressable
             style={[styles.addWorkout, styles.topTextFlexBox]}
             onPress={() => navigation.navigate("Onboarding1")}
@@ -110,9 +101,9 @@ const Workouts: React.FC<HomeActiveProps> = ({ navigation, route, new_route }) =
         propColor1="#2f548d"
         propColor2="#9299a3"
         onHomePress={() => navigation.navigate("HomeActive",{ ...route.params })}
-        onTrainingPress={() => navigation.navigate("Workouts")}
-        onActivityPress={() => navigation.navigate("ActivityActive")}
-        onProfilePress={() => navigation.navigate("ProfileActive")}
+        onTrainingPress={() => navigation.navigate("Workouts",{ ...route.params })}
+        onActivityPress={() => navigation.navigate("ActivityActive",{ ...route.params })}
+        onProfilePress={() => navigation.navigate("ProfileActive",{ ...route.params })}
       />
 
     </View>

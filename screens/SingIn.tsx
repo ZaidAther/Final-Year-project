@@ -8,27 +8,29 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-import StatusBars from "../components/StatusBars";
-import Inputs from "../components/Inputs";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { useNavigation, ParamListBase, useRoute, RouteProp } from "@react-navigation/native";
 import { FontFamily, Padding, FontSize, Color } from "../GlobalStyles";
 import { useState } from "react";
-import { shadow } from "react-native-paper";
+import Inputs from "../components/Inputs";
+import { RootStackParamList } from "../types";
+
+
 
 const SingIn = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  // const navigation = useNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPressed, setIsPressed] = useState(false);
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://172.20.10.3:5000/login", {
-        method: "POST",
+      const response = await fetch('http://192.168.1.113:5000/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
@@ -37,12 +39,16 @@ const SingIn = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        navigation.navigate("Onboarding");
+        if (data.has_user_data) {
+         navigation.navigate("HomeActive", { ...route.params,clusterId: data.cluster_id });
+        } else {
+          navigation.navigate("Onboarding");
+        }
       } else {
         alert(data.message);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -51,19 +57,15 @@ const SingIn = () => {
   };
 
   const handleSignUp = () => {
-    // Step 3
     navigation.navigate("SignUp");
   };
 
   return (
-    <View style={[styles.singIn, styles.singFlexBox]}>
-
-      <ScrollView
-        style={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContentScrollViewContent}
-      >
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.scrollContent}>
         <View style={styles.logo}>
           <Image
             style={styles.logoIcon}
@@ -141,17 +143,20 @@ const SingIn = () => {
             </Pressable>
           </View>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContentScrollViewContent: {
-    flexDirection: "column",
-    paddingBottom: 10,
-    alignItems: "center",
-    justifyContent: "center",
+  container: {
+    backgroundColor: "white",
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  scrollContent: {
+    paddingTop: Padding.p_31xl,
+    paddingHorizontal: Padding.p_3xs,
   },
   singFlexBox: {
     overflow: "hidden",
@@ -168,12 +173,9 @@ const styles = StyleSheet.create({
   },
   inputSpaceBlock: {
     paddingVertical: 0,
-    paddingHorizontal: Padding.p_3xs,
     marginTop: 25,
-    // alignSelf: "stretch",
     width: "100%",
     alignItems: "center",
-    
   },
   iconsSpaceBlock: {
     marginTop: 30,
@@ -229,11 +231,19 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 3,
     },
-    shadowRadius: 2,
+    shadowRadius: 5,
     elevation: 5,
     shadowOpacity: 1,
+    borderRadius: 8,
+    height: 45,
+    backgroundColor: Color.primary,
+    paddingHorizontal: 33,
+    paddingVertical: 12,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    overflow: "hidden",
   },
   button: {
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -319,16 +329,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  scrollContent: {
-    zIndex: 1,
-    marginTop: 25,
-    alignSelf: "stretch",
-    flex: 1,
-  },
+
   singIn: {
     backgroundColor: Color.colorWhite,
     width: "100%",
-    // height: "100%",
     paddingTop: Padding.p_31xl,
     alignContent: "center",
     justifyContent: "center",

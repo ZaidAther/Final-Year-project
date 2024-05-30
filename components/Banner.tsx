@@ -4,9 +4,16 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
+import { RootStackParamList } from "../types";
 
-const Banner = () => {
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+export type bannerProp ={
+  route: any;
+  navigation: any;
+  workoutPlan:any;
+}
+
+const Banner = ({route, navigation, workoutPlan}: bannerProp) => {
+  route.params.workoutPlan = workoutPlan
 
   return (
     <View style={styles.banner}>
@@ -24,7 +31,7 @@ const Banner = () => {
         </Text>
         <Pressable
           style={[styles.button, styles.buttonFlexBox]}
-          onPress={() => navigation.navigate("Workouts")}
+          onPress={() => navigation.navigate("Workouts", {...route.params})}
         >
           <Text style={[styles.startTraining, styles.startTrainingTypo]}>
             Start Training

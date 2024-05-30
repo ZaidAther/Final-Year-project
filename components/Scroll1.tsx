@@ -55,6 +55,7 @@ export type Scroll1Type = {
   };
 };
 
+
 // Define Scroll1 component
 const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
@@ -63,35 +64,24 @@ const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
 
   // State variables and functions for fetching meal plan
   const [mealPlans, setMealPlan] = React.useState(mealPlan);
-  // const [loading, setLoading] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   fetch("http://192.168.18.22:5000/recommend_meal_plan", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ cluster_id: clusterId }),
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setMealPlan(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error.message);
-  //       setLoading(false);
-  //     });
-  // }, [clusterId]);
+  // Calculate total proteins
+  let totalProteins = 0;
+  let totalcarbs = 0;
+  let totalfat = 0;
+  let totalcalories = 0;
+  
+  if (mealPlan) {
+    Object.values(mealPlan).forEach((mealsPerDay) => {
+      Object.values(mealsPerDay).forEach((meal) => {
+        totalProteins += meal.protein;
+        totalcarbs += meal.carbohydrate;
+        totalfat += meal.fat;
+        totalcalories += meal.calories;
+      });
+    });
+  }
 
-  // if (loading) {
-  //   return <ActivityIndicator size="large" color={Color.primary} />;
-  // }
 
   return (
     <View style={[styles.scroll, style]}>
@@ -107,7 +97,10 @@ const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
         <Pressable
           style={styles.item1}
           onPress={() =>
-            navigation.navigate("ActivityActive", { mealPlan: mealPlan })
+            navigation.navigate("ActivityActive", {
+              ...route.params,
+              mealPlan: mealPlans,
+            })
           }
         >
           <Text style={[styles.nutrition1, styles.nutritionTypo]}>
@@ -142,20 +135,19 @@ const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
           <View style={[styles.info, styles.infoSpaceBlock]}>
             <View style={styles.textShadowBox}>
               <Text style={[styles.protein, styles.kcalTypo]}>Protein</Text>
-              <Text style={[styles.g, styles.kcalTypo]}>details</Text>
-              {/* <Image source={{ uri: details.image }} style={styles.mealImage} /> */}
+              <Text style={[styles.g, styles.kcalTypo]}>{totalProteins} g</Text>
             </View>
             <View style={[styles.text2, styles.textShadowBox]}>
               <Text style={[styles.kcal1, styles.kcalTypo]}>Kcal</Text>
-              <Text style={[styles.g, styles.kcalTypo]}>1200 kcal</Text>
+              <Text style={[styles.g, styles.kcalTypo]}>{totalcalories} kcal</Text>
             </View>
             <View style={[styles.text3, styles.textShadowBox]}>
               <Text style={[styles.kcal1, styles.kcalTypo]}>Fat</Text>
-              <Text style={[styles.g, styles.kcalTypo]}>37 g</Text>
+              <Text style={[styles.g, styles.kcalTypo]}>{totalfat} g</Text>
             </View>
             <View style={[styles.text4, styles.textShadowBox]}>
               <Text style={[styles.carbs, styles.kcalTypo]}>Carbs</Text>
-              <Text style={[styles.g, styles.kcalTypo]}>14 g</Text>
+              <Text style={[styles.g, styles.kcalTypo]}>{totalcarbs} g</Text>
             </View>
           </View>
         </View>
@@ -172,7 +164,12 @@ const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
               {Object.entries(meals).map(([mealTime, details]) => (
                 <Pressable
                   style={styles.itemShadowBox}
-                  onPress={() => navigation.navigate("FoodDetails")}
+                  onPress={() =>
+                    navigation.navigate("FoodDetails", {
+                      ...route.params,
+                      mealDetails: details,
+                    })
+                  }
                   key={mealTime}
                 >
                   <Image

@@ -11,14 +11,7 @@ const Welcome = () => {
 
   return (
     <View style={[styles.welcome, styles.welcomeBg]}>
-      <View style={styles.statusBar}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightWidth={390}
-        />
-      </View>
+
       <View style={styles.content}>
         <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
           <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>

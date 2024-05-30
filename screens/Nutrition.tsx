@@ -40,14 +40,15 @@ const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
   const [mealPlan, setMealPlan] = useState<MealPlan>(route.params.mealPlan);
   const { clusterId } = route.params;
   const [loading, setLoading] = useState(true);
-  console.log(mealPlan, clusterId)
+  // console.log(mealPlan, clusterId)
   const [flatListFlatListData, setFlatListFlatListData] = useState([
     <Scroll1 clusterId={clusterId} mealPlan={mealPlan} />,
   ]);
 
   useEffect(() => {
+    console.log("Nutrition:",route.params)
     if (!mealPlan) {
-      fetch("http://172.20.10.3:5000/recommend_meal_plan", {
+      fetch("http://192.168.1.113:5000/recommend_meal_plan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +92,7 @@ const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
         <View style={[styles.home, styles.homeFlexBox]}>
           <Pressable
             style={styles.homeFlexBox}
-            onPress={() => navigation.navigate("HomeActive")}
+            onPress={() => navigation.navigate("HomeActive", {...route.params})}
           >
             <Image
               style={styles.homeIcon}
@@ -103,7 +104,7 @@ const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
         </View>
         <Pressable
           style={styles.homeFlexBox}
-          onPress={() => navigation.navigate("Workouts")}
+          onPress={() => navigation.navigate("Workouts", {...route.params, mealPlan: mealPlan, clusterId: clusterId})}
         >
           <Image
             style={[styles.trainingIcon, styles.iconLayout]}
@@ -125,7 +126,7 @@ const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
         </Pressable>
         <Pressable
           style={styles.homeFlexBox}
-          onPress={() => navigation.navigate("ProfileActive")}
+          onPress={() => navigation.navigate("ProfileActive", {...route.params})}
         >
           <Image
             style={[styles.profileIcon, styles.iconLayout]}

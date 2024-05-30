@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   cardio: {
     alignSelf: "stretch",
-    fontSize: FontSize.size_sm,
+    fontSize: FontSize.size_xs,
     lineHeight: 24,
     color: Color.colorGray_200,
     marginTop: 3,

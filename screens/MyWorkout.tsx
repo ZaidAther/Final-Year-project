@@ -45,68 +45,13 @@ interface HomeActiveProps {
       activity_level: string;
       clusterId: number;
       workoutPlan: any;
+      day: string;
     };
   };
 }
 const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
-  const [workoutPlan, setWorkoutPlan] = React.useState<any>({});
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<unknown>(null);
-
-  React.useEffect(() => {
-    const fetchExercises = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          "http://172.20.10.3:5000/recommend_workout_plan",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              weight: route.params.weight,
-              height: route.params.height,
-              age: route.params.age,
-              gender: route.params.gender,
-              fitness_goal: route.params.fitness_goal,
-              muscle_groups: route.params.muscle_groups,
-              workout_intensity: route.params.workout_intensity,
-              activity_level: route.params.activity_level,
-            }),
-          }
-        );
-        const jsonData = await response.json();
-        if (response.ok) {
-          setWorkoutPlan(jsonData);
-        } else {
-          throw new Error("Failed to fetch exercises");
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExercises();
-  }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000FF" />;
-  }
-
-  if (error) {
-    return (
-      <View>
-        <Text>
-          {typeof error === "string"
-            ? error
-            : "An error occurred while fetching the workout plan."}
-        </Text>
-      </View>
-    );
-  }
+  const { workoutPlan, day } = route.params;
+  const exercisesForDay = workoutPlan[day];
 
   const handleExercisePress = (
     exerciseDetails: string,
@@ -130,165 +75,46 @@ const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                 Exercises
               </Text>
               <Text style={[styles.exercises210, styles.minTypo]}>
-                Exercises: 210
+                Exercises: {Object.keys(exercisesForDay).length}
               </Text>
             </View>
             {/* <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text> */}
           </View>
           <View style={styles.excercises}>
-            <Pressable style={styles.exercise1SpaceBlock}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Front and Back Lunge
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </Pressable>
-
-            {Object.entries(workoutPlan).map(([day, exercises]) => (
-              <View>
-                {Object.entries(exercises).map(
-                  ([muscleGroup, exerciseDetails]) => (
-                    <Pressable
-                      onPress={() =>
-                        handleExercisePress(exerciseDetails, muscleGroup, day)
-                      }
-                      key={muscleGroup}
-                      style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
-                    >
-                      <View>
-                        <Video
-                          source={{ uri: exerciseDetails.Exercise_Video }}
-                          style={styles.beautifulSlimBrunetteDoing}
-                          useNativeControls
-                          resizeMode={ResizeMode.CONTAIN}
-                          isLooping
-                        />
-                      </View>
-                      <View style={styles.text1}>
-                        <Text
-                          style={[styles.danceFitness, styles.hiDeborahTypo]}
-                        >
-                          {exerciseDetails.Exercise_Name}
-                        </Text>
-                        <Text style={[styles.text2, styles.text2Typo]}>
-                          {muscleGroup}
-                        </Text>
-                      </View>
-                      <Image
-                        style={styles.featherinfoIcon}
-                        contentFit="cover"
-                        source={require("../assets/featherinfo1.png")}
-                      />
-                    </Pressable>
-                  )
-                )}
-              </View>
-            ))}
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
-            <View style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}>
-              <View>
-                <View style={styles.beautifulSlimBrunetteDoing} />
-              </View>
-              <View style={styles.text1}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Sumo Squat
-                </Text>
-                <Text style={[styles.text2, styles.text2Typo]}>0:30</Text>
-              </View>
-              <Image
-                style={styles.featherinfoIcon}
-                contentFit="cover"
-                source={require("../assets/featherinfo1.png")}
-              />
-            </View>
+            {Object.entries(exercisesForDay).map(
+              ([muscleGroup, exerciseDetails]) => (
+                <Pressable
+                  onPress={() =>
+                    handleExercisePress(exerciseDetails, muscleGroup, day)
+                  }
+                  key={muscleGroup}
+                  style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
+                >
+                  <View>
+                    <Video
+                      source={{ uri: exerciseDetails.Exercise_Video }}
+                      style={styles.beautifulSlimBrunetteDoing}
+                      useNativeControls
+                      resizeMode={ResizeMode.CONTAIN}
+                      isLooping
+                    />
+                  </View>
+                  <View style={styles.text1}>
+                    <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
+                      {exerciseDetails.Exercise_Name}
+                    </Text>
+                    <Text style={[styles.text2, styles.text2Typo]}>
+                      {muscleGroup}
+                    </Text>
+                  </View>
+                  <Image
+                    style={styles.featherinfoIcon}
+                    contentFit="cover"
+                    source={require("../assets/featherinfo1.png")}
+                  />
+                </Pressable>
+              )
+            )}
           </View>
         </View>
       </ScrollView>
@@ -297,12 +123,30 @@ const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
         training={require("../assets/training.png")}
         activity={require("../assets/activity.png")}
         propColor2="#9299a3"
-        onHomePress={() => navigation.navigate("HomeActive")}
-        onTrainingPress={() => navigation.navigate("Workouts")}
-        onActivityPress={() =>
-          navigation.navigate("ActivityActive", { ...route.params, workoutPlan: workoutPlan })
+        onHomePress={() =>
+          navigation.navigate("HomeActive", {
+            ...route.params,
+            workoutPlan: workoutPlan,
+          })
         }
-        onProfilePress={() => navigation.navigate("ProfileActive")}
+        onTrainingPress={() =>
+          navigation.navigate("Workouts", {
+            ...route.params,
+            workoutPlan: workoutPlan,
+          })
+        }
+        onActivityPress={() =>
+          navigation.navigate("ActivityActive", {
+            ...route.params,
+            workoutPlan: workoutPlan,
+          })
+        }
+        onProfilePress={() =>
+          navigation.navigate("ProfileActive", {
+            ...route.params,
+            workoutPlan: workoutPlan,
+          })
+        }
       />
     </View>
   );

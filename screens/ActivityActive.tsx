@@ -11,7 +11,7 @@ import { RootStackParamList } from "../types";
 
 const ActivityActive = () => {
   const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
-  console.log("screenshot", route.params)
+  // console.log("screenshot", route.params)
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const [flatListFlatListData, setFlatListFlatListData] = useState([
     <Status1/>,

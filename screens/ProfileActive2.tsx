@@ -2,55 +2,46 @@ import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  useNavigation,
-  ParamListBase,
-  RouteProp,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation, RouteProp } from "@react-navigation/native";
 import StatusBars from "../components/StatusBars";
 import Setting from "../components/Setting";
 import NavBar from "../components/NavBar";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 import Footer from "../components/Footer";
-import { RootStackParamList } from "../types";
 
-type ProfileActiveNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "ActivityActive"
->;
-type ProfileActiveRouteProp = RouteProp<RootStackParamList, "ActivityActive">;
+type RootStackParamList = {
+  ProfileActive: { weight: any; height: any; age: any };
+};
 
-const ProfileActive: React.FC<{
-  navigation: ProfileActiveNavigationProp;
-  route: ProfileActiveRouteProp;
-}> = ({ route, navigation }) => {
+type ProfileActiveNavigationProp = StackNavigationProp<RootStackParamList, "ProfileActive">;
+type ProfileActiveRouteProp = RouteProp<RootStackParamList, "ProfileActive">;
+
+const ProfileActive2: React.FC<{ navigation: ProfileActiveNavigationProp; route: ProfileActiveRouteProp }> = ({ route, navigation }) => {
   const { weight, height, age } = route.params;
 
-  // console.log("profile", weight);
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://192.168.1.113:5000/logout", {
-        method: "GET",
+      const response = await fetch('http://192.168.1.113:5000/logout', {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       if (response.ok) {
         const data = await response.json();
         console.log(data.message);
-        navigation.navigate("SingIn", { ...route.params });
+        navigation.navigate("SingIn");
       } else {
-        console.error("Failed to log out");
+        console.error('Failed to log out');
       }
     } catch (error) {
-      console.error("Error logging out:", error);
+      console.error('Error logging out:', error);
     }
   };
 
   return (
-    <>
     <View style={styles.profileActive}>
+
       <ScrollView
         style={styles.allSettings}
         showsVerticalScrollIndicator={false}
@@ -88,12 +79,13 @@ const ProfileActive: React.FC<{
             <Text style={[styles.min1, styles.minTypo]}>{age} Years</Text>
           </View>
         </View>
-
-        {/* <View style={[styles.accountInfo, styles.accountShadowBox]}>
+        <View style={[styles.accountInfo, styles.accountShadowBox]}>
           <Setting title="Account" />
-          <Setting title="My workouts  🚀" propMarginTop={3} />
+          <Setting title="My workouts 🚀" propMarginTop={3} />
           <Setting title="Workout reminders" propMarginTop={3} />
-          <Setting title="Log out" propMarginTop={3} />
+          <Pressable onPress={handleLogout}>
+            <Setting title="Log out" propMarginTop={3} />
+          </Pressable>
         </View>
         <View style={styles.settings}>
           <Text style={styles.settings1}>Settings</Text>
@@ -103,116 +95,24 @@ const ProfileActive: React.FC<{
             <Setting title="Pin Lock" propMarginTop={3} />
             <Setting title="Support" propMarginTop={3} />
           </View>
-        </View> */}
-      </ScrollView>
-        <View style={[styles.continue, styles.levelsFlexBox]}>
-          <Pressable
-            style={[styles.button, styles.levelsFlexBox]}
-            onPress={handleLogout}
-          >
-            <Text style={[styles.startTraining, styles.chooseGenderTypo]}>
-              Logout
-            </Text>
-          </Pressable>
         </View>
+      </ScrollView>
+      <Footer
+        homeActive={require("../assets/homeactive.png")}
+        training={require("../assets/training.png")}
+        activity={require("../assets/activity.png")}
+        onHomePress={() => navigation.navigate("HomeActive")}
+        onTrainingPress={() => navigation.navigate("Workouts")}
+        onActivityPress={() => navigation.navigate("ActivityActive")}
+        onProfilePress={() => navigation.navigate("ProfileActive")}
+      />
     </View>
-        <Footer
-          homeActive={require("../assets/homeactive.png")}
-          training={require("../assets/training.png")}
-          activity={require("../assets/activity.png")}
-          onHomePress={() =>
-            navigation.navigate("HomeActive", { ...route.params })
-          }
-          onTrainingPress={() =>
-            navigation.navigate("Workouts", { ...route.params })
-          }
-          onActivityPress={() =>
-            navigation.navigate("ActivityActive", { ...route.params })
-          }
-          onProfilePress={() =>
-            navigation.navigate("ProfileActive", { ...route.params })
-          }
-        />
-        </>
-
   );
 };
 
-const styles = StyleSheet.create({
-  buttonFlexBox: {
-    alignSelf: "stretch",
-    overflow: "hidden",
-  },
-  levelsSpaceBlock: {
-    marginTop: 60,
-    alignSelf: "stretch",
-  },
-  levelsFlexBox: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  chooseGenderTypo: {
-    textAlign: "center",
-    fontFamily: FontFamily.poppins,
-    fontWeight: "500",
-  },
 
-  chooseGender: {
-    fontSize: FontSize.size_xl,
-    color: Color.colorGray_200,
-    textAlign: "center",
-  },
-  levels: {
-    marginTop: 60,
-    alignSelf: "stretch",
-  },
-  scrollContent: {
-    zIndex: 1,
-    marginTop: 33,
-    flex: 1,
-    alignSelf: "stretch",
-  },
-  startTraining: {
-    fontSize: FontSize.size_mid,
-    lineHeight: 20,
-    color: Color.primary,
-  },
-  button: {
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 5,
-    elevation: 5,
-    shadowOpacity: 1,
-    borderRadius: Border.br_6xl,
-    backgroundColor: "white",
-    paddingHorizontal: Padding.p_14xl,
-    paddingVertical: Padding.p_xs,
-    alignSelf: "stretch",
-    overflow: "hidden",
-    flexDirection: "row",
-  },
-  continue: {
-    width: "100%",
-    // right: "3.97%",
-    bottom: 0,
-    // left: "3.97%",
-    paddingBottom: Padding.p_6xl,
-    zIndex: 2,
-    // position: "absolute",
-  },
-  trainingLevel: {
-    backgroundColor: Color.colorWhite,
-    width: "100%",
-    height: 692,
-    paddingHorizontal: Padding.p_3xs,
-    paddingTop: Padding.p_31xl,
-    alignItems: "center",
-    overflow: "hidden",
-    flex: 1,
-  },
+
+const styles = StyleSheet.create({
   allSettingsScrollViewContent: {
     flexDirection: "column",
     alignItems: "center",
@@ -408,7 +308,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileActive: {
-    backgroundColor: Color.colorWhitesmoke_100,
+    backgroundColor: Color.colorWhitesmoke,
     width: "100%",
     height: 719,
     paddingHorizontal: Padding.p_3xs,
@@ -420,4 +320,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileActive;
+export default ProfileActive2;

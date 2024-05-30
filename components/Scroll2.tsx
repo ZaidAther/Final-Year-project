@@ -14,10 +14,12 @@ import { FontFamily, FontSize, Color, Padding, Border } from "../GlobalStyles";
 
 export type Scroll2Type = {
   style?: StyleProp<ViewStyle>;
+  mealDetails?: any;
 };
 
-const Scroll2 = ({ style }: Scroll2Type) => {
+const Scroll2 = ({ style, mealDetails }: Scroll2Type) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  console.log("Scroll2as", mealDetails);
 
   return (
     <View style={[styles.scroll, style]}>
@@ -29,27 +31,32 @@ const Scroll2 = ({ style }: Scroll2Type) => {
             source={require("../assets/icon1.png")}
           />
         </Pressable>
-        <Text style={[styles.chickenMaximusSala, styles.ingredients1Typo]}>
-          Chicken Maximus Salad
-        </Text>
       </View>
-      <View style={[styles.image, styles.infoFlexBox]} />
+      <Text style={[styles.chickenMaximusSala, styles.ingredients1Typo]}>
+        {mealDetails.name}
+      </Text>
+
+      <Image
+        style={[styles.image, styles.infoFlexBox]}
+        contentFit="cover"
+        source={{ uri: mealDetails.image }}
+      />
       <View style={[styles.info, styles.infoFlexBox]}>
         <View style={styles.text}>
           <Text style={[styles.protein, styles.carbsTypo]}>Protein</Text>
-          <Text style={[styles.g, styles.gTypo]}>90 g</Text>
+          <Text style={[styles.g, styles.gTypo]}>{mealDetails.protein} g</Text>
         </View>
         <View style={styles.textShadowBox}>
           <Text style={[styles.kcal, styles.gTypo]}>Kcal</Text>
-          <Text style={[styles.g, styles.gTypo]}>1200 kcal</Text>
+          <Text style={[styles.g, styles.gTypo]}>{mealDetails.calories} kcal</Text>
         </View>
         <View style={styles.textShadowBox}>
           <Text style={[styles.kcal, styles.gTypo]}>Fat</Text>
-          <Text style={[styles.g, styles.gTypo]}>37 g</Text>
+          <Text style={[styles.g, styles.gTypo]}>{mealDetails.fat} g</Text>
         </View>
         <View style={styles.textShadowBox}>
           <Text style={[styles.carbs, styles.carbsTypo]}>Carbs</Text>
-          <Text style={[styles.g, styles.gTypo]}>14 g</Text>
+          <Text style={[styles.g, styles.gTypo]}>{mealDetails.carbohydrate} g</Text>
         </View>
       </View>
       <View style={[styles.ingredients, styles.descriptionFlexBox]}>
@@ -122,6 +129,8 @@ const styles = StyleSheet.create({
     height: 12,
   },
   icon: {
+    position: "absolute",
+    top: "80%",
     height: 34,
     padding: Padding.p_xs,
     zIndex: 0,
@@ -138,13 +147,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   chickenMaximusSala: {
-    position: "absolute",
-    marginTop: -12,
-    marginLeft: -106,
-    top: "50%",
-    left: "50%",
+    // position: "absolute",
+    // marginTop: -12,
+    // marginLeft: -106,
+    // top: "50%",
+    // left: "50%",
+
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginHorizontal: "auto",
     zIndex: 1,
-    textAlign: "left",
+    textAlign: "center",
     color: Color.colorGray_100,
   },
   header: {

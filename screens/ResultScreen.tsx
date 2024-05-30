@@ -46,7 +46,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const { clusterId } = route.params;
 
   useEffect(() => {
-    fetch("http://172.20.10.3:5000/recommend_meal_plan", {
+    fetch("http://192.168.1.113:5000/recommend_meal_plan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

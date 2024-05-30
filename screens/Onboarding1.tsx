@@ -11,21 +11,13 @@ const Onboarding1 = () => {
 
   return (
     <View style={[styles.onboarding2, styles.button1FlexBox]}>
-      <View style={styles.statusBar}>
-        <StatusBars
-          barsStatusBarsiPhoneLight={require("../assets/barsstatus-barsiphonelight.png")}
-          barsStatusBarsiPhoneLightHeight={50}
-          barsStatusBarsiPhoneLightOverflow="hidden"
-          barsStatusBarsiPhoneLightWidth={390}
-        />
-      </View>
       <View style={styles.content}>
         <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
           <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>
             Custom Workouts
           </Text>
           <Text style={[styles.title, styles.titleTypo]}>
-            FitooZone has workouts on demand that you can find based on hCreate
+            ActiveTrack has workouts on demand that you can find based on hCreate
             and save your own custom workouts. Name your workouts, save them,
             and they’ll automatically appear when you’re ready  to workoutow
             much time you have

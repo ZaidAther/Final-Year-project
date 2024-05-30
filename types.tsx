@@ -46,6 +46,7 @@ export type RootStackParamList = {
   //   clusterId: number;
   //   activity_level: string;
   // };
+
   HeightInputScreen: { 
     weight: number;
     height: number;
@@ -64,7 +65,29 @@ export type RootStackParamList = {
     age: number;
     gender: string;
   };
-  WorkoutPlan: any; 
+    Workouts: {
+    weight: number;
+    height: number;
+    age: number;
+    gender: string;
+    fitness_goal: string;
+    muscle_groups: string[];
+    workout_intensity: string;
+    clusterId: number;
+    activity_level: string;
+    mealPlan: {
+      [day: string]: {
+        [mealTime: string]: {
+          name: string;
+          calories: number;
+          carbohydrate: number;
+          fat: number;
+          protein: number;
+          image: string;
+        };
+      };
+    };
+  };
 // Define the appropriate params type for WorkoutPlan
   HomeActive: any; // Define the appropriate params type for WorkoutPlan
   ExerciseInfo: {
@@ -101,6 +124,37 @@ export type RootStackParamList = {
       };
     }
 };
+  FoodDetails: {
+    weight: number;
+    height: number;
+    age: number;
+    gender: string;
+    fitness_goal: string;
+    muscle_groups: string[];
+    workout_intensity: string;
+    clusterId: number;
+    activity_level: string;
+    mealPlan: {
+      [day: string]: {
+        [mealTime: string]: {
+          name: string;
+          calories: number;
+          carbohydrate: number;
+          fat: number;
+          protein: number;
+          image: string;
+        };
+      };
+    }
+    mealDetails: {
+      name: string;
+      calories: number;
+      carbohydrate: number;
+      fat: number;
+      protein: number;
+      image: string;
+    };
+};
   ActivityActive: { 
     weight: number;
     height: number;
@@ -123,6 +177,31 @@ export type RootStackParamList = {
       };
     };
   }};
-  Workouts: undefined;
-  ProfileActive: undefined;
+  SingIn: { 
+    weight: number;
+    height: number;
+    age: number;
+    gender: string;
+    fitness_goal: string;
+    muscle_groups: string[];
+    workout_intensity: string;
+    clusterId: number;
+    activity_level: string;
+    mealPlan: {
+    [day: string]: {
+      [mealTime: string]: {
+        name: string;
+        calories: number;
+        carbohydrate: number;
+        fat: number;
+        protein: number;
+        image: string;
+      };
+    };
+  }};
+  ProfileActive: {
+    weight: number;
+    height: number;
+    age: number;
+  }
 };

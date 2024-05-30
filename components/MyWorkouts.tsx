@@ -23,20 +23,28 @@ interface HomeActiveProps {
 
 export type MyWorkoutsType = {
   /** Action props */
-  onWorkout1Press?: () => void;
+  navigation: any;
   workoutPlan: any;
+  onWorkout1Press?: () => void;
 };
 
-const MyWorkouts = ({ onWorkout1Press, workoutPlan }: MyWorkoutsType) => {
-  // console.log(workoutPlan);
+const MyWorkouts = ({ navigation, workoutPlan }: MyWorkoutsType) => {
+  const handleWorkoutPress = (day: string) => {
+    navigation.navigate("MyWorkout", { day, workoutPlan });
+  };
+
   return (
     <>
       {Object.entries(workoutPlan).map(([day, exercises]) => (
-        <Pressable style={styles.workout1} onPress={onWorkout1Press}>
-          {Object.entries(exercises).map(([muscleGroup, exerciseDetails]) => (
-            <View style={styles.topText} key={day}>
+        <Pressable
+          style={styles.workout1}
+          onPress={() => handleWorkoutPress(day)}
+          key={day}
+        >
+          {Object.entries(exercises).map(([muscleGroup]) => (
+            <View style={styles.topText} key={muscleGroup}>
               <Text style={styles.workout11}>{day}</Text>
-              <Text style={[styles.beginner, styles.beginnerTypo]} key={muscleGroup}>
+              <Text style={[styles.beginner, styles.beginnerTypo]}>
                 {muscleGroup}
               </Text>
             </View>
