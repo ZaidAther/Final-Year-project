@@ -13,6 +13,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, ParamListBase, RouteProp, useRoute } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
 import { RootStackParamList } from "../types";
+import * as Pedometer from 'expo-sensors/build/Pedometer';
+import { useEffect, useState } from 'react';
+
+
+
 
 export type Status1Type = {
   style?: StyleProp<ViewStyle>;
@@ -23,8 +28,30 @@ export type Status1Type = {
 const Status1 = ({ style }: Status1Type) => {
   const route = useRoute<RouteProp<RootStackParamList, "ActivityActive">>();
   // const {mealPlan} = route.params;
-  console.log("status",route.params)
+  // console.log("status",route.params)
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+  const [stepCount, setStepCount] = useState(0);
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState(false);
+
+
+  useEffect(() => {
+    const subscription = Pedometer.watchStepCount((result) => {
+      setStepCount(result.steps);
+    });
+
+    Pedometer.isAvailableAsync().then(
+      (result) => {
+        setIsPedometerAvailable(result);
+      },
+      (error) => {
+        console.error('Error checking pedometer availability:', error);
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <View style={[styles.status, style]}>
@@ -103,7 +130,7 @@ const Status1 = ({ style }: Status1Type) => {
                 source={require("../assets/path-12.png")}
               />
               <View style={[styles.stepText, styles.textPosition]}>
-                <Text style={[styles.text1, styles.textFlexBox]}>1234</Text>
+                <Text style={[styles.text1, styles.textFlexBox]}>{isPedometerAvailable ? stepCount : 'N/A'}</Text>
                 <Text style={[styles.steps2, styles.bmpTypo]}>Steps</Text>
               </View>
             </View>

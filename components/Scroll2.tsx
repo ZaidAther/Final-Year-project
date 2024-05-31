@@ -71,7 +71,7 @@ const Scroll2 = ({ style, mealDetails }: Scroll2Type) => {
               source={require("../assets/oval2.png")}
             />
             <Text style={styles.crasDapibusLorem}>
-              Cras dapibus lorem rhoncus faucibus
+              {mealDetails.ingredients}
             </Text>
           </View>
           <View style={[styles.description1, styles.descriptionFlexBox]}>

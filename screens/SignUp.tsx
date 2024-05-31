@@ -16,12 +16,15 @@ import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { FontFamily, Padding, FontSize, Color } from "../GlobalStyles";
 import { useState } from "react";
 import { shadow } from "react-native-paper";
+import Constants from 'expo-constants';
+import * as Google from 'expo-auth-session/providers/google';
 
 const SignUp = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPressed, setIsPressed] = useState(false);
+ 
 
   const handleSignUp = async () => {
     try {

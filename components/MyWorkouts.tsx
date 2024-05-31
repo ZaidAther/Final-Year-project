@@ -29,6 +29,7 @@ export type MyWorkoutsType = {
 };
 
 const MyWorkouts = ({ navigation, workoutPlan }: MyWorkoutsType) => {
+  console.log("MyWorkouts:",workoutPlan)
   const handleWorkoutPress = (day: string) => {
     navigation.navigate("MyWorkout", { day, workoutPlan });
   };
@@ -41,14 +42,14 @@ const MyWorkouts = ({ navigation, workoutPlan }: MyWorkoutsType) => {
           onPress={() => handleWorkoutPress(day)}
           key={day}
         >
-          {Object.entries(exercises).map(([muscleGroup]) => (
-            <View style={styles.topText} key={muscleGroup}>
+            <View style={styles.topText} >
               <Text style={styles.workout11}>{day}</Text>
-              <Text style={[styles.beginner, styles.beginnerTypo]}>
+          {Object.entries(exercises).map(([muscleGroup]) => (
+              <Text style={[styles.beginner, styles.beginnerTypo]} key={muscleGroup}>
                 {muscleGroup}
               </Text>
-            </View>
           ))}
+            </View>
           <View style={styles.topText}>
             <Text style={styles.beginnerTypo}>Progress 100%</Text>
             <View style={styles.progressBar}>

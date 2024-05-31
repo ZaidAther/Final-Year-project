@@ -50,7 +50,7 @@ export const Color = {
 /* Paddings */
 export const Padding = {
   p_3xs: 10,
-  p_31xl: 50,
+  p_31xl: 80,
   p_26xl: 45,
   p_61xl: 80,
   p_8xs: 5,
