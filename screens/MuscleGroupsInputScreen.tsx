@@ -67,13 +67,13 @@ const MuscleGroupsInputScreen: React.FC<MuscleGroupsInputScreenProps> = ({
           showSkip
           navigationPosition="unset"
           navigationAlignSelf="stretch"
-          step2OfColor="#2f548d"
+          step2OfColor="#035e7b"
           step2OfMarginLeft="unset"
           skipMarginLeft="unset"
           onBackButtonPress={() => navigation.goBack()}
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>CHOOSE MUSCLE GROUPS</Text>
+          <Text style={styles.title}>Choose Muscle</Text>
         </View>
         <View style={styles.muscleGroupContainer}>
           {[
@@ -101,7 +101,7 @@ const MuscleGroupsInputScreen: React.FC<MuscleGroupsInputScreenProps> = ({
                     styles.selectedButtonText,
                 ]}
               >
-                {muscleGroup.toUpperCase()}
+                {muscleGroup}
               </Text>
             </TouchableHighlight>
           ))}
@@ -124,10 +124,10 @@ const MuscleGroupsInputScreen: React.FC<MuscleGroupsInputScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.colorWhitesmoke_100,
+    backgroundColor: Color.colorWhite,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: Padding.p_31xl,
+    paddingTop: Padding.p_56xl,
     paddingHorizontal: Padding.p_3xs,
   },
   content: {
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     width: "100%",
-    paddingTop: 33,
+    // paddingTop: 33,
   },
   continue: {
     width: "100%",
@@ -181,10 +181,11 @@ const styles = StyleSheet.create({
     
   },
   title: {
-    fontSize: FontSize.size_xl,
-    color: Color.colorSlategray_100,
-    textAlign: "center",
+    fontSize: FontSize.size_mid,
     lineHeight: 32,
+    color: Color.colorGray_200,
+    fontWeight: "400",
+    // marginTop: 60,
   },
   muscleGroupContainer: {
     flexDirection: "row",
@@ -193,20 +194,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   muscleButton: {
-    padding: 10,
-    borderRadius: Border.br_mini,
+    padding: 15,
+    borderRadius: Border.br_5xs,
     backgroundColor: Color.colorWhite,
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: { height: 3, width: 0 },
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 1,
+    elevation: 1,
+    shadowOpacity: 1,
     marginBottom: 10,
     width: "45%",
     alignItems: "center",
   },
   muscleButtonText: {
-    fontSize: FontSize.size_sm,
-    color: Color.colorSlategray_100,
+    fontSize: FontSize.size_base,
+    // fontWeight: "400",
+    color: Color.colorGray_200,
     textAlign: "center",
   },
   selectedButton: {

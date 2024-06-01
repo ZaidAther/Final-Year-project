@@ -6,8 +6,8 @@ const ALaunch = () => {
   return (
     <View style={styles.aLaunch}>
       <Text style={styles.activetrack}>
-        <Text style={[styles.active, styles.trackTypo]}>ACTIVE</Text>
-        <Text style={styles.trackTypo}>TRACK</Text>
+        <Text style={[styles.active, styles.trackTypo]}>FIT</Text>
+        <Text style={styles.trackTypo}>EASE</Text>
       </Text>
     </View>
   );

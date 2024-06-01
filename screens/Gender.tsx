@@ -5,6 +5,7 @@ import { useNavigation, RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types";
 import Navigations from "../components/Navigation";
 import { Color, FontSize, Border, Padding, FontFamily } from "../GlobalStyles";
+import { color } from "@rneui/base";
 
 type GenderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Gender'>;
 type GenderScreenRouteProp = RouteProp<RootStackParamList, 'Gender'>;
@@ -17,6 +18,7 @@ type Props = {
 const Gender: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation<GenderScreenNavigationProp>();
   const [gender, setGender] = useState("");
+  console.log(route.params.age);
 
   const handlePress = (selectedGender: string) => {
     setGender(selectedGender);
@@ -113,16 +115,16 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 1,
     },
-    shadowRadius: 5,
-    elevation: 5,
+    shadowRadius: 1,
+    elevation: 1,
     shadowOpacity: 1,
   },
 
   text: {
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
     color: Color.colorGray_100,
     flex: 1,
     fontSize: FontSize.size_base,
@@ -149,14 +151,14 @@ const styles = StyleSheet.create({
   chooseGenderTypo: {
     textAlign: "center",
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
   },
   buttonFlexBox: {
     justifyContent: "center",
     alignItems: "center",
   },
   chooseGender: {
-    fontSize: FontSize.size_xl,
+    fontSize: FontSize.size_mid,
     lineHeight: 32,
     color: Color.colorGray_200,
     marginTop: 60,

@@ -17,7 +17,7 @@ const Onboarding1 = () => {
             Custom Workouts
           </Text>
           <Text style={[styles.title, styles.titleTypo]}>
-            ActiveTrack has workouts on demand that you can find based on hCreate
+            FitEase has workouts on demand that you can find based on hCreate
             and save your own custom workouts. Name your workouts, save them,
             and they’ll automatically appear when you’re ready  to workoutow
             much time you have

@@ -5,6 +5,7 @@ import Navigations from "../components/Navigation";
 import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
+import { Picker } from "@react-native-picker/picker";
 
 type HeightInputScreenNavigationProp = StackNavigationProp<RootStackParamList, 'HeightInputScreen'>;
 
@@ -44,14 +45,20 @@ const HeightInputScreen: React.FC = () => {
         <View style={styles.button1}>
           <Text style={styles.buttontext}>CM</Text>
         </View>
-        <View style={[styles.heightInput, styles.continueFlexBox]}>
-          <TextInput
-            style={[styles.input, styles.inputShadowBox]}
-            value={height}
-            onChangeText={setheight}
-            keyboardType="numeric"
-          />
-          <Text style={styles.cm}>cm</Text>
+        <View style={[styles.heightInput, styles.continueFlexBox, styles.pickerContainer,]}>
+        <Picker
+                selectedValue={height}
+                onValueChange={(itemValue, itemIndex) => setheight(itemValue)}
+                style={styles.picker}
+              >
+                {Array.from({ length: 200 }, (_, i) => i + 1).map((value) => (
+                  <Picker.Item
+                    key={value}
+                    label={value.toString()}
+                    value={value.toString()}
+                  />
+                ))}
+              </Picker>
         </View>
       </View>
       <View style={[styles.continue, styles.continueFlexBox]}>
@@ -70,6 +77,15 @@ const HeightInputScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  pickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  picker: {
+    flex: 1,
+    height: 64,
+  },
   scrollFlexBox: {
     flex: 1,
     alignItems: "center",

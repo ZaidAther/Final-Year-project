@@ -52,26 +52,29 @@ const Goal: React.FC<Props> = ({ route }) => {
         </Text>
         <View style={[styles.genders, styles.buttonFlexBox]}>
         <Goals
-            title="LOOSE WEIGHT"
+            title="Lose weight"
             txt="Light workout intensity"
-            propBorderColor={fitnessGoal === "lose_weight" ? "#2f548d" : "#fff"}
+            propBorderColor={fitnessGoal === "lose_weight" ? "#035e7b" : "#fff"}
             onPress={() => setFitnessGoal("lose_weight")}
-            dumbbell={require("../assets/dumbbell1.png")}
+            isSelected={fitnessGoal === "lose_weight"}
+            dumbbell={require("../assets/lose.png")}
           />
           <Goals
           
-            title="GAIN MUSCLE"
+            title="Gain muscle"
             txt="Moderate workout intensity"
-            propBorderColor={fitnessGoal === "gain_muscle" ? "#2f548d" : "#fff"}
+            propBorderColor={fitnessGoal === "gain_muscle" ? "#035e7b" : "#fff"}
             onPress={() => setFitnessGoal("gain_muscle")}
-            dumbbell={require("../assets/dumbbell1.png")}
+            isSelected={fitnessGoal === "gain_muscle"}
+            dumbbell={require("../assets/gain.png")}
           />
           <Goals
-            title="MAINTAIN"
+            title="Maintain"
             txt="Intense workout intensity"
-            propBorderColor={fitnessGoal === "maintain" ? "#2f548d" : "#fff"}
+            propBorderColor={fitnessGoal === "maintain" ? "#035e7b" : "#fff"}
             onPress={() => setFitnessGoal("maintain")}
-            dumbbell={require("../assets/dumbbell1.png")}
+            dumbbell={require("../assets/maintain.png")}
+            isSelected={fitnessGoal === "maintain"}
           />
           {/* <Goals dumbbell={require("../assets/dumbbell1.png")} />
           <Goals
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
   chooseGenderTypo: {
     textAlign: "center",
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
   },
   buttonFlexBox: {
     justifyContent: "center",
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   chooseGender: {
-    fontSize: FontSize.size_xl,
+    fontSize: FontSize.size_mid,
     lineHeight: 32,
     color: Color.colorGray_200,
     marginTop: 60,

@@ -44,11 +44,11 @@ const MyWorkouts = ({ navigation, workoutPlan }: MyWorkoutsType) => {
         >
             <View style={styles.topText} >
               <Text style={styles.workout11}>{day}</Text>
-          {Object.entries(exercises).map(([muscleGroup]) => (
+          {/* {Object.entries(exercises).map(([muscleGroup]) => (
               <Text style={[styles.beginner, styles.beginnerTypo]} key={muscleGroup}>
-                {muscleGroup}
+                {muscleGroup.slice(0,-2)}
               </Text>
-          ))}
+          ))} */}
             </View>
           <View style={styles.topText}>
             <Text style={styles.beginnerTypo}>Progress 100%</Text>

@@ -26,7 +26,7 @@ export const Color = {
   colorWhite: "#fff",
   tertiaryColor: "#afafaf",
   colorDarkgray_100: "#9299a3",
-  primary: "#2f548d",
+  primary: "#035e7b",
   colorSteelblue_100: "rgba(47, 84, 141, 0.7)",
   colorGray_100: "#1e2022",
   colorGray_200: "#0b0616",
@@ -50,7 +50,7 @@ export const Color = {
 /* Paddings */
 export const Padding = {
   p_3xs: 10,
-  p_31xl: 80,
+  p_31xl: 50,
   p_26xl: 45,
   p_61xl: 80,
   p_8xs: 5,
@@ -80,7 +80,7 @@ export const Border = {
   br_5xs: 8,
   br_8xs_9: 5,
   br_8xs: 5,
-  br_6xl: 25,
+  br_6xl: 8,
   br_5xl: 24,
   br_xl: 20,
   br_5xl_9: 25,

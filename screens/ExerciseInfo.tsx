@@ -106,7 +106,7 @@ const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ route }) => {
             <View style={[styles.focusArea, styles.equipmentFlexBox]}>
               <Text style={[styles.title, styles.titleTypo]}>Focus Area</Text>
               <Text style={[styles.title3, styles.titleTypo]}>
-                {muscleGroup}
+                {muscleGroup.slice(0,-2)}
               </Text>
             </View>
           </View>
@@ -371,21 +371,22 @@ const styles = StyleSheet.create({
     backgroundColor: Color.rgb255255255,
   },
   mainInfo: {
-    // shadowColor: "rgba(234, 240, 246, 0.6)",
+    shadowColor: "rgba(0, 0, 0, 0.15)",
     paddingVertical: Padding.p_5xl,
     marginTop: -15,
-    // borderRadius: Border.br_5xs,
-    // shadowOpacity: 1,
-    // // elevation: 5,
-    // // shadowRadius: 5,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
+    borderRadius: Border.br_5xs,
+    shadowOpacity: 1,
+    elevation: 1,
+    shadowRadius: 1,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
     paddingHorizontal: Padding.p_3xs,
     backgroundColor: Color.rgb255255255,
   },
   heroSection: {
+    paddingHorizontal: 10,
     height: 489,
     alignSelf: "stretch",
     alignItems: "center",
@@ -417,17 +418,18 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   details: {
+    marginTop:50,
     paddingHorizontal: Padding.p_mini,
     paddingVertical: Padding.p_sm,
     borderRadius: Border.br_5xs,
-    // shadowColor: "rgba(0, 0, 0, 0.1)",
-    // shadowOpacity: 1,
-    // // elevation: 5,
-    // // shadowRadius: 5,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOpacity: 1,
+    elevation: 1,
+    shadowRadius: 1,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
     alignSelf: "stretch",
     backgroundColor: Color.rgb255255255,
   },

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   text1Typo: {
     textAlign: "center",
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
   },
   text1: {
     fontSize: FontSize.size_7xl,

@@ -73,9 +73,9 @@ const SignUp = () => {
             contentFit="cover"
             source={require("../assets/logo.png")}
           />
-          <Text style={[styles.logotext, styles.logotextTypo]}>
-            ACTIVETRACK
-          </Text>
+          {/* <Text style={[styles.logotext, styles.logotextTypo]}>
+            FitEase
+          </Text> */}
         </View>
         <View style={[styles.emailInput, styles.inputSpaceBlock]}>
           <Inputs
@@ -202,11 +202,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   logoIcon: {
-    width: 68,
-    height: 64,
+    width: 160,
+    height: 55,
   },
   logotext: {
-    fontSize: FontSize.size_8xl,
+    fontSize: FontSize.size_xl,
     lineHeight: 32,
     color: Color.colorGray_200,
     textAlign: "center",
@@ -216,6 +216,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignItems: "center",
+    marginBottom: 35,
   },
   emailInput: {
     justifyContent: "center",

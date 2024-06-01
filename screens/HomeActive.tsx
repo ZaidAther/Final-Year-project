@@ -19,6 +19,7 @@ import Footer from "../components/Footer";
 import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 import Video from "expo-av/build/Video";
 import ExerciseDetails from "./ExerciseDetails";
+import * as FileSystem from 'expo-file-system';
 
 // interface Exercise {
 //   Exercise_Name: string;
@@ -53,45 +54,80 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<unknown>(null);
 
+  const cacheVideo = async (url) => {
+    try {
+      const filename = url.split('/').pop();
+      const uri = FileSystem.cacheDirectory + filename;
+      const fileInfo = await FileSystem.getInfoAsync(uri);
+      if (!fileInfo.exists) {
+        console.log("Downloading video:", filename);
+        const downloadResult = await FileSystem.downloadAsync(url, uri);
+        return downloadResult.uri;
+      }
+      return uri;
+    } catch (error) {
+      console.error("Failed to cache video:", error);
+      return null;  // Return null or handle it as needed
+    }
+  };
   React.useEffect(() => {
-    console.log("home:",route.params.age)
     const fetchExercises = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          "http://192.168.1.113:5000/recommend_workout_plan",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              weight: route.params.weight,
-              height: route.params.height,
-              age: route.params.age,
-              gender: route.params.gender,
-              fitness_goal: route.params.fitness_goal,
-              muscle_groups: route.params.muscle_groups,
-              workout_intensity: route.params.workout_intensity,
-              activity_level: route.params.activity_level,
-            }),
-          }
-        );
+        const response = await fetch("http://192.168.1.113:5000/recommend_workout_plan", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(route.params),
+        });
+    
+      
+    
         const jsonData = await response.json();
         if (response.ok) {
-          setWorkoutPlan(jsonData);
+          await preloadVideos(jsonData); // Preload videos in the background
+          const workoutPlanWithCache = await Promise.all(
+            Object.entries(jsonData).map(async ([day, exercises]) => {
+              const cachedExercises = await Promise.all(
+                Object.entries(exercises).map(async ([muscleGroup, exerciseDetails]) => {
+                  const cachedUri = await cacheVideo(exerciseDetails.Exercise_Video);
+                  return [
+                    muscleGroup,
+                    { ...exerciseDetails, Exercise_Video: cachedUri },
+                  ];
+                })
+              );
+              return [day, Object.fromEntries(cachedExercises)];
+            })
+          );
+          setWorkoutPlan(Object.fromEntries(workoutPlanWithCache));
+          setLoading(false); // Set loading to false after fetching and caching
         } else {
           throw new Error("Failed to fetch exercises");
         }
       } catch (err) {
         setError(err);
-      } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false if there's an error
       }
     };
 
+    const preloadVideos = async (jsonData) => {
+      const allVideoUrls = Object.values(jsonData).flatMap((exercises) =>
+        Object.values(exercises).map((exercise) => exercise.Exercise_Video)
+      );
+      await Promise.all(
+        allVideoUrls.map(async (url) => {
+          const uri = FileSystem.cacheDirectory + url.split('/').pop();
+          const info = await FileSystem.getInfoAsync(uri);
+          if (!info.exists) {
+            await FileSystem.downloadAsync(url, uri);
+          }
+        })
+      );
+    };
+
     fetchExercises();
-    
   }, []);
 
   if (loading) {
@@ -191,16 +227,14 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.workoutsScrollViewContent}
           >
-            <View style={styles.workoutShadowBox}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
+          <View style={styles.workoutShadowBox}>
+              <Image
+                style={styles.bitmap2}
+                source={require("../assets/fit.jpg")} // Replace with your image path
+              />
               <View style={styles.content}>
                 <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
+                  Dumbell BentOver
                 </Text>
                 <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
                 <Text style={[styles.min, styles.minTypo]}>32 min</Text>
@@ -208,80 +242,66 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             </View>
 
             <View style={[styles.workout12, styles.workoutShadowBox]}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
+              <Image
+                style={styles.bitmap2}
+                source={require("../assets/fit2.jpg")} 
+                // resizeMode={ResizeMode.COVER}
+                // Replace with your image path
+              />
               <View style={styles.content}>
                 <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
+                  Deadlift   Bands
                 </Text>
                 <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
                 <Text style={[styles.min, styles.minTypo]}>32 min</Text>
               </View>
             </View>
+            
             <View style={[styles.workout13, styles.workoutShadowBox]}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
+              <Image
+                style={styles.bitmap2}
+                source={require("../assets/fit1.jpg")} // Replace with your image path
+              />
               <View style={styles.content}>
                 <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
+                  Incline dumbell
                 </Text>
                 <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
                 <Text style={[styles.min, styles.minTypo]}>32 min</Text>
               </View>
             </View>
+
+        
             <View style={[styles.workout14, styles.workoutShadowBox]}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
+              <Image
+                style={styles.bitmap2}
+                source={require("../assets/fit3.jpg")} // Replace with your image path
+              />
               <View style={styles.content}>
                 <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
+                  Muscle reverse-fly
                 </Text>
                 <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
                 <Text style={[styles.min, styles.minTypo]}>32 min</Text>
               </View>
             </View>
+
+
             <View style={[styles.workout15, styles.workoutShadowBox]}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
+              <Image
+                style={styles.bitmap2}
+                source={require("../assets/fit4.jpg")} // Replace with your image path
+              />
               <View style={styles.content}>
                 <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
+                 Chest Rollsover
                 </Text>
                 <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
                 <Text style={[styles.min, styles.minTypo]}>32 min</Text>
               </View>
             </View>
-            <View style={[styles.workout16, styles.workoutShadowBox]}>
-              <View style={styles.bitmap}>
-                <View style={styles.bitmap1}>
-                  <View style={styles.bitmap2} />
-                </View>
-                <View style={styles.mask} />
-              </View>
-              <View style={styles.content}>
-                <Text style={[styles.danceFitness, styles.hiDeborahTypo]}>
-                  Dance Fitness
-                </Text>
-                <Text style={[styles.beginner, styles.minTypo]}>Beginner</Text>
-                <Text style={[styles.min, styles.minTypo]}>32 min</Text>
-              </View>
-            </View>
+
+          
           </ScrollView>
         </View>
         <View style={styles.scrollSpaceBlock}>
@@ -297,25 +317,25 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
             <Text style={[styles.viewAll, styles.viewTypo]}>View All</Text>
           </View>
           <View style={styles.excercises}>
-
-            {Object.entries(workoutPlan).map(([day, exercises]) => (
-              <View>
-                {Object.entries(exercises).map(
-                  ([muscleGroup, exerciseDetails]) => (
-                    <Pressable
-                    onPress={() => handleExercisePress(exerciseDetails, muscleGroup, day)}
-                    key={muscleGroup}
-                      style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
-                    >
-                      <View >
-                        <Video
-                        source={{ uri: exerciseDetails.Exercise_Video }}
-                        style={styles.beautifulSlimBrunetteDoing}
-                        useNativeControls
-                        resizeMode={ResizeMode.CONTAIN}
-                        isLooping
-                      />
-                      </View>
+          {Object.entries(workoutPlan).map(([day, exercises]) => (
+            <View key={day}>
+              {Object.entries(exercises).map(([muscleGroup, exerciseDetails]) => (
+                <Pressable
+                  onPress={() => handleExercisePress(exerciseDetails, muscleGroup, day)}
+                  key={muscleGroup}
+                  style={[styles.exercise1Copy, styles.exercise1SpaceBlock]}
+                >
+                  <View>
+                    <Video
+                      source={{ uri: exerciseDetails.Exercise_Video }}
+                      style={styles.beautifulSlimBrunetteDoing}
+                      useNativeControls
+                      resizeMode={ResizeMode.CONTAIN}
+                      isLooping
+                      shouldPlay // Add this prop to play the video without loading
+                      progressUpdateIntervalMillis={10000} // Adjust the progress update interval (e.g., 10 seconds)
+                    />
+                  </View>
                       <View style={styles.text1}>
                         <Text
                           style={[styles.danceFitness, styles.hiDeborahTypo]}
@@ -323,7 +343,7 @@ const HomeActive: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                           {exerciseDetails.Exercise_Name}
                         </Text>
                         <Text style={[styles.text2, styles.text2Typo]}>
-                        {muscleGroup}
+                        {muscleGroup.slice(0,-2)}
                         </Text>
                       </View>
                       <Image
@@ -372,6 +392,11 @@ const styles = StyleSheet.create({
   workoutsFlexBox: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  bitmap: {
+    width: 200, // Set appropriate width
+    height: 200, // Set appropriate height
+    
   },
   scrollSpaceBlock: {
     marginTop: 19,

@@ -15,10 +15,10 @@ const Welcome = () => {
       <View style={styles.content}>
         <View style={[styles.welcomeText, styles.buttonSpaceBlock]}>
           <Text style={[styles.welcomeToFitoozone, styles.titleTypo]}>
-            Welcome to ActiveTrack
+            Welcome to FitEase
           </Text>
           <Text style={[styles.title, styles.buttonFlexBox]}>
-            ActiveTrack has workouts on demand that you can find based on how much
+            FitEase has workouts on demand that you can find based on how much
             time you have
           </Text>
         </View>

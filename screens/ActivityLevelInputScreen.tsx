@@ -92,7 +92,7 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
         contentContainerStyle={styles.scrollContentScrollViewContent}
       >
         <Navigations
-          step2Of5="Step 8 of 8"
+          step2Of5="Step 5 of 8"
           showStep2Of
           showSkip
           navigationPosition="unset"
@@ -103,37 +103,45 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
           onBackButtonPress={() => navigation.goBack()}
         />
         <Text style={[styles.chooseGender, styles.levelsSpaceBlock]}>
-          Choose Activity level
+          Activity level
         </Text>
         <View style={[styles.levels, styles.levelsFlexBox]}>
+        <View style={[styles.shadow]}>
           <ChooseLevel
-            title="SEDENTARY"
+            title="Sedentary"
             txt="I train 1-2 times a week"
             propBorderColor={selectedLevel === "Sedentary" ? "#2f548d" : "#e5e9ef"}
             onPress={() => setSelectedLevel("Sedentary")}
             isSelected={selectedLevel === "Sedentary"}
           />
+          </View>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="LIGHTLY ACTIVE"
+            title="Lightly Active"
             txt="I want to start training"
             propBorderColor={selectedLevel === "lightly_active" ? "#2f548d" : "#e5e9ef"}
             onPress={() => setSelectedLevel("lightly_active")}
             isSelected={selectedLevel === "lightly_active"}
           />
+          </View>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="MODERATELY ACTIVE"
+            title="Moderately Active"
             txt="I train 2-3 times a week"
             propBorderColor={selectedLevel === "moderately_active" ? "#2f548d" : "#e5e9ef"}
             onPress={() => setSelectedLevel("moderately_active")}
             isSelected={selectedLevel === "moderately_active"}
           />
+          </View>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="VERY ACTIVE"
+            title="Very Active"
             txt="I train more than 4 times a week"
             propBorderColor={selectedLevel === "very_active" ? "#2f548d" : "#e5e9ef"}
             onPress={() => setSelectedLevel("very_active")}
             isSelected={selectedLevel === "very_active"}
           />
+          </View>
         </View>
       </ScrollView>
       <View style={[styles.continue, styles.levelsFlexBox]}>
@@ -151,6 +159,17 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
 };
 
 const styles = StyleSheet.create({
+  shadow:{
+    width: "100%",
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 1,
+    elevation: 1,
+    shadowOpacity: 1,
+  },
   scrollContentScrollViewContent: {
     flexDirection: "column",
     paddingBottom: 80,
@@ -162,7 +181,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   levelsSpaceBlock: {
-    marginTop: 60,
+    marginTop: 50,
     alignSelf: "stretch",
   },
   levelsFlexBox: {
@@ -172,16 +191,19 @@ const styles = StyleSheet.create({
   chooseGenderTypo: {
     textAlign: "center",
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
   },
 
   chooseGender: {
-    fontSize: FontSize.size_xl,
-    color: Color.colorGray_200,
+    fontWeight: '400',
+    fontFamily: FontFamily.poppins,
     textAlign: 'center',
+    fontSize: FontSize.size_mid,
+    lineHeight: 32,
+    color: Color.colorGray_200,
   },
   levels: {
-    marginTop: 60,
+    marginTop: 33,
     alignSelf: "stretch",
   },
   scrollContent: {
@@ -213,10 +235,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   continue: {
-    width: "92.05%",
-    right: "3.97%",
+    width: "100%",
     bottom: 0,
-    left: "3.97%",
     paddingBottom: Padding.p_6xl,
     zIndex: 2,
     position: "absolute",

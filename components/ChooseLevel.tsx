@@ -23,8 +23,8 @@ const ChooseLevel = ({
       style={[
         styles.chooseLevel,
         isSelected
-          ? { backgroundColor: propBorderColor, borderColor: propBorderColor }
-          : { backgroundColor: Color.colorWhite, borderColor: Color.colorAliceblue_200 },
+          ? { backgroundColor: Color.primary, borderColor: propBorderColor }
+          : { backgroundColor: Color.colorWhite, borderColor: Color.primary },
       ]}
     >
       <View style={styles.text}>
@@ -53,10 +53,10 @@ const ChooseLevel = ({
 
 const styles = StyleSheet.create({
   txtTypo: {
-    height: 16,
+    // height: 16,
     textAlign: "left",
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
     alignSelf: "stretch",
   },
   title: {
@@ -68,16 +68,26 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     lineHeight: 18,
     color: Color.colorDarkslategray,
-    marginTop: 9,
+    marginTop: 5,
   },
   text: {
     alignSelf: "stretch",
   },
   chooseLevel: {
+    width: "100%",
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 5,
+    elevation: 5,
+    shadowOpacity: 1,
     borderRadius: Border.br_5xs,
-    borderStyle: "solid",
-    borderWidth: 1,
-    height: 89,
+    backgroundColor: "white",
+    // borderStyle: "solid",
+    // borderWidth: 1,
+    height: 80,
     overflow: "hidden",
     padding: Padding.p_5xl,
     marginTop: 16,

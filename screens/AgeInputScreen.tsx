@@ -1,75 +1,109 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Pressable, Text, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Navigations from "../components/Navigation";
 import { FontFamily, Color, FontSize, Border, Padding } from "../GlobalStyles";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
+import { Picker } from "@react-native-picker/picker";
 
-type HeightInputScreenNavigationProp = StackNavigationProp<RootStackParamList, 'AgeInputScreen'>;
+type HeightInputScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "AgeInputScreen"
+>;
 
 const AgeInputScreen: React.FC = () => {
   const navigation = useNavigation<HeightInputScreenNavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'AgeInputScreen'>>();
-  const [age, setage] = useState<string>('');
+  const route = useRoute<RouteProp<RootStackParamList, "AgeInputScreen">>();
+  const [age, setage] = useState<string>("");
 
   const handleNext = () => {
     // Validate height input
     const parsedage = parseFloat(age);
     if (!parsedage || isNaN(parsedage)) {
-      alert('Please enter a valid age.');
+      alert("Please enter a valid age.");
       return;
     }
-    navigation.navigate('Gender', { ...route.params, age: parseInt(age) });
+    navigation.navigate("Gender", { ...route.params, age: parseInt(age) });
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View style={[styles.selectHeight, styles.scrollFlexBox]}>
-      <View style={[styles.scroll, styles.scrollFlexBox]}>
-        <Navigations
-          step2Of5="Step 3 of 8"
-          showStep2Of
-          showSkip
-          navigationPosition="unset"
-          navigationAlignSelf="stretch"
-          step2OfColor="#2f548d"
-          step2OfMarginLeft="unset"
-          skipMarginLeft="unset"
-          onBackButtonPress={() => navigation.goBack()}
-        />
-        <Text style={[styles.selectHeight1, styles.selectHeight1Typo]}>
-          Enter Your Age 👤
-        </Text>
-        <View style={styles.button1}>
-          <Text style={styles.buttontext}>Y/O</Text>
-        </View>
-        <View style={[styles.heightInput, styles.continueFlexBox]}>
-          <TextInput
-            style={[styles.input, styles.inputShadowBox]}
-            value={age}
-            onChangeText={setage}
-            keyboardType="numeric"
+      <View style={[styles.selectHeight, styles.scrollFlexBox]}>
+        <View style={[styles.scroll, styles.scrollFlexBox]}>
+          <Navigations
+            step2Of5="Step 3 of 8"
+            showStep2Of
+            showSkip
+            navigationPosition="unset"
+            navigationAlignSelf="stretch"
+            step2OfColor="#035e7b"
+            step2OfMarginLeft="unset"
+            skipMarginLeft="unset"
+            onBackButtonPress={() => navigation.goBack()}
           />
-          <Text style={styles.cm}>y/o</Text>
+          <Text style={[styles.selectHeight1, styles.selectHeight1Typo]}>
+            Enter Your Age 👤
+          </Text>
+          <View style={styles.button1}>
+            <Text style={styles.buttontext}>Y/O</Text>
+          </View>
+          <View
+            style={[
+              styles.heightInput,
+              styles.continueFlexBox,
+              styles.pickerContainer,
+            ]}
+          >
+            <Picker
+              selectedValue={age}
+              onValueChange={(itemValue, itemIndex) => setage(itemValue)}
+              style={styles.picker}
+            >
+              {Array.from({ length: 200 }, (_, i) => i + 1).map((value) => (
+                <Picker.Item
+                  key={value}
+                  label={value.toString()}
+                  value={value.toString()}
+                />
+              ))}
+            </Picker>
+          </View>
+        </View>
+        <View style={[styles.continue, styles.continueFlexBox]}>
+          <Pressable
+            style={[styles.button, styles.inputShadowBox]}
+            onPress={handleNext}
+          >
+            <Text style={[styles.startTraining, styles.selectHeight1Typo]}>
+              Continue
+            </Text>
+          </Pressable>
         </View>
       </View>
-      <View style={[styles.continue, styles.continueFlexBox]}>
-        <Pressable
-          style={[styles.button, styles.inputShadowBox]}
-          onPress={handleNext}
-        >
-          <Text style={[styles.startTraining, styles.selectHeight1Typo]}>
-            Continue
-          </Text>
-        </Pressable>
-      </View>
-    </View>
     </TouchableWithoutFeedback>
   );
+  
 };
 
 const styles = StyleSheet.create({
+  pickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  picker: {
+    flex: 1,
+    height: 64,
+  },
   scrollFlexBox: {
     flex: 1,
     alignItems: "center",
@@ -110,9 +144,9 @@ const styles = StyleSheet.create({
   selectHeight1: {
     marginTop: 90,
     fontSize: FontSize.size_xl,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Color.colorSlategray_100,
-    textAlign: 'center',
+    textAlign: "center",
   },
   input: {
     shadowColor: "rgba(0, 0, 0, 0.1)",

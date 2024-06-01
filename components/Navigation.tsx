@@ -7,7 +7,7 @@ import {
   View,
   ImageSourcePropType,
 } from "react-native";
-import { FontFamily, FontSize, Color } from "../GlobalStyles";
+import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 
 export type NavigationsType = {
   icon?: ImageSourcePropType;
@@ -51,7 +51,7 @@ const Navigations = ({
 
   const step2OfStyle = useMemo(() => {
     return {
-      ...getStyleValue("color", step2OfColor),
+      ...getStyleValue("color", "#035e7b"),
       ...getStyleValue("marginLeft", step2OfMarginLeft),
     };
   }, [step2OfColor, step2OfMarginLeft]);
@@ -63,37 +63,63 @@ const Navigations = ({
   }, [skipMarginLeft]);
 
   return (
+    <>
+        <Pressable style={styles.icon} onPress={() => onBackButtonPress}>
+          <Image
+            style={styles.icon1}
+            contentFit="cover"
+            source={require("../assets/icon1.png")}
+          />
+        </Pressable>
     <View style={[styles.navigation, navigationStyle]}>
-      <Pressable style={styles.backButton} onPress={onBackButtonPress}>
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/back-button1.png")}
-        />
-      </Pressable>
       {showStep2Of && (
         <Text style={[styles.step2Of, styles.skipTypo, step2OfStyle]}>
           {step2Of5}
         </Text>
       )}
-      {showSkip && (
+      {/* {showSkip && (
         <Text style={[styles.skip, styles.skipTypo, skipStyle]}>Skip</Text>
-      )}
+      )} */}
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  icon1: {
+    width: 12,
+    height: 12,
+  },
+  icon: {
+
+    position: "absolute",
+    top: -10,
+    left: 10,
+    height: 34,
+    padding: Padding.p_xs,
+    zIndex: 3,
+    backgroundColor: Color.rgb255255255,
+    shadowOpacity: 1,
+    elevation: 4,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    borderRadius: Border.br_8xs,
+    // flexDirection: "row",
+  },
   skipTypo: {
     marginLeft: 21,
     fontFamily: FontFamily.poppins,
-    fontWeight: "500",
+    fontWeight: "400",
     fontSize: FontSize.size_base,
   },
-  icon: {
-    width: "100%",
-    height: "100%",
-  },
+  // icon: {
+  //   width: "100%",
+  //   height: "100%",
+  // },
   backButton: {
     width: 24,
     height: 24,

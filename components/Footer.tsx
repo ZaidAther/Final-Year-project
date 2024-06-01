@@ -13,6 +13,7 @@ export type FooterType = {
   homeActive?: ImageSourcePropType;
   training?: ImageSourcePropType;
   activity?: ImageSourcePropType;
+  profile?: ImageSourcePropType;
 
   /** Style props */
   propBottom?: number | string;
@@ -35,6 +36,7 @@ const Footer = ({
   homeActive,
   training,
   activity,
+  profile,
   propBottom,
   propColor,
   propColor1,
@@ -104,7 +106,7 @@ const Footer = ({
         <Image
           style={[styles.profileIcon, styles.iconLayout]}
           contentFit="cover"
-          source={require("../assets/profile.png")}
+          source={profile}
         />
         <Text style={[styles.activity1, styles.home2Typo]}>Profile</Text>
       </Pressable>

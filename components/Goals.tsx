@@ -2,12 +2,13 @@ import React, { useMemo } from "react";
 import { StyleSheet, View, Text, Image, ImageSourcePropType, Pressable } from "react-native";
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
-export type GoalsType = {
-  dumbbell?: ImageSourcePropType;
-  title?: string;
-  txt?: string;
-  propBorderColor?: string;
-  onPress?: () => void;
+type GoalsType = {
+  title: string;
+  txt: string;
+  propBorderColor: string;
+  onPress: () => void;
+  isSelected: boolean;
+  dumbbell?: any;
 };
 
 const Goals: React.FC<GoalsType> = ({
@@ -16,64 +17,77 @@ const Goals: React.FC<GoalsType> = ({
   txt = "",
   propBorderColor = Color.primary,
   onPress,
+  isSelected,
 }) => {
   const goalStyle = useMemo(() => {
     return {
-      backgroundColor: propBorderColor,
+      backgroundColor: isSelected ? propBorderColor : Color.colorWhite,
+      borderColor: isSelected ? propBorderColor : "#e5e9ef",
+      borderWidth: isSelected ? 2 : 1,
     };
-  }, [propBorderColor]);
+  }, [propBorderColor, isSelected]);
+
+  const titleStyle = useMemo(() => {
+    return {
+      color: isSelected ? Color.colorWhite : Color.colorGray_100,
+      // fontWeight: isSelected ? "700" : "500",
+    };
+  }, [isSelected]);
 
   return (
     <Pressable onPress={onPress} style={[styles.goal, goalStyle]}>
       <View style={styles.icon}>
         <Image style={styles.dumbbellIcon} source={dumbbell} />
+      <Text style={[styles.title, titleStyle]}>{title}</Text>
       </View>
-      <Text style={styles.title}>{title}</Text>
-    </Pressable >
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   goal: {
-    backgroundColor: Color.colorWhite,
-
-    height: 88,
+    height: 80,
     paddingHorizontal: Padding.p_mini,
-    paddingVertical: Padding.p_12xl,
+    // paddingVertical: Padding.p_12xl,
+    // paddingTop: 20,
+    
     borderRadius: Border.br_5xs,
     shadowColor: "rgba(0, 0, 0, 0.15)",
     shadowOffset: {
       width: 0,
       height: 1,
     },
-    shadowRadius: 2,
-    elevation: 5,
+    shadowRadius: 1,
+    elevation: 1,
     shadowOpacity: 1,
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
     width: "100%",
-
+    backgroundColor: Color.colorWhite,
   },
   icon: {
-    width: 56,
-    height: 56,
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.colorGray_200,
-    marginRight: 10,
+
+    alignItems: "center",
+    flexDirection: "row",
   },
   dumbbellIcon: {
-    width: "50%",
-    height: "50%",
+    width: 45,
+    height: 45,
     resizeMode: "contain",
+    marginRight: 15,
+
   },
   title: {
-    flex: 1,
-    fontSize: FontSize.size_base,
+    zIndex: 2,
     fontFamily: FontFamily.poppins,
-    color: Color.colorGray_200,
+    flex: 1,
+    textAlign: "left",
+    fontSize: FontSize.size_base,
+    color: Color.colorGray_100,
+    fontWeight: "400",
+    height: "100%",
   },
-
 });
 
 export default Goals;

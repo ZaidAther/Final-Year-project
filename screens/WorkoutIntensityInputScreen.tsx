@@ -6,6 +6,7 @@ import ChooseLevel from '../components/ChooseLevel';
 import { FontFamily, FontSize, Color, Border, Padding } from '../GlobalStyles';
 import Navigations from '../components/Navigation'; // Import Navigations component
 import { RootStackParamList } from "../types";
+import { shadow } from 'react-native-paper';
 // type RootStackParamList = {
 //   WorkoutIntensityInput: undefined;
 //   ActivityLevelInput: {
@@ -47,7 +48,7 @@ const WorkoutIntensityInputScreen: React.FC<WorkoutIntensityInputScreenProps> = 
         contentContainerStyle={styles.scrollContentScrollViewContent}
       >
         <Navigations
-          step2Of5="Step 7 of 8"
+          step2Of5="Step 4 of 8"
           showStep2Of
           showSkip
           navigationPosition="unset"
@@ -58,30 +59,36 @@ const WorkoutIntensityInputScreen: React.FC<WorkoutIntensityInputScreenProps> = 
           onBackButtonPress={() => navigation.goBack()}
         />
         <Text style={[styles.chooseGender]}>
-          Choose Workout Intensity
+          Workout Intensity
         </Text>
         <View style={[styles.levels, styles.levelsFlexBox]}>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="LIGHT"
+            title="Light"
             txt="Light workout intensity"
             propBorderColor={selectedIntensity === 'Light' ? '#2f548d' : '#fff'}
             onPress={() => setSelectedIntensity('Light')}
             isSelected={selectedIntensity === "Light"}
           />
+          </View>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="MODERATE"
+            title="Moderate"
             txt="Moderate workout intensity"
             propBorderColor={selectedIntensity === 'Moderate' ? '#2f548d' : '#fff'}
             onPress={() => setSelectedIntensity('Moderate')}
             isSelected={selectedIntensity === "Moderate"}
           />
+          </View>
+          <View style={[styles.shadow]}>
           <ChooseLevel
-            title="INTENSE"
+            title="Intense"
             txt="Intense workout intensity"
             propBorderColor={selectedIntensity === 'Intense' ? '#2f548d' : '#fff'}
             onPress={() => setSelectedIntensity('Intense')}
             isSelected={selectedIntensity === "Intense"}
           />
+          </View>
         </View>
       </ScrollView>
       <View style={styles.continue}>
@@ -117,16 +124,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   chooseGender: {
-    fontWeight: '500',
+    fontWeight: '400',
     fontFamily: FontFamily.poppins,
     textAlign: 'center',
-    fontSize: FontSize.size_xl,
+    fontSize: FontSize.size_mid,
     lineHeight: 32,
     color: Color.colorGray_200,
-    marginTop: 60,
+    marginTop: 50,
   },
   levels: {
-    marginTop: 60,
+    marginTop: 33,
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
@@ -142,6 +149,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontFamily.poppins,
     fontWeight: '500',
+  },
+
+  shadow:{
+    width: "100%",
+    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 1,
+    elevation: 1,
+    shadowOpacity: 1,
   },
   button: {
     shadowColor: 'rgba(0, 0, 0, 0.15)',
@@ -161,10 +180,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   continue: {
-    width: '92.05%',
-    right: '3.97%',
+    paddingHorizontal: Padding.p_3xs,
+    width: '100%',
+    // right: '3.97%',
     bottom: 0,
-    left: '3.97%',
+    // left: '3.97%',
     paddingBottom: Padding.p_6xl,
     zIndex: 2,
     position: 'absolute',

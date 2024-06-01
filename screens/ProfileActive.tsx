@@ -117,9 +117,10 @@ const ProfileActive: React.FC<{
         </View>
     </View>
         <Footer
-          homeActive={require("../assets/homeactive.png")}
+          homeActive={require("../assets/home.png")}
           training={require("../assets/training.png")}
           activity={require("../assets/activity.png")}
+          profile={require("../assets/profileactivedarktheme.png")}
           onHomePress={() =>
             navigation.navigate("HomeActive", { ...route.params })
           }

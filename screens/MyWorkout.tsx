@@ -104,7 +104,7 @@ const MyWorkout: React.FC<HomeActiveProps> = ({ navigation, route }) => {
                       {exerciseDetails.Exercise_Name}
                     </Text>
                     <Text style={[styles.text2, styles.text2Typo]}>
-                      {muscleGroup}
+                      {muscleGroup.slice(0,-2)}
                     </Text>
                   </View>
                   <Image

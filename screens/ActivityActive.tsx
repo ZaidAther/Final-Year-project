@@ -57,7 +57,7 @@ const ActivityActive = () => {
           <Image
             style={[styles.trainingIcon, styles.iconLayout]}
             contentFit="cover"
-            source={require("../assets/activity1.png")}
+            source={require("../assets/activity4.png")}
           />
           <Text style={[styles.activity1, styles.home2Typo]}>Activity</Text>
         </Pressable>

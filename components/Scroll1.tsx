@@ -124,7 +124,7 @@ const Scroll1 = ({ style, clusterId, mealPlan }: Scroll1Type) => {
           </View>
           <View style={[styles.text, styles.textPosition]}>
             <Text style={[styles.target, styles.nutritionTypo]}>Target</Text>
-            <Text style={[styles.kcal, styles.kcalTypo]}>4000 kcal</Text>
+            <Text style={[styles.kcal, styles.kcalTypo]}>2024 kcal</Text>
           </View>
         </View>
         <View style={[styles.goalForTheDay, styles.infoSpaceBlock]}>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_8xs,
   },
   tabSpaceBlock: {
-    marginTop: 30,
+    marginTop: 40,
     alignSelf: "stretch",
   },
   nutritionTypo: {
