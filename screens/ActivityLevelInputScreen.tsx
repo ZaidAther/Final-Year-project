@@ -64,7 +64,7 @@ const ActivityLevelInputScreen: React.FC<ActivityLevelInputScreenProps> = ({
 
   const sendUserDataToBackend = async (userData: any) => {
     try {
-      const response = await fetch('http://192.168.1.113:5000/save_user_data', {
+      const response = await fetch('http://192.168.198.147:5000/save_user_data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

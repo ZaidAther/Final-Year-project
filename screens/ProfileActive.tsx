@@ -30,7 +30,7 @@ const ProfileActive: React.FC<{
   // console.log("profile", weight);
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://192.168.1.113:5000/logout", {
+      const response = await fetch("http://192.168.198.147:5000/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

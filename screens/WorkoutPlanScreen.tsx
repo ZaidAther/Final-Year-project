@@ -22,7 +22,7 @@ const WorkoutPlanScreen: React.FC<WorkoutPlanProps> = ({ navigation, route }) =>
     const fetchExercises = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://192.168.1.113:5000/recommend_workout_plan', {
+        const response = await fetch('http://192.168.198.147:5000/recommend_workout_plan', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

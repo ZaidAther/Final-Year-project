@@ -28,7 +28,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch('http://192.168.1.113:5000/signup', {
+      const response = await fetch('http://192.168.198.147:5000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

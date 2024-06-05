@@ -27,7 +27,7 @@ const SingIn = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.1.113:5000/login', {
+      const response = await fetch('http://192.168.198.147:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

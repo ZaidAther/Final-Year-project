@@ -48,7 +48,7 @@ const Nutrition: React.FC<NutritionProps> = ({ navigation, route }) => {
   useEffect(() => {
     console.log("Nutrition:",route.params)
     if (!mealPlan) {
-      fetch("http://192.168.1.113:5000/recommend_meal_plan", {
+      fetch("http://192.168.198.147:5000/recommend_meal_plan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

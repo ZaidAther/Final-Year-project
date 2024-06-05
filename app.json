@@ -9,16 +9,7 @@
       "android",
       "web"
     ],
-    "extra": {
-      "googleClientId": {
-        "ios": "860879379444-i96gc8n0ekrc1d05rdu0c0ssveas97vs.apps.googleusercontent.com",
-        "android": "your-android-client-id",
-        "web": "860879379444-qa9u8qv2443bhvqvv0s2nfflmcn3akm7.apps.googleusercontent.com"
-      },
-      "eas": {
-        "projectId": "51b36fd6-8c4c-44e5-a7db-24b629936df2"
-      }
-    },
+
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -33,15 +24,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.hammadzaib.activetrack"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.hammadzaib.activetrack"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
